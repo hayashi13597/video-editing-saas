@@ -53,7 +53,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
             {title || description ? (
               <CardDescription className="flex-col-center gap-1">
                 {title && (
-                  <div className="medium-title font-medium">{title}</div>
+                  <div className="medium-title-no-bold text-text">{title}</div>
                 )}
                 {description && (
                   <p

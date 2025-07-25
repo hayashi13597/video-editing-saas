@@ -7,9 +7,8 @@ const routesApp = {
   verify: "/verify",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password",
-  videoList: "/dashboard/videos",
-  videoProjects: "/dashboard/videos/projects",
-  videoUploads: "/dashboard/videos/uploads",
+  create: "/dashboard/projects/create",
+  projects: "/dashboard/projects",
   chat: "/dashboard/chat",
   profile: "/dashboard/profile",
   points: "/dashboard/points"

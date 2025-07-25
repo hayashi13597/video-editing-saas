@@ -1,4 +1,4 @@
-import SignInForm from "@/features/auth/signIn/SignInForm";
+import SignInForm from "@/features/auth/sign-in/SignInForm";
 import { Metadata } from "next";
 import Image from "next/image";
 

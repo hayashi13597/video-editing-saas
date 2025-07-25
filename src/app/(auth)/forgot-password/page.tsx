@@ -3,7 +3,7 @@ import AuthLayout from "@/components/auth/AuthLayout";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
-import ForgotPasswordForm from "@/features/auth/forgotPassword";
+import ForgotPasswordForm from "@/features/auth/forgot-password";
 
 export const metadata: Metadata = {
   title: "パスワードをリセット",

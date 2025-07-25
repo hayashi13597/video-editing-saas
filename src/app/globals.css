@@ -31,6 +31,9 @@
   --color-accent: #43be7a;
   --color-accent-foreground: #43be7a;
 
+  --color-disabled: rgba(47, 43, 61, 0.4);
+  --color-action-selected: rgba(47, 43, 61, 0.078);
+
   --radius-6: 6px;
 }
 
@@ -61,6 +64,10 @@
 
   .medium-title {
     @apply text-2xl font-bold tracking-[0.25px] leading-[1.75];
+  }
+
+  .medium-title-no-bold {
+    @apply text-2xl font-normal tracking-[0.25px] leading-[1.75];
   }
 
   .body-text {

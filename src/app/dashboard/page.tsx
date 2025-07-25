@@ -1,27 +1,12 @@
-"use client";
-
-import { signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-
 const Dashboard = () => {
-  const { data } = useSession();
-  if (!data) {
-    return <div>Loading...</div>;
-  }
-  const handleSignOut = async () => {
-    await signOut({ redirect: false });
-    redirect("/sign-in");
-  };
-
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Welcome to your dashboard!</p>
-      <p>User: {data.user?.name || "Guest"}</p>
-      <p>Email: {data.user?.email || "Not provided"}</p>
-      <p>Role: {data.user?.role || "Not specified"}</p>
-      <button onClick={handleSignOut}>sign out</button>
-    </div>
+    <main>
+      <h1 className="text-2xl font-bold mb-4">ダッシュボード</h1>
+      <p className="mb-6">
+        ここでは、あなたのアカウント情報や設定を管理できます。
+      </p>
+      {/* 他のダッシュボードコンテンツをここに追加 */}
+    </main>
   );
 };
 

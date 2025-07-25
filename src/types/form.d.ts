@@ -1,5 +1,5 @@
-import { forgotPasswordType } from "@/features/auth/forgotPassword/validate";
-import { SignInSchemaType } from "@/features/auth/signIn/validate";
+import { forgotPasswordType } from "@/features/auth/forgot-password/validate";
+import { SignInSchemaType } from "@/features/auth/sign-in/validate";
 
 type FormType = SignInSchemaType | forgotPasswordType | resetPasswordType;
 

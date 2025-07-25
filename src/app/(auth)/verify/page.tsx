@@ -22,6 +22,7 @@ export default async function Verify({
     <AuthLayout
       title="2段階認証"
       description={`あなたの携帯電話に認証コードを送信しました。下の欄に携帯電話からコードを入力してください。\n${email ? email : ""}`}
+      descriptionClassName="text-center"
     >
       <FormVerifyEmail email={email} resetPassword={resetPassword} />
     </AuthLayout>
