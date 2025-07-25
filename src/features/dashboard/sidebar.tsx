@@ -1,12 +1,16 @@
 import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "@/components/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
-  SidebarHeader,
+  SidebarHeader
 } from "@/components/ui/sidebar";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -39,7 +43,10 @@ const SidebarComponent = () => {
       </SidebarHeader>
       <SidebarContent className="py-1 px-3 gap-0">
         <SidebarGroup className="p-0">
-          <Link href={routesApp.dashboard} className="bg-green-main text-white body-text flex justify-between items-center gap-2 py-2 px-3 rounded-6 hover:bg-green-main hover:text-white relative">
+          <Link
+            href={routesApp.dashboard}
+            className="bg-green-main text-white body-text flex justify-between items-center gap-2 py-2 px-3 rounded-6 hover:bg-green-main hover:text-white relative"
+          >
             <div className="flex items-center gap-2">
               <SmartHomeIcon />
               <span>ダッシュボード</span>
@@ -69,18 +76,29 @@ const SidebarComponent = () => {
               </CollapsibleTrigger>
             </SidebarGroupLabel>
             <CollapsibleContent>
-              <Link href={routesApp.create} className="body-text text-text flex items-center gap-2 py-2 pl-7 rounded-6 hover:bg-green-main hover:text-white">
-                <span className="block w-2.5 h-2.5 border-2 rounded-full" />案件登録
+              <Link
+                href={routesApp.create}
+                className="body-text text-text flex items-center gap-2 py-2 pl-7 rounded-6 hover:bg-green-main hover:text-white"
+              >
+                <span className="block w-2.5 h-2.5 border-2 rounded-full" />
+                案件登録
               </Link>
-              <Link href={routesApp.projects} className="body-text text-text flex items-center gap-2 py-2 pl-7 rounded-6 hover:bg-green-main hover:text-white">
-                <span className="block w-2.5 h-2.5 border-2 rounded-full" />案件一覧
+              <Link
+                href={routesApp.projects}
+                className="body-text text-text flex items-center gap-2 py-2 pl-7 rounded-6 hover:bg-green-main hover:text-white"
+              >
+                <span className="block w-2.5 h-2.5 border-2 rounded-full" />
+                案件一覧
               </Link>
             </CollapsibleContent>
           </SidebarGroup>
         </Collapsible>
 
         <SidebarGroup className="p-0">
-          <Link href={routesApp.chat} className="body-text text-text flex items-center gap-2 py-2 px-3 rounded-6 hover:bg-green-main hover:text-white">
+          <Link
+            href={routesApp.chat}
+            className="body-text text-text flex items-center gap-2 py-2 px-3 rounded-6 hover:bg-green-main hover:text-white"
+          >
             <ChatIcon />
             チャット
           </Link>
