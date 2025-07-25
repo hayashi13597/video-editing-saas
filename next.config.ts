@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  eslint: {
+    dirs: ["src"]
+  },
+  allowedDevOrigins: ["192.168.10.57"]
 };
 
 export default nextConfig;
