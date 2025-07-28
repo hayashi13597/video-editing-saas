@@ -1,9 +1,9 @@
 import { getAuthentication } from "@/orvalApi/endpoints/authentication/authentication";
 import { AuthResponseDto } from "@/orvalApi/model";
-import { UserRole } from "@/types/next-auth";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getErrorMessage } from "./utils";
+import { UserRole } from "@/types/form";
 
 const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -43,10 +43,11 @@ const nextAuthOptions: NextAuthOptions = {
           return {
             id: user.id,
             email: user.email,
-            name: user.name || "",
-            image: user.avatarUrl || "",
+            name: user.name,
+            image: user.avatarUrl,
             accessToken: authData.tokens.accessToken,
-            role: user.role as UserRole
+            role: user.role as UserRole,
+            cognitoId: user.cognitoId
           };
         } catch (error) {
           const errorMessage = getErrorMessage(
@@ -69,8 +70,8 @@ const nextAuthOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.name = user.name || "";
-        token.image = user.image || "";
+        token.name = user.name;
+        token.image = user.image;
         token.accessToken = user.accessToken;
         token.role = user.role;
       }

@@ -7,6 +7,16 @@ type KindType = "client" | "freelancer";
 
 type UserRole = "CLIENT" | "FREELANCER" | "ADMIN";
 
+interface UserInterface {
+  id: string;
+  email: string;
+  name?: string;
+  image?: string;
+  accessToken?: string;
+  role: "CLIENT" | "ADMIN" | "FREELANCER";
+  cognitoId?: string;
+}
+
 interface SelectOption {
   label: string;
   value: string;

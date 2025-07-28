@@ -4,10 +4,14 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
-  SidebarHeader,
-} from "@/components/ui/sidebar"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
+  SidebarHeader
+} from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "../ui/collapsible";
 
 const SidebarSkeleton = () => {
   return (
@@ -79,7 +83,7 @@ const SidebarSkeleton = () => {
 
       <SidebarFooter />
     </Sidebar>
-  )
-}
+  );
+};
 
-export default SidebarSkeleton
+export default SidebarSkeleton;

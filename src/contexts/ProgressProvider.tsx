@@ -71,7 +71,7 @@ function NavigationEvents({
 export const ProgressProvider: React.FC<ProgressProviderProps> = ({
   children,
   defaultType = LoadingTypeEnum.TOP_BAR,
-  color = "#2D97E4", // blue-500
+  color = "#43be7a", // blue-500
   height = 4,
   delay = 300
 }) => {

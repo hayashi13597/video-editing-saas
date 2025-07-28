@@ -1,13 +1,13 @@
+import MainContent from "@/features/dashboard/MainContent";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ダッシュボード",
+  description: "ダッシュボードの概要"
+};
+
 const Dashboard = () => {
-  return (
-    <main>
-      <h1 className="text-2xl font-bold mb-4">ダッシュボード</h1>
-      <p className="mb-6">
-        ここでは、あなたのアカウント情報や設定を管理できます。
-      </p>
-      {/* 他のダッシュボードコンテンツをここに追加 */}
-    </main>
-  );
+  return <MainContent />;
 };
 
 export default Dashboard;

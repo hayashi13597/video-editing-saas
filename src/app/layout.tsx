@@ -3,6 +3,7 @@ import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import CustomSessionProvider from "@/contexts/CustomSessionProvider";
 import { Toaster } from "sonner";
+import { ProgressProvider } from "@/contexts/ProgressProvider";
 
 const publicSans = Public_Sans({
   subsets: ["latin"]
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${publicSans.className} antialiased`}>
-        <CustomSessionProvider>{children}</CustomSessionProvider>
+        <ProgressProvider>
+          <CustomSessionProvider>{children}</CustomSessionProvider>
+        </ProgressProvider>
         <Toaster position="top-center" richColors expand={false} />
       </body>
     </html>

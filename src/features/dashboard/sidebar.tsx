@@ -44,7 +44,9 @@ const SidebarComponent = () => {
   return (
     <Sidebar collapsible="icon" className="shadow-sm border-none">
       <SidebarHeader className="h-[70px] p-0">
-        <div className={`h-[70px] flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-4`}>
+        <div
+          className={`h-[70px] flex items-center ${isCollapsed ? "justify-center" : "justify-between"} px-4`}
+        >
           {!isCollapsed && (
             <div className="w-[100px] h-[20px] relative">
               <Image
@@ -56,7 +58,12 @@ const SidebarComponent = () => {
               />
             </div>
           )}
-          <TooltipCustom content={isCollapsed ? "サイドバーを展開" : "サイドバーを折りたたむ"} isCollapsed={isCollapsed}>
+          <TooltipCustom
+            content={
+              isCollapsed ? "サイドバーを展開" : "サイドバーを折りたたむ"
+            }
+            isCollapsed={isCollapsed}
+          >
             <Image
               src="/icons/toggle.svg"
               alt="toggle"
@@ -68,7 +75,7 @@ const SidebarComponent = () => {
           </TooltipCustom>
         </div>
       </SidebarHeader>
-      <SidebarContent className={`py-1 gap-0 ${isCollapsed ? '' : 'px-3'}`}>
+      <SidebarContent className={`py-1 gap-0 ${isCollapsed ? "" : "px-3"}`}>
         <SidebarGroup className="p-0">
           <TooltipCustom content="ダッシュボード" isCollapsed={isCollapsed}>
             <Link
@@ -79,7 +86,9 @@ const SidebarComponent = () => {
                 pathname === routesApp.dashboard && "bg-green-main text-white"
               )}
             >
-              <div className={`flex items-center ${isCollapsed ? '' : 'gap-2'}`}>
+              <div
+                className={`flex items-center ${isCollapsed ? "" : "gap-2"}`}
+              >
                 <SmartHomeIcon />
                 {!isCollapsed && <span>ダッシュボード</span>}
               </div>
@@ -104,11 +113,17 @@ const SidebarComponent = () => {
             <SidebarGroupLabel asChild>
               <TooltipCustom content="案件官理" isCollapsed={isCollapsed}>
                 <CollapsibleTrigger asChild={isCollapsed ? false : true}>
-                  <Link href={isCollapsed ? routesApp.projects : "#"} className={cn(
-                    "body-text text-text bg-action-selected py-2 px-3 h-fit mb-1.5 cursor-pointer rounded-6 flex items-center gap-2",
-                    isCollapsed && "flex-center bg-white mb-0 hover:bg-green-main hover:text-white",
-                    isCollapsed && pathname === routesApp.projects && "bg-green-main text-white"
-                  )}>
+                  <Link
+                    href={isCollapsed ? routesApp.projects : "#"}
+                    className={cn(
+                      "body-text text-text bg-action-selected py-2 px-3 h-fit mb-1.5 cursor-pointer rounded-6 flex items-center gap-2",
+                      isCollapsed &&
+                        "flex-center bg-white mb-0 hover:bg-green-main hover:text-white",
+                      isCollapsed &&
+                        pathname === routesApp.projects &&
+                        "bg-green-main text-white"
+                    )}
+                  >
                     <PaperIcon />
                     {!isCollapsed && "案件官理"}
                     {!isCollapsed && (
@@ -122,7 +137,8 @@ const SidebarComponent = () => {
               <CollapsibleContent>
                 <Link
                   href={routesApp.create}
-                  className={cn("body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
+                  className={cn(
+                    "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
                     pathname === routesApp.create && "bg-green-main text-white"
                   )}
                 >
@@ -131,8 +147,10 @@ const SidebarComponent = () => {
                 </Link>
                 <Link
                   href={routesApp.projects}
-                  className={cn("body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
-                    pathname === routesApp.projects && "bg-green-main text-white"
+                  className={cn(
+                    "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
+                    pathname === routesApp.projects &&
+                      "bg-green-main text-white"
                   )}
                 >
                   <span className="block w-2.5 h-2.5 border-2 rounded-full" />

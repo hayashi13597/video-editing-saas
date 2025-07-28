@@ -1,9 +1,20 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { routesApp } from '@/constants/routesApp';
-import { LogOut, UserRoundPen } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react'
+"use client";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "@/components/ui/popover";
+import { routesApp } from "@/constants/routesApp";
+import { getErrorMessage } from "@/lib/utils";
+import { getAuthentication } from "@/orvalApi/endpoints/authentication/authentication";
+import { LogOut, UserRoundPen } from "lucide-react";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { toast } from "sonner";
 
 const AvatarPopup = ({
   image,
@@ -14,6 +25,19 @@ const AvatarPopup = ({
   name: string;
   email: string;
 }) => {
+  const router = useRouter();
+  const handleSignOut = async () => {
+    try {
+      await getAuthentication().signOut();
+      await signOut({ redirect: false });
+      toast.success("サインアウトしました");
+      router.push(routesApp.signIn);
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
+      toast.error(errorMessage);
+    }
+  };
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -34,12 +58,8 @@ const AvatarPopup = ({
       <PopoverContent align="end">
         <div className="flex items-center gap-3 p-4 border-b border-border">
           <div className="flex flex-col">
-            <span className="body-text">
-              {name}
-            </span>
-            <span className="body-text text-text">
-              {email}
-            </span>
+            <span className="body-text">{name}</span>
+            <span className="body-text text-text">{email}</span>
           </div>
         </div>
         <div className="py-2">
@@ -53,7 +73,7 @@ const AvatarPopup = ({
           <Link
             href="#"
             className="flex items-center gap-2 text-red px-4 py-2 hover:bg-gray-200 transition-colors rounded-6"
-          // onClick={handleSignOut}
+            onClick={handleSignOut}
           >
             <LogOut size={20} />
             サインアウト
@@ -61,7 +81,7 @@ const AvatarPopup = ({
         </div>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
-export default AvatarPopup
+export default AvatarPopup;

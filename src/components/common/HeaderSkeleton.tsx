@@ -1,4 +1,4 @@
-import { Skeleton } from "../ui/skeleton"
+import { Skeleton } from "../ui/skeleton";
 
 const HeaderSkeleton = () => {
   return (
@@ -15,7 +15,7 @@ const HeaderSkeleton = () => {
         <Skeleton className="w-8 h-8 rounded-full" />
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default HeaderSkeleton
+export default HeaderSkeleton;

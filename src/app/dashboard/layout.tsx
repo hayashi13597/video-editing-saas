@@ -9,14 +9,16 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <SidebarProvider style={
-      {
-        "--sidebar-width": "18vw",
-        "--sidebar-width-icon": "4vw",
-      } as React.CSSProperties
-    }>
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "18vw",
+          "--sidebar-width-icon": "4vw"
+        } as React.CSSProperties
+      }
+    >
       <SidebarComponent />
-      <div className="w-full p-5 space-y-5">
+      <div className="w-full p-5 space-y-5 bg-bg-main">
         <Header />
         {children}
       </div>
