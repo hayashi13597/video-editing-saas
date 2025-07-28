@@ -28,13 +28,18 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { UserRole } from "@/types/form";
+import SidebarSkeleton from "@/components/common/SidebarSkeleton";
 
 const SidebarComponent = () => {
   const pathname = usePathname();
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
-  const { data: session } = useSession();
-  const isClient = session?.user.role as UserRole;
+  const { data: session, status } = useSession();
+  const userRole = session?.user.role as UserRole;
+
+  if (status === "loading") {
+    return <SidebarSkeleton />;
+  }
 
   return (
     <Sidebar collapsible="icon" className="shadow-sm border-none">
@@ -115,19 +120,15 @@ const SidebarComponent = () => {
             </SidebarGroupLabel>
             {!isCollapsed && (
               <CollapsibleContent>
-                {
-                  isClient === "CLIENT" && (
-                    <Link
-                      href={routesApp.create}
-                      className={cn("body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
-                        pathname === routesApp.create && "bg-green-main text-white"
-                      )}
-                    >
-                      <span className="block w-2.5 h-2.5 border-2 rounded-full" />
-                      案件登録
-                    </Link>
-                  )
-                }
+                <Link
+                  href={routesApp.create}
+                  className={cn("body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
+                    pathname === routesApp.create && "bg-green-main text-white"
+                  )}
+                >
+                  <span className="block w-2.5 h-2.5 border-2 rounded-full" />
+                  {userRole === "CLIENT" ? "案件登録" : "応募可能な案件"}
+                </Link>
                 <Link
                   href={routesApp.projects}
                   className={cn("body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
@@ -135,7 +136,7 @@ const SidebarComponent = () => {
                   )}
                 >
                   <span className="block w-2.5 h-2.5 border-2 rounded-full" />
-                  案件一覧
+                  {userRole === "CLIENT" ? "案件一覧" : "応募済みの案件"}
                 </Link>
               </CollapsibleContent>
             )}

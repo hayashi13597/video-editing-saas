@@ -1,3 +1,5 @@
+import { routesApp } from "@/constants/routesApp";
+import { UserRole } from "@/types/form";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -65,4 +67,21 @@ export function formatSize(bytes: number): string {
 
   // Format with 2 decimal places and round
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
+
+export function getPageTile(pathname: string, role: UserRole): string {
+  switch (pathname) {
+    case routesApp.dashboard:
+      return "ダッシュボード";
+    case routesApp.profile:
+      return "プロフィール";
+    case routesApp.create:
+      return role === "CLIENT" ? "案件登録" : "応募可能な案件";
+    case routesApp.projects:
+      return role === "CLIENT" ? "案件一覧" : "応募済みの案件";
+    case routesApp.chat:
+      return "チャット";
+    default:
+      return "ダッシュボード";
+  }
 }
