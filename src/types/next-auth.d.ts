@@ -1,17 +1,11 @@
 import { DefaultSession } from "next-auth";
 
-enum UserRole {
-  CLIENT = "CLIENT",
-  FREELANCER = "FREELANCER",
-  ADMIN = "ADMIN"
-}
-
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       accessToken?: string;
-      role: UserRole;
+      role: "CLIENT" | "ADMIN" | "FREELANCER";
     } & DefaultSession["user"];
   }
 
@@ -21,7 +15,7 @@ declare module "next-auth" {
     name?: string;
     image?: string;
     accessToken?: string;
-    role: UserRole;
+    role: "CLIENT" | "ADMIN" | "FREELANCER";
     cognitoId?: string;
   }
 }
@@ -34,7 +28,7 @@ declare module "next-auth/jwt" {
       name?: string;
       image?: string;
       accessToken?: string;
-      role: UserRole;
+      role: "CLIENT" | "ADMIN" | "FREELANCER";
       cognitoId?: string;
     };
   }

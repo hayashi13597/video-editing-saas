@@ -40,9 +40,9 @@ interface FormFieldCustomProps<T extends FormType> {
 const FormFieldCustom = <T extends FormType>({
   control,
   name,
-  placeholder = "Enter your value",
-  type = "text",
-  label = "Label",
+  placeholder,
+  type,
+  label,
   autoComplete,
   requiredBadge,
   badgeText,
@@ -91,6 +91,7 @@ const FormFieldCustom = <T extends FormType>({
                 control={control}
                 name={name}
                 requiredBadge={requiredBadge}
+                badgeText={badgeText}
               />
             );
           case "checkbox":

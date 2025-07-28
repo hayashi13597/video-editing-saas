@@ -8,7 +8,12 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <SidebarProvider>
+    <SidebarProvider style={
+      {
+        "--sidebar-width": "18vw",
+        "--sidebar-width-icon": "4vw",
+      } as React.CSSProperties
+    }>
       <SidebarComponent />
       <main>{children}</main>
     </SidebarProvider>

@@ -29,8 +29,8 @@ const FormPassword = <T extends FormType>({
   name,
   placeholder = "············",
   label = "パスワード",
-  requiredBadge = false,
-  badgeText = "必須"
+  requiredBadge,
+  badgeText
 }: FormPasswordProps<T>) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
