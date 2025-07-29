@@ -151,7 +151,7 @@ const Table: React.FC<TableProps> = ({
         href="/projects"
         className="body-text text-green-main flex-end gap-2"
       >
-        <Grip4 /> View all
+        <Grip4 /> もっと見る
       </Link>
     </div>
   )
