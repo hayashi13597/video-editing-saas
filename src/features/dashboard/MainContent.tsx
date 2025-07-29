@@ -11,7 +11,7 @@ const MainContent = () => {
   const user = session?.user as UserInterface;
 
   return (
-    <main className="space-y-10">
+    <main className="space-y-10 pb-[60px]">
       <StatsCard />
 
       <CompletedProjectsCard user={user} />

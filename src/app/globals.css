@@ -8,6 +8,8 @@
   --color-light-green: #e4f0eb;
   --color-bg-main: #F5F6F8;
 
+  --color-badge: #7367F0;
+
   --color-text: #333333;
   --color-placeholder: #9e9e9e;
   --color-stroke: #cfcfcf;
@@ -63,6 +65,10 @@
 
 @utility flex-between {
   @apply flex items-center justify-between;
+}
+
+@utility flex-end {
+  @apply flex items-center justify-end;
 }
 
 @utility medium-title {
