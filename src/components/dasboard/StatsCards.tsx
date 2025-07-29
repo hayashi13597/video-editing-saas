@@ -8,7 +8,7 @@ const Card = ({ title, value, unit = "件" }: CardProps) => {
   return (
     <div className="border border-green-main bg-light-green flex-col-center gap-3 py-10 rounded-10">
       <div className="medium-title-no-bold">{title}</div>
-      <div className="text-7xl font-medium text-green-main">
+      <div className="text-5xl 2xl:text-7xl font-medium text-green-main">
         {value}
         <span className="text-xl font-bold">{unit}</span>
       </div>

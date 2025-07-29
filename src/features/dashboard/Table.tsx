@@ -65,22 +65,22 @@ const renderCellContent = (field: FieldType, data: TableRowData, showChevron: bo
 
     case 'applicant':
       return data.applicant ? (
-        <p className="body-text">{data.applicant}</p>
+        <p className="body-text line-clamp-1">{data.applicant}</p>
       ) : null
 
     case 'requestDate':
       return data.requestDate ? (
-        <p className="body-text">{data.requestDate}</p>
+        <p className="body-text line-clamp-1">{data.requestDate}</p>
       ) : null
 
     case 'deadline':
       return data.deadline ? (
-        <p className="body-text">{data.deadline}</p>
+        <p className="body-text line-clamp-1">{data.deadline}</p>
       ) : null
 
     case 'points':
       return data.points ? (
-        <p className="body-text">{data.points}</p>
+        <p className="body-text line-clamp-1">{data.points}</p>
       ) : null
 
     case 'action':
