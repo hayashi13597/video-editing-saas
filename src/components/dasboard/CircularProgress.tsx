@@ -31,7 +31,6 @@ export default function CircularProgress({
           stroke="#CFCFCF"
           strokeWidth={strokeWidth}
           fill="transparent"
-          className="opacity-30"
         />
 
         {/* Progress circle */}

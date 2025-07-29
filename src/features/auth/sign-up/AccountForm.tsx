@@ -123,7 +123,7 @@ const AccountForm = ({
             <Link
               href={routesApp.signUpClient}
               className={cn(
-                "text-size-primary text-accent hover:underline",
+                "body-text text-accent hover:underline",
                 isProfileUpdate ? "cursor-not-allowed hidden" : ""
               )}
             >

@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import { getAuthentication } from "@/orvalApi/endpoints/authentication/authentication";
 import NotificationModal from "@/components/modal/NotificationModal";
 import { routesApp } from "@/constants/routesApp";
+import { getErrorMessage } from "@/lib/utils";
+import { uploadFileToS3 } from "@/lib/upload";
 
 const SignUpForm = () => {
   const [step, setStep] = useState<number>(1);
@@ -47,6 +49,7 @@ const SignUpForm = () => {
   const profileForm = useForm<profileSchemaType>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
+      role: kind,
       avatarUrl: "",
       selfIntroduction: "",
       specialization: "",
@@ -56,6 +59,7 @@ const SignUpForm = () => {
       companyOverview: "",
       industry: "",
       plan: "",
+      bankName: "",
       accountNumber: "",
       accountName: "",
       branchCode: "",
@@ -69,26 +73,36 @@ const SignUpForm = () => {
 
   const handleProfileSubmit = async (data: profileSchemaType) => {
     try {
+      let avatarUrl = "";
+      if (file) {
+        const { fileUrl } = await uploadFileToS3({
+          file,
+          entityType: "user",
+          purpose: "avatar"
+        });
+        avatarUrl = fileUrl;
+      }
       const accountData = accountForm.getValues();
       const fullData = {
         ...accountData,
         ...data,
         classification: kind === "client" ? "client" : "freelance",
-        avatarUrl: file ? URL.createObjectURL(file) : "",
+        avatarUrl: avatarUrl || "",
         phoneNumber: accountData.phone || ""
       };
       // eslint-disable-next-line
       await getAuthentication().signUp(fullData as any);
       setIsModalOpen(true);
       toast.success("プロフィールが更新されました");
-    } catch {
-      toast.error("プロフィールの更新に失敗しました");
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError, "サインアップに失敗しました");
+      toast.error(errorMessage);
     }
   };
 
   return (
     <main className="w-full max-w-[72.5%] space-y-5">
-      <h1 className="big-title">会社として登録</h1>
+      <h1 className="big-title">{kind === "client" ? "会社" : "フリーランス"}として登録</h1>
       <ProgressSteps currentStep={step} />
 
       {step === 1 ? (

@@ -30,7 +30,7 @@ const CardProject = ({ user }: CompletedProjectsCardProps) => {
 
     <div className="py-1 px-2 5 rounded-6 bg-bg-main flex-between">
       <div className="flex items-center space-x-3">
-        <ImageFallback src={user?.image} />
+        <ImageFallback src={user?.image} name={user?.name} />
         <div className="flex flex-col">
           <span className="body-text">{user?.name}</span>
           <span className="small-text text-gray">UI/UX Design</span>

@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
   PopoverContent,
@@ -15,6 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
+import ImageFallback from "./ImageFallback";
 
 const AvatarPopup = ({
   image,
@@ -41,19 +41,7 @@ const AvatarPopup = ({
   return (
     <Popover>
       <PopoverTrigger>
-        <Avatar
-          className="cursor-pointer w-[38px] h-[38px]"
-          data-id="user-avatar"
-        >
-          <AvatarImage
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover"
-          />
-          <AvatarFallback className="text-white">
-            {name.charAt(0)}
-          </AvatarFallback>
-        </Avatar>
+        <ImageFallback src={image} alt={name} name={name} className="cursor-pointer w-[38px] h-[38px]" />
       </PopoverTrigger>
       <PopoverContent align="end" className="border-none shadow-sm">
         <div className="flex items-center gap-3 p-4 border-b border-border">

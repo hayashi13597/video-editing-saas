@@ -1,25 +1,25 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface ImageFallbackProps {
-  className?: string;
   src?: string;
   alt?: string;
+  name?: string;
+  className?: string;
 }
 
 const ImageFallback = ({
+  src,
+  alt,
+  name,
   className,
-  src = "/images/placeholder.png",
-  alt = "image fallback"
 }: ImageFallbackProps) => {
   return (
-    <Image
-      src={src}
-      alt={alt}
-      width={40}
-      height={40}
-      className={cn("rounded-full w-10 h-10", className)}
-    />
+    <Avatar className={className}>
+      <AvatarImage src={src} alt={alt} className="w-full h-full object-cover" />
+      <AvatarFallback className="bg-green-main text-white">
+        {name ? name.charAt(0) : "?"}
+      </AvatarFallback>
+    </Avatar>
   )
 }
 

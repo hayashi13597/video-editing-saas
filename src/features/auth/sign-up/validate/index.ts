@@ -134,30 +134,105 @@ export const getSignUpSchema = (role: "client" | "freelancer") => {
 type signUpSchemaType = z.infer<typeof signUpSchema>;
 
 // Profile form validation schema using Zod
-const profileSchema = z.object({
-  avatarUrl: z.string().optional(),
-  selfIntroduction: z.string().optional(),
-  specialization: z.string().optional(),
-  editingSoftware: z.array(z.string()),
-  invoice: z.string().optional(),
-  portfolioLinks: z
-    .array(
-      z.object({
-        url: z.string().optional()
-      })
-    )
-    .max(5, "ポートフォリオリンクは最大5つまでです")
-    .optional(),
-  skills: z.array(z.string()),
-  companyOverview: z.string().optional(),
-  industry: z.string().optional(),
-  plan: z.string().min(1, "プランを選択してください"),
-  // Bank account details 口座番号, 口座名義, 支店コード, 口座種類 required for clients
-  accountNumber: z.string().min(1, "口座番号は必須です"),
-  accountName: z.string().min(1, "口座名義は必須です"),
-  branchCode: z.string().min(1, "支店コードは必須です"),
-  accountType: z.enum(["普通預金", "定期預金"])
-});
+const profileSchema = z
+  .object({
+    role: z.enum(["client", "freelancer"]),
+    avatarUrl: z.string().optional(),
+    selfIntroduction: z.string().optional(),
+    specialization: z.string().optional(),
+    editingSoftware: z.array(z.string()),
+    invoice: z.string().optional(),
+    portfolioLinks: z
+      .array(
+        z.object({
+          url: z.string().optional()
+        })
+      )
+      .max(5, "ポートフォリオリンクは最大5つまでです")
+      .optional(),
+    skills: z.array(z.string()),
+    companyOverview: z.string().optional(),
+    industry: z.string().optional(),
+    // required only for clients
+    plan: z.string().optional(),
+    bankName: z.string().optional(),
+    accountNumber: z.string().optional(),
+    accountName: z.string().optional(),
+    branchCode: z.string().optional(),
+    accountType: z.enum(["普通預金", "定期預金"]).optional()
+  })
+  .refine(
+    data => {
+      if (data.role === "client") {
+        return data.plan && data.plan.trim() !== "";
+      }
+      return true;
+    },
+    {
+      message: "プランは必須です",
+      path: ["plan"]
+    }
+  )
+  .refine(
+    data => {
+      if (data.role === "client") {
+        return data.bankName && data.bankName.trim() !== "";
+      }
+      return true;
+    },
+    {
+      message: "金融機関名は必須です",
+      path: ["bankName"]
+    }
+  )
+  .refine(
+    data => {
+      if (data.role === "client") {
+        return data.accountNumber && data.accountNumber.trim() !== "";
+      }
+      return true;
+    },
+    {
+      message: "口座番号は必須です",
+      path: ["accountNumber"]
+    }
+  )
+  .refine(
+    data => {
+      if (data.role === "client") {
+        return data.accountName && data.accountName.trim() !== "";
+      }
+      return true;
+    },
+    {
+      message: "口座名義は必須です",
+      path: ["accountName"]
+    }
+  )
+  .refine(
+    data => {
+      if (data.role === "client") {
+        return data.branchCode && data.branchCode.trim() !== "";
+      }
+      return true;
+    },
+    {
+      message: "支店コードは必須です",
+      path: ["branchCode"]
+    }
+  )
+  .refine(
+    data => {
+      if (data.role === "client") {
+        return !!data.accountType;
+      }
+      return true;
+    },
+    {
+      message: "口座種別は必須です",
+      path: ["accountType"]
+    }
+  );
 
 // TypeScript type for the profile schema
 type profileSchemaType = z.infer<typeof profileSchema>;

@@ -121,6 +121,16 @@ const ProfileForm = ({
                 badgeText="必須"
               />
 
+              {/* bank name */}
+              <FormFieldCustom
+                control={form.control}
+                name="bankName"
+                label="金融機関名"
+                placeholder="金融機関名"
+                type="text"
+                requiredBadge={true}
+              />
+
               {/* bank info */}
               <div className="grid grid-cols-2 gap-5">
                 <FormFieldCustom
