@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { useSession } from "next-auth/react";
@@ -8,6 +7,8 @@ import HeaderSkeleton from "@/components/common/HeaderSkeleton";
 import AvatarPopup from "@/components/dasboard/AvatarPopup";
 import { getPageTile } from "@/lib/utils";
 import { UserRole } from "@/types/form";
+import PointPopup from "@/components/dasboard/PointPopup";
+import NotificationPopup from "@/components/dasboard/NotificationPopup";
 
 const Header = () => {
   const pathname = usePathname();
@@ -16,6 +17,7 @@ const Header = () => {
   const name = session?.user.name || "User";
   const email = session?.user.email || "***@gmail.com";
   const role = session?.user.role as UserRole;
+  const points = session?.user.points || 0;
   const isLoading = status === "loading";
 
   if (isLoading) {
@@ -26,23 +28,8 @@ const Header = () => {
     <header className="flex-between w-full">
       <h1 className="big-title">{getPageTile(pathname, role)}</h1>
       <div className="flex-center gap-4">
-        <div className="relative w-6 h-6">
-          <Image
-            src="/icons/point.svg"
-            alt="point"
-            fill
-            sizes="(max-width: 768px) 20px, 30px"
-          />
-        </div>
-        <div className="relative w-6 h-6">
-          <Image
-            src="/icons/notification.svg"
-            alt="notification"
-            fill
-            sizes="(max-width: 768px) 20px, 30px"
-          />
-          <div className="w-3 h-3 bg-red border-2 border-white rounded-full absolute top-0 right-0" />
-        </div>
+        <PointPopup points={points} />
+        <NotificationPopup />
         <AvatarPopup image={image} name={name} email={email} />
       </div>
     </header>

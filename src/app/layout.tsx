@@ -6,7 +6,9 @@ import { Toaster } from "sonner";
 import { ProgressProvider } from "@/contexts/ProgressProvider";
 
 const publicSans = Public_Sans({
-  subsets: ["latin"]
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap"
 });
 
 export const metadata: Metadata = {
@@ -20,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
-      <body className={`${publicSans.className} antialiased`}>
+    <html lang="ja" className={publicSans.className}>
+      <body>
         <ProgressProvider>
           <CustomSessionProvider>{children}</CustomSessionProvider>
         </ProgressProvider>

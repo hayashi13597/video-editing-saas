@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ChevronDown, ListFilter, Plus, Search } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ChevronDown, ListFilter, Plus, Search } from "lucide-react";
 
 const FilterComponent = () => {
   return (
@@ -11,7 +11,10 @@ const FilterComponent = () => {
           placeholder="キーワードで検索"
           type="search"
         />
-        <Search className="text-text absolute left-2.5 top-1/2 -translate-y-1/2" size={20} />
+        <Search
+          className="text-text absolute left-2.5 top-1/2 -translate-y-1/2"
+          size={20}
+        />
       </div>
 
       <div className="h-9 border border-stroke rounded-6 px-2.5 flex-center gap-2 cursor-pointer">
@@ -24,7 +27,7 @@ const FilterComponent = () => {
         新規案件追加
       </Button>
     </div>
-  )
-}
+  );
+};
 
-export default FilterComponent
+export default FilterComponent;

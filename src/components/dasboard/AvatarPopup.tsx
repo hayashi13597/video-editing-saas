@@ -41,7 +41,12 @@ const AvatarPopup = ({
   return (
     <Popover>
       <PopoverTrigger>
-        <ImageFallback src={image} alt={name} name={name} className="cursor-pointer w-[38px] h-[38px]" />
+        <ImageFallback
+          src={image}
+          alt={name}
+          name={name}
+          className="cursor-pointer w-[38px] h-[38px]"
+        />
       </PopoverTrigger>
       <PopoverContent align="end" className="border-none shadow-sm">
         <div className="flex items-center gap-3 p-4 border-b border-border">

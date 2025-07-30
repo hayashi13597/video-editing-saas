@@ -1,6 +1,6 @@
-import FilterComponent from "@/features/dashboard/FilterComponent"
-import Table, { defaultColumns } from "./Table"
-import { dummyDashboardTableData } from "@/constants"
+import FilterComponent from "@/features/dashboard/FilterComponent";
+import Table, { defaultColumns } from "./Table";
+import { dummyDashboardTableData } from "@/constants";
 
 const TaskCard = () => {
   return (
@@ -13,7 +13,7 @@ const TaskCard = () => {
 
       <Table data={dummyDashboardTableData} columns={defaultColumns} />
     </div>
-  )
-}
+  );
+};
 
-export default TaskCard
+export default TaskCard;

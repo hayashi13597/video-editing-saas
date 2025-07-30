@@ -90,14 +90,18 @@ const SidebarComponent = () => {
                 className={`flex items-center ${isCollapsed ? "" : "gap-2"}`}
               >
                 <SmartHomeIcon />
-                {!isCollapsed && <span className="line-clamp-1">ダッシュボード</span>}
+                {!isCollapsed && (
+                  <span className="line-clamp-1">ダッシュボード</span>
+                )}
               </div>
               {!isCollapsed && (
-                <Badge className="text-white bg-red rounded-full border-none outline-none">
-                  5
-                </Badge>
+                <div className="flex items-center gap-2">
+                  <Badge className="text-white bg-red rounded-full border-none outline-none">
+                    5
+                  </Badge>
+                  <ChevronRight className="w-4 h-4" />
+                </div>
               )}
-              {!isCollapsed && <ChevronRight className="w-4 h-4" />}
             </Link>
           </TooltipCustom>
         </SidebarGroup>
@@ -118,14 +122,16 @@ const SidebarComponent = () => {
                     className={cn(
                       "body-text text-text bg-action-selected py-2 px-3 h-fit mb-1.5 cursor-pointer rounded-6 flex items-center gap-2",
                       isCollapsed &&
-                      "flex-center bg-white mb-0 hover:bg-green-main hover:text-white",
+                        "flex-center bg-white mb-0 hover:bg-green-main hover:text-white",
                       isCollapsed &&
-                      pathname === routesApp.projects &&
-                      "bg-green-main text-white"
+                        pathname === routesApp.projects &&
+                        "bg-green-main text-white"
                     )}
                   >
                     <PaperIcon />
-                    {!isCollapsed && <span className="line-clamp-1">案件官理</span>}
+                    {!isCollapsed && (
+                      <span className="line-clamp-1">案件官理</span>
+                    )}
                     {!isCollapsed && (
                       <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                     )}
@@ -150,7 +156,7 @@ const SidebarComponent = () => {
                   className={cn(
                     "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
                     pathname === routesApp.projects &&
-                    "bg-green-main text-white"
+                      "bg-green-main text-white"
                   )}
                 >
                   <span className="block w-2.5 h-2.5 border-2 rounded-full" />

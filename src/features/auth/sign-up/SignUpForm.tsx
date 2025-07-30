@@ -95,14 +95,19 @@ const SignUpForm = () => {
       setIsModalOpen(true);
       toast.success("プロフィールが更新されました");
     } catch (error) {
-      const errorMessage = getErrorMessage(error as ApiError, "サインアップに失敗しました");
+      const errorMessage = getErrorMessage(
+        error as ApiError,
+        "サインアップに失敗しました"
+      );
       toast.error(errorMessage);
     }
   };
 
   return (
     <main className="w-full max-w-[72.5%] space-y-5">
-      <h1 className="big-title">{kind === "client" ? "会社" : "フリーランス"}として登録</h1>
+      <h1 className="big-title">
+        {kind === "client" ? "会社" : "フリーランス"}として登録
+      </h1>
       <ProgressSteps currentStep={step} />
 
       {step === 1 ? (

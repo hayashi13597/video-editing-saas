@@ -47,7 +47,8 @@ const nextAuthOptions: NextAuthOptions = {
             image: user.avatarUrl,
             accessToken: authData.tokens.accessToken,
             role: user.role as UserRole,
-            cognitoId: user.cognitoId
+            cognitoId: user.cognitoId,
+            points: user.points
           };
         } catch (error) {
           const errorMessage = getErrorMessage(
@@ -74,6 +75,8 @@ const nextAuthOptions: NextAuthOptions = {
         token.image = user.image;
         token.accessToken = user.accessToken;
         token.role = user.role;
+        token.cognitoId = user.cognitoId;
+        token.points = user.points;
       }
       return token;
     },
@@ -85,6 +88,8 @@ const nextAuthOptions: NextAuthOptions = {
         session.user.image = token.image as string;
         session.user.accessToken = token.accessToken as string;
         session.user.role = token.role as UserRole;
+        session.user.cognitoId = token.cognitoId as string;
+        session.user.points = token.points as number;
       }
       return session;
     }

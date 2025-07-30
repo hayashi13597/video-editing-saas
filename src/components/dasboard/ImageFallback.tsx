@@ -7,12 +7,7 @@ interface ImageFallbackProps {
   className?: string;
 }
 
-const ImageFallback = ({
-  src,
-  alt,
-  name,
-  className,
-}: ImageFallbackProps) => {
+const ImageFallback = ({ src, alt, name, className }: ImageFallbackProps) => {
   return (
     <Avatar className={className}>
       <AvatarImage src={src} alt={alt} className="w-full h-full object-cover" />
@@ -20,7 +15,7 @@ const ImageFallback = ({
         {name ? name.charAt(0) : "?"}
       </AvatarFallback>
     </Avatar>
-  )
-}
+  );
+};
 
-export default ImageFallback
+export default ImageFallback;

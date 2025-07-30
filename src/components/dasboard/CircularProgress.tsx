@@ -1,10 +1,10 @@
 interface CircularProgressProps {
-  currentStep: number
-  totalSteps: number
-  progress: number
-  size?: number
-  strokeWidth?: number
-  className?: string
+  currentStep: number;
+  totalSteps: number;
+  progress: number;
+  size?: number;
+  strokeWidth?: number;
+  className?: string;
 }
 
 export default function CircularProgress({
@@ -13,15 +13,17 @@ export default function CircularProgress({
   progress,
   size = 200,
   strokeWidth = 12,
-  className = "",
+  className = ""
 }: CircularProgressProps) {
-  const radius = (size - strokeWidth) / 2
-  const circumference = radius * 2 * Math.PI
-  const strokeDasharray = circumference
-  const strokeDashoffset = circumference - (progress / 100) * circumference
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={`relative inline-flex items-center justify-center ${className}`}>
+    <div
+      className={`relative inline-flex items-center justify-center ${className}`}
+    >
       <svg width={size} height={size} className="transform -rotate-90">
         {/* Background circle */}
         <circle
@@ -51,10 +53,12 @@ export default function CircularProgress({
       {/* Center text */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center">
-          <span className="medium-title-no-bold text-green-main">{currentStep}</span>
+          <span className="medium-title-no-bold text-green-main">
+            {currentStep}
+          </span>
           <span className="Body text text-placeholder">/{totalSteps}</span>
         </div>
       </div>
     </div>
-  )
+  );
 }

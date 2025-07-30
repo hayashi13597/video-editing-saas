@@ -6,9 +6,9 @@
   --color-green-main: #43be7a;
   --color-bright-green: #f3faf7;
   --color-light-green: #e4f0eb;
-  --color-bg-main: #F5F6F8;
+  --color-bg-main: #f5f6f8;
 
-  --color-badge: #7367F0;
+  --color-badge: #7367f0;
 
   --color-text: #333333;
   --color-placeholder: #9e9e9e;
@@ -37,7 +37,7 @@
   --color-disabled: rgba(47, 43, 61, 0.4);
   --color-action-selected: rgba(47, 43, 61, 0.078);
 
-  --color-star: #FFC300;
+  --color-star: #ffc300;
 
   --radius-6: 6px;
   --radius-10: 10px;
@@ -49,10 +49,8 @@
   }
 }
 
-@layer components {
-  .button-submit {
-    @apply text-white text-sm font-semibold bg-green-main rounded-6 px-3 py-2.5 cursor-pointer w-full transition-colors duration-200 ease-in-out;
-  }
+@utility button-submit {
+  @apply text-white text-sm font-semibold bg-green-main rounded-6 px-3 py-2.5 cursor-pointer w-full transition-colors duration-200 ease-in-out;
 }
 
 @utility flex-center {
@@ -83,6 +81,10 @@
   @apply text-sm font-normal tracking-[0.25px] leading-[1.75];
 }
 
+@utility body-text-bold {
+  @apply text-sm font-semibold tracking-[0.25px] leading-[1.75];
+}
+
 @utility big-title {
   @apply text-[32px] font-bold tracking-[0.25px] leading-[1.75];
 }
@@ -91,8 +93,16 @@
   @apply text-xs font-normal tracking-normal leading-[1.75];
 }
 
+@utility small-title {
+  @apply text-xl font-bold tracking-[0.25px] leading-[1.75];
+}
+
 @utility intro-text {
   @apply text-base font-normal tracking-[0.25px] leading-[1.75];
+}
+
+@utility intro-text-bold {
+  @apply text-base font-bold tracking-[0.25px] leading-[1.75];
 }
 
 @utility very-small-text {

@@ -6,6 +6,8 @@ declare module "next-auth" {
       id: string;
       accessToken?: string;
       role: "CLIENT" | "ADMIN" | "FREELANCER";
+      cognitoId?: string;
+      points?: number;
     } & DefaultSession["user"];
   }
 
@@ -17,6 +19,7 @@ declare module "next-auth" {
     accessToken?: string;
     role: "CLIENT" | "ADMIN" | "FREELANCER";
     cognitoId?: string;
+    points?: number;
   }
 }
 
@@ -30,6 +33,7 @@ declare module "next-auth/jwt" {
       accessToken?: string;
       role: "CLIENT" | "ADMIN" | "FREELANCER";
       cognitoId?: string;
+      points?: number;
     };
   }
 }
