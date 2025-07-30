@@ -4,11 +4,11 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { useSession } from "next-auth/react";
 import HeaderSkeleton from "@/components/common/HeaderSkeleton";
-import AvatarPopup from "@/components/dasboard/AvatarPopup";
+import AvatarPopup from "@/components/dashboard/AvatarPopup";
 import { getPageTile } from "@/lib/utils";
 import { UserRole } from "@/types/form";
-import PointPopup from "@/components/dasboard/PointPopup";
-import NotificationPopup from "@/components/dasboard/NotificationPopup";
+import PointPopup from "@/components/dashboard/PointPopup";
+import NotificationPopup from "@/components/dashboard/NotificationPopup";
 
 const Header = () => {
   const pathname = usePathname();

@@ -74,7 +74,7 @@ export function getPageTile(pathname: string, role: UserRole): string {
     case routesApp.dashboard:
       return "ダッシュボード";
     case routesApp.profile:
-      return "プロフィール";
+      return "アカウント編集";
     case routesApp.create:
       return role === "CLIENT" ? "案件登録" : "応募可能な案件";
     case routesApp.projects:

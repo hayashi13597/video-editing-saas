@@ -15,7 +15,8 @@ import RequiredBadge from "@/components/form/RequiredBadge";
 import { cn } from "@/lib/utils";
 
 interface PortfolioLinksFieldProps {
-  control: Control<profileSchemaType>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<profileSchemaType | any>;
 }
 
 const PortfolioLinksField: React.FC<PortfolioLinksFieldProps> = ({

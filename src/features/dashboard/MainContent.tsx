@@ -1,7 +1,7 @@
 "use client";
 
-import CompletedProjectsCard from "@/components/dasboard/CompletedProjects";
-import StatsCard from "@/components/dasboard/StatsCards";
+import CompletedProjectsCard from "@/components/dashboard/CompletedProjects";
+import StatsCard from "@/components/dashboard/StatsCards";
 import TaskCard from "@/features/dashboard/TaskCard";
 import { UserInterface } from "@/types/form";
 import { useSession } from "next-auth/react";

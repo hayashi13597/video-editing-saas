@@ -35,6 +35,7 @@ interface FormFieldCustomProps<T extends FormType> {
   requiredBadge?: boolean;
   badgeText?: string;
   selectOptions?: SelectOption[];
+  disabled?: boolean;
 }
 
 const FormFieldCustom = <T extends FormType>({
@@ -46,7 +47,8 @@ const FormFieldCustom = <T extends FormType>({
   autoComplete,
   requiredBadge,
   badgeText,
-  selectOptions
+  selectOptions,
+  disabled
 }: FormFieldCustomProps<T>) => {
   const [options, setOptions] = useState<SelectOption[]>(selectOptions || []);
 
@@ -79,7 +81,8 @@ const FormFieldCustom = <T extends FormType>({
                     placeholder={placeholder}
                     autoComplete={autoComplete}
                     value={field.value?.toString() || ""}
-                    className="border-stroke placeholder:text-placeholder"
+                    className="border-stroke placeholder:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100"
+                    disabled={disabled}
                   />
                 </FormControl>
                 <FormMessage />
@@ -92,6 +95,7 @@ const FormFieldCustom = <T extends FormType>({
                 name={name}
                 requiredBadge={requiredBadge}
                 badgeText={badgeText}
+                disabled={disabled}
               />
             );
           case "checkbox":
@@ -99,6 +103,7 @@ const FormFieldCustom = <T extends FormType>({
               <FormItem className="flex items-center gap-2">
                 <FormControl>
                   <Checkbox
+                    {...field}
                     className="text-white border-text size-[18px] data-[state=checked]:bg-green-main data-[state=checked]:border-green-main"
                     checked={field.value ? true : false}
                     onCheckedChange={field.onChange}
@@ -147,7 +152,7 @@ const FormFieldCustom = <T extends FormType>({
                     value={field.value?.toString() || ""}
                   >
                     <FormControl>
-                      <SelectTrigger className="rounded-6 body-text w-full [&_svg:not([class*='text-'])]:text-text [&_svg:not([class*='text-'])]:opacity-100 data-[placeholder]:text-placeholder">
+                      <SelectTrigger {...field} disabled={disabled} className="rounded-6 body-text w-full [&_svg:not([class*='text-'])]:text-text [&_svg:not([class*='text-'])]:opacity-100 data-[placeholder]:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100 disabled:[&_svg:not([class*='text-'])]:opacity-0">
                         <SelectValue placeholder={placeholder} />
                       </SelectTrigger>
                     </FormControl>
@@ -206,6 +211,7 @@ const FormFieldCustom = <T extends FormType>({
                 </FormLabel>
                 <FormControl>
                   <RadioGroup
+                    {...field}
                     className="flex items-center gap-4"
                     value={field.value}
                     onValueChange={field.onChange}

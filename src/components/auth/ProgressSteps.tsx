@@ -1,4 +1,4 @@
-import CircularProgress from "../dasboard/CircularProgress";
+import CircularProgress from "../dashboard/CircularProgress";
 
 interface ProgressStepsProps {
   currentStep: number;

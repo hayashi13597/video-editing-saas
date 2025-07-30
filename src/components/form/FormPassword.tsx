@@ -22,6 +22,7 @@ interface FormPasswordProps<T extends FormType> {
   label?: string;
   requiredBadge?: boolean;
   badgeText?: string;
+  disabled?: boolean;
 }
 
 const FormPassword = <T extends FormType>({
@@ -30,7 +31,8 @@ const FormPassword = <T extends FormType>({
   placeholder = "············",
   label = "パスワード",
   requiredBadge,
-  badgeText
+  badgeText,
+  disabled
 }: FormPasswordProps<T>) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -61,6 +63,7 @@ const FormPassword = <T extends FormType>({
                 autoComplete="off"
                 value={field.value?.toString() || ""}
                 className="border-stroke placeholder:text-placeholder"
+                disabled={disabled}
               />
             </FormControl>
             {isShowPassword ? (

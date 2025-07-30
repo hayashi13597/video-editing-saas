@@ -1,7 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { EllipsisVertical } from "lucide-react";
 import Link from "next/link";
-import Grip4 from "../../../public/icons/grip-4.svg";
+import dynamic from "next/dynamic";
+const Grip4 = dynamic(() => import("../../../public/icons/grip-4.svg"), {
+  ssr: false
+});
 import React from "react";
 
 // Define all possible field types
@@ -80,7 +83,9 @@ const renderCellContent = (
 
     case "requestDate":
       return data.requestDate ? (
-        <p className="body-text line-clamp-1 wrap-anywhere">{data.requestDate}</p>
+        <p className="body-text line-clamp-1 wrap-anywhere">
+          {data.requestDate}
+        </p>
       ) : null;
 
     case "deadline":
@@ -117,18 +122,20 @@ const Table: React.FC<TableProps> = ({
         <div
           className="grid px-3 gap-6 text-gray"
           style={{
-            gridTemplateColumns: columns.map((column, idx) => {
-              if (idx === columns.length - 1) return "max-content";
-              if (column.key === "title") return `${12 - columns.length}fr`;
-              return "minmax(auto, 1fr)";
-            }).join(" ")
+            gridTemplateColumns: columns
+              .map((column, idx) => {
+                if (idx === columns.length - 1) return "max-content";
+                if (column.key === "title") return `${12 - columns.length}fr`;
+                return "minmax(auto, 1fr)";
+              })
+              .join(" ")
           }}
         >
           {columns.map(column => (
-            <React.Fragment
-              key={column.key}
-            >
-              <p className="body-text line-clamp-1 wrap-anywhere">{column.label}</p>
+            <React.Fragment key={column.key}>
+              <p className="body-text line-clamp-1 wrap-anywhere">
+                {column.label}
+              </p>
             </React.Fragment>
           ))}
         </div>
@@ -139,17 +146,17 @@ const Table: React.FC<TableProps> = ({
             key={row.id}
             className="grid gap-6 px-3 py-2 bg-white rounded-6"
             style={{
-              gridTemplateColumns: columns.map((column, idx) => {
-                if (idx === columns.length - 1) return "max-content";
-                if (column.key === "title") return `${12 - columns.length}fr`;
-                return "1fr";
-              }).join(" ")
+              gridTemplateColumns: columns
+                .map((column, idx) => {
+                  if (idx === columns.length - 1) return "max-content";
+                  if (column.key === "title") return `${12 - columns.length}fr`;
+                  return "1fr";
+                })
+                .join(" ")
             }}
           >
             {columns.map(column => (
-              <React.Fragment
-                key={column.key}
-              >
+              <React.Fragment key={column.key}>
                 {renderCellContent(column.key, row, icon)}
               </React.Fragment>
             ))}
