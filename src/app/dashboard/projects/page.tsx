@@ -1,3 +1,4 @@
+import ProjectsListSkeleton from "@/components/common/ProjectsListSkeleton";
 import MainProjects from "@/features/dashboard/projects/MainProjects";
 import { Suspense } from "react";
 
@@ -9,7 +10,7 @@ export const metadata = {
 
 const Projects = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<ProjectsListSkeleton />}>
       <MainProjects />
     </Suspense>
   );
