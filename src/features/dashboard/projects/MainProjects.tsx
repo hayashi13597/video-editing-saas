@@ -11,8 +11,6 @@ import { useSearchParams } from "next/navigation";
 
 const MainProjects = () => {
   const searchParams = useSearchParams();
-  // const status = searchParams.get("status") || "";
-  // const search = searchParams.get("search") || "";
   const page = searchParams.get("page") || "1";
 
   return (

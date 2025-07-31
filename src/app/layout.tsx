@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={publicSans.className}>
+    <html lang="ja" className={`${publicSans.className} antialiased`}>
       <body>
         <ProgressProvider>
           <CustomSessionProvider>{children}</CustomSessionProvider>

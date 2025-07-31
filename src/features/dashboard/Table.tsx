@@ -3,15 +3,13 @@
 import { Badge } from "@/components/ui/badge";
 import { EllipsisVertical } from "lucide-react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-const Grip4 = dynamic(() => import("../../../public/icons/grip-4.svg"), {
-  ssr: false
-});
+import Grip4 from "../../../public/icons/grip-4.svg";
 import React from "react";
 import Image from "next/image";
 import { StatusType } from "@/types/form";
 import { cn, getColorStatus, getColorStatusText } from "@/lib/utils";
 import PaginationCustom from "./PaginationCustom";
+import { routesApp } from "@/constants/routesApp";
 
 // Define all possible field types
 export type FieldType =
@@ -290,7 +288,8 @@ const Table: React.FC<TableProps> = ({
         />
       ) : (
         <Link
-          href="/projects"
+          href={routesApp.projects
+          }
           className="body-text text-green-main flex-end gap-2"
         >
           <Grip4 /> もっと見る

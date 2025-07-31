@@ -1,7 +1,7 @@
 "use client";
 
 import ImageFallback from "@/components/dashboard/ImageFallback";
-import Camera from "@/../public/icons/camera.svg";
+import Camera from "../../../../public/icons/camera.svg";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import {

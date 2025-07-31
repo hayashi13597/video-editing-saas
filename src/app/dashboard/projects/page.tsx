@@ -1,4 +1,5 @@
 import MainProjects from "@/features/dashboard/projects/MainProjects";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "案件一覧",
@@ -7,7 +8,11 @@ export const metadata = {
 };
 
 const Projects = () => {
-  return <MainProjects />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MainProjects />
+    </Suspense>
+  );
 };
 
 export default Projects;
