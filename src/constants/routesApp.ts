@@ -9,6 +9,7 @@ const routesApp = {
   resetPassword: "/reset-password",
   create: "/dashboard/projects/create",
   projects: "/dashboard/projects",
+  list: "/dashboard/projects/list",
   chat: "/dashboard/chat",
   profile: "/dashboard/profile",
   points: "/dashboard/points"

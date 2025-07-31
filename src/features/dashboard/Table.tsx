@@ -158,7 +158,7 @@ const renderCellContent = (
     case "applicant":
       return data.applicant ? (
         <p className="body-text line-clamp-1 wrap-anywhere">{data.applicant}</p>
-      ) : null;
+      ) : "-";
 
     case "requestDate":
       return data.requestDate ? (
@@ -202,7 +202,7 @@ const renderCellContent = (
         <p className="body-text line-clamp-1 wrap-anywhere">
           {data.freelancer}
         </p>
-      ) : null;
+      ) : "-";
 
     case "startDate":
       return data.startDate ? (
