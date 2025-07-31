@@ -47,10 +47,13 @@
 
   --radius-6: 6px;
   --radius-10: 10px;
+
+  --font-public-sans: "Public Sans", sans-serif;
 }
 
 @layer base {
   body {
+    font-family: var(--font-public-sans);
     @apply bg-white text-text text-sm font-normal tracking-[0.25px] leading-[1.75] scroll-smooth overflow-x-hidden;
   }
 }
