@@ -109,14 +109,15 @@ const SignUpForm = () => {
         portfolioUrl:
           kind === "freelancer" && fullData.portfolioLinks
             ? (fullData.portfolioLinks
-              .map(link => link.url)
-              .filter(url => url && url.trim() !== "") as string[])
+                .map(link => link.url)
+                .filter(url => url && url.trim() !== "") as string[])
             : undefined,
         skills: kind === "freelancer" ? fullData.skills : undefined,
-        classification: kind === "client" ? "client" as const : "freelance" as const,
+        classification:
+          kind === "client" ? ("client" as const) : ("freelance" as const),
         plan: kind === "client" ? fullData.plan : undefined,
         avatarUrl: avatarUrl || ""
-      }
+      };
       await getAuthentication().signUp(signUpData);
       setIsModalOpen(true);
       toast.success("プロフィールが更新されました");

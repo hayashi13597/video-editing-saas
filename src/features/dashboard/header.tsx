@@ -13,7 +13,7 @@ import NotificationPopup from "@/components/dashboard/NotificationPopup";
 const Header = () => {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const image = session?.user.image || "/images/avatar.png";
+  const image = session?.user.image;
   const name = session?.user.name || "User";
   const email = session?.user.email || "***@gmail.com";
   const role = session?.user.role as UserRole;
@@ -30,7 +30,7 @@ const Header = () => {
       <div className="flex-center gap-4">
         <PointPopup points={points} />
         <NotificationPopup />
-        <AvatarPopup image={image} name={name} email={email} />
+        <AvatarPopup image={image as string} name={name} email={email} />
       </div>
     </header>
   );

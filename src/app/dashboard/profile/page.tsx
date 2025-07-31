@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 
 const Profile = () => {
   return (
-    <div className="p-6 bg-white rounded-6 shadow-sm space-y-8">
+    <main className="p-6 bg-white rounded-6 shadow-sm space-y-8">
       <UpdateProfileForm />
-    </div>
+    </main>
   );
 };
 

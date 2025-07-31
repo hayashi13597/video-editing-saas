@@ -38,5 +38,5 @@ export interface DefaultSelectionPrisma36ProfilePayload {
     email: string;
     name: string;
     phoneNumber: string;
-  }
+  };
 }

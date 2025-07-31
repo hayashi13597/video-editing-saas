@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { EllipsisVertical } from "lucide-react";
 import Link from "next/link";
@@ -6,6 +8,10 @@ const Grip4 = dynamic(() => import("../../../public/icons/grip-4.svg"), {
   ssr: false
 });
 import React from "react";
+import Image from "next/image";
+import { StatusType } from "@/types/form";
+import { cn, getColorStatus, getColorStatusText } from "@/lib/utils";
+import PaginationCustom from "./PaginationCustom";
 
 // Define all possible field types
 export type FieldType =
@@ -15,7 +21,12 @@ export type FieldType =
   | "requestDate"
   | "deadline"
   | "points"
-  | "action";
+  | "action"
+  | "image"
+  | "freelancer"
+  | "startDate"
+  | "endDate"
+  | "rating";
 
 // Define column configuration
 export interface ColumnConfig {
@@ -27,16 +38,18 @@ export interface ColumnConfig {
 // Define row data structure
 export interface TableRowData {
   id: string;
-  status?: {
-    label: string;
-    variant?: string;
-  };
+  status?: StatusType;
   title?: string;
   applicant?: string;
   requestDate?: string;
   deadline?: string;
-  points?: string;
+  points?: number | string;
   href?: string;
+  image?: string;
+  freelancer?: string;
+  startDate?: string;
+  endDate?: string;
+  rating?: number;
 }
 
 // Table props interface
@@ -44,6 +57,10 @@ export interface TableProps {
   columns: ColumnConfig[];
   data: TableRowData[];
   icon?: boolean;
+  pagination?: boolean;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (_page: number) => void;
 }
 
 // Default column configurations
@@ -57,6 +74,65 @@ export const defaultColumns: ColumnConfig[] = [
   { key: "action", label: "　" }
 ];
 
+const StarRating = ({ rating = 3.4, totalStars = 5 }) => {
+  const fullStars = Math.floor(rating); // 3 full stars
+  const decimalPart = rating % 1; // 0.4 for partial star
+  const emptyStars = totalStars - Math.ceil(rating); // Remaining empty stars
+
+  return (
+    <div className="flex">
+      {/* Full Stars */}
+      {[...Array(fullStars)].map((_, index) => (
+        <svg
+          key={`full-${index}`}
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="#FFD700" // Yellow for full stars
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      ))}
+
+      {/* Partial Star */}
+      {decimalPart > 0 && (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="partial">
+              <stop offset={`${decimalPart * 100}%`} stopColor="#FFD700" />
+              <stop offset={`${decimalPart * 100}%`} stopColor="#D3D3D3" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            fill="url(#partial)"
+          />
+        </svg>
+      )}
+
+      {/* Empty Stars */}
+      {[...Array(emptyStars)].map((_, index) => (
+        <svg
+          key={`empty-${index}`}
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="#D3D3D3" // Gray for empty stars
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      ))}
+    </div>
+  );
+};
+
 // Render cell content based on field type
 const renderCellContent = (
   field: FieldType,
@@ -66,8 +142,13 @@ const renderCellContent = (
   switch (field) {
     case "status":
       return data.status ? (
-        <Badge className="rounded-full bg-badge text-white">
-          {data.status.label}
+        <Badge
+          className={cn(
+            "rounded-full bg-badge text-white w-full max-w-14 h-6",
+            getColorStatus(data.status)
+          )}
+        >
+          {getColorStatusText(data.status)}
         </Badge>
       ) : null;
 
@@ -95,7 +176,9 @@ const renderCellContent = (
 
     case "points":
       return data.points ? (
-        <p className="body-text line-clamp-1 wrap-anywhere">{data.points}</p>
+        <p className="body-text line-clamp-1 wrap-anywhere">
+          {Number(data.points).toLocaleString("ja-JP", { currency: "JPY" })}pt
+        </p>
       ) : null;
 
     case "action":
@@ -105,6 +188,37 @@ const renderCellContent = (
         </div>
       ) : null;
 
+    case "image":
+      return data.image ? (
+        <Image
+          src={data.image}
+          alt="Project Thumbnail"
+          width={74}
+          height={54}
+          className="w-auto h-auto object-contain"
+        />
+      ) : null;
+
+    case "freelancer":
+      return data.freelancer ? (
+        <p className="body-text line-clamp-1 wrap-anywhere">
+          {data.freelancer}
+        </p>
+      ) : null;
+
+    case "startDate":
+      return data.startDate ? (
+        <p className="body-text line-clamp-1 wrap-anywhere">{data.startDate}</p>
+      ) : null;
+
+    case "endDate":
+      return data.endDate ? (
+        <p className="body-text line-clamp-1 wrap-anywhere">{data.endDate}</p>
+      ) : null;
+
+    case "rating":
+      return data.rating ? <StarRating rating={data.rating} /> : null;
+
     default:
       return null;
   }
@@ -113,10 +227,14 @@ const renderCellContent = (
 const Table: React.FC<TableProps> = ({
   columns = defaultColumns,
   data = [],
-  icon = true
+  icon = true,
+  pagination = false,
+  currentPage = 1,
+  totalPages = 1,
+  onPageChange
 }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-[60px]">
       <div className="space-y-2">
         {/* Header Row */}
         <div
@@ -144,7 +262,7 @@ const Table: React.FC<TableProps> = ({
         {data.map(row => (
           <div
             key={row.id}
-            className="grid gap-6 px-3 py-2 bg-white rounded-6"
+            className="grid gap-6 px-3 py-2 bg-white rounded-6 items-center"
             style={{
               gridTemplateColumns: columns
                 .map((column, idx) => {
@@ -164,12 +282,20 @@ const Table: React.FC<TableProps> = ({
         ))}
       </div>
 
-      <Link
-        href="/projects"
-        className="body-text text-green-main flex-end gap-2"
-      >
-        <Grip4 /> もっと見る
-      </Link>
+      {pagination ? (
+        <PaginationCustom
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange || (() => {})}
+        />
+      ) : (
+        <Link
+          href="/projects"
+          className="body-text text-green-main flex-end gap-2"
+        >
+          <Grip4 /> もっと見る
+        </Link>
+      )}
     </div>
   );
 };

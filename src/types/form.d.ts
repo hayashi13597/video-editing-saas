@@ -21,3 +21,5 @@ interface SelectOption {
   label: string;
   value: string;
 }
+
+type StatusType = "OPEN" | "REVIEW" | "ASSIGNED" | "COMPLETED";

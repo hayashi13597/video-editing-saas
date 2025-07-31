@@ -9,11 +9,19 @@ interface ImageFallbackProps {
   classNameFallback?: string;
 }
 
-const ImageFallback = ({ src, alt, name, className, classNameFallback }: ImageFallbackProps) => {
+const ImageFallback = ({
+  src,
+  alt,
+  name,
+  className,
+  classNameFallback
+}: ImageFallbackProps) => {
   return (
     <Avatar className={className}>
       <AvatarImage src={src} alt={alt} className="w-full h-full object-cover" />
-      <AvatarFallback className={cn("bg-green-main text-white", classNameFallback)}>
+      <AvatarFallback
+        className={cn("bg-green-main text-white", classNameFallback)}
+      >
         {name ? name.charAt(0) : "?"}
       </AvatarFallback>
     </Avatar>

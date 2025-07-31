@@ -41,6 +41,10 @@
 
   --color-star: #ffc300;
 
+  --color-badge-assigned: #be43a7;
+  --color-badge-review: #ff9e2f;
+  --color-badge-open: #7367f0;
+
   --radius-6: 6px;
   --radius-10: 10px;
 }

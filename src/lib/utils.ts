@@ -1,5 +1,5 @@
 import { routesApp } from "@/constants/routesApp";
-import { UserRole } from "@/types/form";
+import { StatusType, UserRole } from "@/types/form";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -69,6 +69,12 @@ export function formatSize(bytes: number): string {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
 
+/**
+ * Generates a page title based on the current route and user role
+ * @param pathname - The current route pathname
+ * @param role - The user's role (e.g., CLIENT, FREELANCER)
+ * @returns A string representing the page title
+ */
 export function getPageTile(pathname: string, role: UserRole): string {
   switch (pathname) {
     case routesApp.dashboard:
@@ -83,5 +89,34 @@ export function getPageTile(pathname: string, role: UserRole): string {
       return "チャット";
     default:
       return "ダッシュボード";
+  }
+}
+
+export function getColorStatus(status: StatusType): string {
+  switch (status) {
+    case "OPEN":
+      return "bg-badge-open text-white";
+    case "ASSIGNED":
+      return "bg-badge-assigned text-white";
+    case "REVIEW":
+      return "bg-badge-review text-white";
+    case "COMPLETED":
+      return "bg-green-main text-white";
+    default:
+      return "bg-green-main text-white";
+  }
+}
+export function getColorStatusText(status: StatusType): string {
+  switch (status) {
+    case "OPEN":
+      return "募集中";
+    case "ASSIGNED":
+      return "編集中";
+    case "REVIEW":
+      return "進行中";
+    case "COMPLETED":
+      return "完了";
+    default:
+      return "募集中";
   }
 }

@@ -152,7 +152,11 @@ const FormFieldCustom = <T extends FormType>({
                     value={field.value?.toString() || ""}
                   >
                     <FormControl>
-                      <SelectTrigger {...field} disabled={disabled} className="rounded-6 body-text w-full [&_svg:not([class*='text-'])]:text-text [&_svg:not([class*='text-'])]:opacity-100 data-[placeholder]:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100 disabled:[&_svg:not([class*='text-'])]:opacity-0">
+                      <SelectTrigger
+                        {...field}
+                        disabled={disabled}
+                        className="rounded-6 body-text w-full [&_svg:not([class*='text-'])]:text-text [&_svg:not([class*='text-'])]:opacity-100 data-[placeholder]:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100 disabled:[&_svg:not([class*='text-'])]:opacity-0"
+                      >
                         <SelectValue placeholder={placeholder} />
                       </SelectTrigger>
                     </FormControl>

@@ -13,7 +13,12 @@ import {
   updateProfileSchemaType
 } from "@/features/auth/sign-up/validate";
 import UpdateImage from "./UpdateImage";
-import { INDUSTRY_OPTIONS, SKILLS_OPTIONS, SOFTWARE_OPTIONS, SPECIALIZATION_OPTIONS } from "@/constants/selectOptions";
+import {
+  INDUSTRY_OPTIONS,
+  SKILLS_OPTIONS,
+  SOFTWARE_OPTIONS,
+  SPECIALIZATION_OPTIONS
+} from "@/constants/selectOptions";
 import { Button } from "@/components/ui/button";
 import UpdateProfileSkeleton from "@/components/common/UpdateProfileSkeleton";
 import PortfolioLinksField from "@/features/auth/sign-up/PortfolioLinksField";
@@ -30,7 +35,7 @@ const UpdateProfileForm = () => {
 
   const setAvatarUrlHandler = (url: string) => {
     setAvatarUrl(url);
-  }
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -56,19 +61,19 @@ const UpdateProfileForm = () => {
         editingSoftware: user?.tools || [],
         portfolioLinks: Array.isArray(user?.portfolioUrl)
           ? user.portfolioUrl.map((url: string | { url: string }) =>
-            typeof url === "string" ? { url } : url
-          )
+              typeof url === "string" ? { url } : url
+            )
           : [{ url: "" }],
         skills: user?.skills || [],
         companyOverview: user?.bio || "",
         industry: user?.industry || "",
         plan: userKind === "client" ? user?.plan || "" : undefined,
-        invoice: user?.invoice as string || "",
+        invoice: (user?.invoice as string) || "",
         bankName: user?.bankName || "",
         accountNumber: user?.accountNumber || "",
         accountName: user?.accountName || "",
         branchCode: user?.branchCode || "",
-        accountType: user?.accountType as "普通預金" | "定期預金" || undefined
+        accountType: (user?.accountType as "普通預金" | "定期預金") || undefined
       });
     };
     fetchProfile();
@@ -83,15 +88,10 @@ const UpdateProfileForm = () => {
     const updatedData = {
       ...data,
       avatarUrl: avatarUrl,
-      name: kind === "freelancer"
-        ? data.name || ""
-        : data.contactPerson || "",
+      name: kind === "freelancer" ? data.name || "" : data.contactPerson || "",
       companyName: kind === "client" ? data.name || "" : undefined,
       phoneNumber: data.phone || "",
-      bio:
-        kind === "freelancer"
-          ? data.selfIntroduction
-          : data.companyOverview,
+      bio: kind === "freelancer" ? data.selfIntroduction : data.companyOverview,
       industry: kind === "client" ? data.industry : undefined,
       specializations:
         kind === "freelancer" && data.specialization
@@ -101,12 +101,12 @@ const UpdateProfileForm = () => {
       portfolioUrl:
         kind === "freelancer" && data.portfolioLinks
           ? (data.portfolioLinks
-            .map(link => link.url)
-            .filter(url => url && url.trim() !== "") as string[])
+              .map(link => link.url)
+              .filter(url => url && url.trim() !== "") as string[])
           : undefined,
       skills: kind === "freelancer" ? data.skills : undefined,
       plan: kind === "client" ? data.plan : undefined
-    }
+    };
     try {
       const updatedProfile = await getProfiles().updateMyProfile(updatedData);
       await update({
@@ -119,7 +119,10 @@ const UpdateProfileForm = () => {
       setAvatarUrl(updatedProfile.user.avatarUrl || "");
       toast.success("プロフィールが更新されました");
     } catch (error) {
-      const errorMessage = getErrorMessage(error as ApiError, "プロフィールの更新中にエラーが発生しました");
+      const errorMessage = getErrorMessage(
+        error as ApiError,
+        "プロフィールの更新中にエラーが発生しました"
+      );
       toast.error(errorMessage);
     }
   };
@@ -138,7 +141,9 @@ const UpdateProfileForm = () => {
           setAvatarUrlHandler={setAvatarUrlHandler}
         />
         <div className="space-y-1 flex-col-center">
-          <h3 className="medium-title">{kind === "client" ? profile?.companyName : profile?.user.name}</h3>
+          <h3 className="medium-title">
+            {kind === "client" ? profile?.companyName : profile?.user.name}
+          </h3>
           <p className="body-text text-gray">{profile?.user.email}</p>
         </div>
       </div>
@@ -209,173 +214,169 @@ const UpdateProfileForm = () => {
               />
             </div>
 
-            {
-              kind === "client" && (
-                <>
-                  {/* Plan */}
-                  <FormFieldCustom
-                    control={profileForm.control}
-                    name="plan"
-                    label="プラン"
-                    placeholder="プランを選択"
-                    type="radio"
-                    requiredBadge={true}
-                    selectOptions={[
-                      { value: "定額プラン", label: "定額プラン" },
-                      { value: "使い切りプラン", label: "使い切りプラン" }
-                    ]}
-                    badgeText="必須"
-                  />
+            {kind === "client" && (
+              <>
+                {/* Plan */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="plan"
+                  label="プラン"
+                  placeholder="プランを選択"
+                  type="radio"
+                  requiredBadge={true}
+                  selectOptions={[
+                    { value: "定額プラン", label: "定額プラン" },
+                    { value: "使い切りプラン", label: "使い切りプラン" }
+                  ]}
+                  badgeText="必須"
+                />
 
-                  {/* bank name */}
+                {/* bank name */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="bankName"
+                  label="金融機関名"
+                  placeholder="金融機関名"
+                  type="text"
+                  requiredBadge={true}
+                  disabled={true}
+                />
+
+                {/* bank info */}
+                <div className="grid grid-cols-2 gap-5">
                   <FormFieldCustom
                     control={profileForm.control}
-                    name="bankName"
-                    label="金融機関名"
-                    placeholder="金融機関名"
+                    name="accountNumber"
+                    label="口座番号"
+                    placeholder="xxx"
                     type="text"
                     requiredBadge={true}
                     disabled={true}
                   />
-
-                  {/* bank info */}
-                  <div className="grid grid-cols-2 gap-5">
-                    <FormFieldCustom
-                      control={profileForm.control}
-                      name="accountNumber"
-                      label="口座番号"
-                      placeholder="xxx"
-                      type="text"
-                      requiredBadge={true}
-                      disabled={true}
-                    />
-                    <FormFieldCustom
-                      control={profileForm.control}
-                      name="accountName"
-                      label="口座名義"
-                      placeholder="xxx"
-                      type="text"
-                      requiredBadge={true}
-                      disabled={true}
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-5">
-                    <FormFieldCustom
-                      control={profileForm.control}
-                      name="branchCode"
-                      label="支店コード"
-                      placeholder="xxx"
-                      type="text"
-                      requiredBadge={true}
-                      disabled={true}
-                    />
-                    <FormFieldCustom
-                      control={profileForm.control}
-                      name="accountType"
-                      label="口座種類"
-                      placeholder="xxx"
-                      type="select"
-                      requiredBadge={true}
-                      selectOptions={[
-                        { value: "普通預金", label: "普通預金" },
-                        { value: "定期預金", label: "定期預金" }
-                      ]}
-                      disabled={true}
-                    />
-                  </div>
-
-                  {/* Self Introduction */}
                   <FormFieldCustom
                     control={profileForm.control}
-                    name="companyOverview"
-                    label="会社概要"
-                    placeholder="会社概要"
-                    type="textarea"
-                    requiredBadge={false}
-                    badgeText="任意"
-                  />
-
-                  {/* Specialization */}
-                  <FormFieldCustom
-                    control={profileForm.control}
-                    name="industry"
-                    label="業種"
-                    placeholder="業種を選択"
-                    type="select"
-                    requiredBadge={false}
-                    selectOptions={INDUSTRY_OPTIONS}
-                    badgeText="任意"
-                  />
-                </>
-              )
-            }
-
-            {
-              kind === "freelancer" && (
-                <>
-                  {/* Skills */}
-                  <FormFieldCustom
-                    control={profileForm.control}
-                    name="skills"
-                    label="スキル"
-                    placeholder="スキルを選択"
-                    type="multi-select"
-                    requiredBadge={false}
-                    selectOptions={SKILLS_OPTIONS}
-                    badgeText="任意"
-                  />
-
-                  {/* Invoice */}
-                  <FormFieldCustom
-                    control={profileForm.control}
-                    name="invoice"
-                    label="インボイス"
-                    placeholder="インボイス"
+                    name="accountName"
+                    label="口座名義"
+                    placeholder="xxx"
                     type="text"
-                    requiredBadge={false}
-                    badgeText="任意"
+                    requiredBadge={true}
+                    disabled={true}
                   />
-
-                  {/* Self Introduction */}
+                </div>
+                <div className="grid grid-cols-2 gap-5">
                   <FormFieldCustom
                     control={profileForm.control}
-                    name="selfIntroduction"
-                    label="自己紹介"
-                    placeholder="新卒で映像制作会社に入社後..."
-                    type="textarea"
-                    requiredBadge={false}
-                    badgeText="任意"
+                    name="branchCode"
+                    label="支店コード"
+                    placeholder="xxx"
+                    type="text"
+                    requiredBadge={true}
+                    disabled={true}
                   />
-
-                  {/* Specialization */}
                   <FormFieldCustom
                     control={profileForm.control}
-                    name="specialization"
-                    label="専門分野"
-                    placeholder="業種を選択"
+                    name="accountType"
+                    label="口座種類"
+                    placeholder="xxx"
                     type="select"
-                    requiredBadge={false}
-                    selectOptions={SPECIALIZATION_OPTIONS}
-                    badgeText="任意"
+                    requiredBadge={true}
+                    selectOptions={[
+                      { value: "普通預金", label: "普通預金" },
+                      { value: "定期預金", label: "定期預金" }
+                    ]}
+                    disabled={true}
                   />
+                </div>
 
-                  {/* Editing Software */}
-                  <FormFieldCustom
-                    control={profileForm.control}
-                    name="editingSoftware"
-                    label="使用ソフトウェア"
-                    placeholder="使用ソフトウェアを選択"
-                    type="multi-select"
-                    requiredBadge={false}
-                    selectOptions={SOFTWARE_OPTIONS}
-                    badgeText="任意"
-                  />
+                {/* Self Introduction */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="companyOverview"
+                  label="会社概要"
+                  placeholder="会社概要"
+                  type="textarea"
+                  requiredBadge={false}
+                  badgeText="任意"
+                />
 
-                  {/* Portfolio link */}
-                  <PortfolioLinksField control={profileForm.control} />
-                </>
-              )
-            }
+                {/* Specialization */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="industry"
+                  label="業種"
+                  placeholder="業種を選択"
+                  type="select"
+                  requiredBadge={false}
+                  selectOptions={INDUSTRY_OPTIONS}
+                  badgeText="任意"
+                />
+              </>
+            )}
+
+            {kind === "freelancer" && (
+              <>
+                {/* Skills */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="skills"
+                  label="スキル"
+                  placeholder="スキルを選択"
+                  type="multi-select"
+                  requiredBadge={false}
+                  selectOptions={SKILLS_OPTIONS}
+                  badgeText="任意"
+                />
+
+                {/* Invoice */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="invoice"
+                  label="インボイス"
+                  placeholder="インボイス"
+                  type="text"
+                  requiredBadge={false}
+                  badgeText="任意"
+                />
+
+                {/* Self Introduction */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="selfIntroduction"
+                  label="自己紹介"
+                  placeholder="新卒で映像制作会社に入社後..."
+                  type="textarea"
+                  requiredBadge={false}
+                  badgeText="任意"
+                />
+
+                {/* Specialization */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="specialization"
+                  label="専門分野"
+                  placeholder="業種を選択"
+                  type="select"
+                  requiredBadge={false}
+                  selectOptions={SPECIALIZATION_OPTIONS}
+                  badgeText="任意"
+                />
+
+                {/* Editing Software */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="editingSoftware"
+                  label="使用ソフトウェア"
+                  placeholder="使用ソフトウェアを選択"
+                  type="multi-select"
+                  requiredBadge={false}
+                  selectOptions={SOFTWARE_OPTIONS}
+                  badgeText="任意"
+                />
+
+                {/* Portfolio link */}
+                <PortfolioLinksField control={profileForm.control} />
+              </>
+            )}
           </div>
           <div className="flex justify-end">
             <Button

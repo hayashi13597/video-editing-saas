@@ -32,7 +32,12 @@ interface UpdateImageProps {
   setAvatarUrlHandler?: (_url: string) => void;
 }
 
-const UpdateImage = ({ src, name, role, setAvatarUrlHandler }: UpdateImageProps) => {
+const UpdateImage = ({
+  src,
+  name,
+  role,
+  setAvatarUrlHandler
+}: UpdateImageProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -122,9 +127,12 @@ const UpdateImage = ({ src, name, role, setAvatarUrlHandler }: UpdateImageProps)
                 <DialogDescription></DialogDescription>
                 <div
                   {...getRootProps()}
-                  className={cn("border border-stroke border-dashed rounded-6 py-10 px-3 cursor-pointer flex-col-center focus-within:outline-none", {
-                    "cursor-not-allowed": uploading
-                  })}
+                  className={cn(
+                    "border border-stroke border-dashed rounded-6 py-10 px-3 cursor-pointer flex-col-center focus-within:outline-none",
+                    {
+                      "cursor-not-allowed": uploading
+                    }
+                  )}
                 >
                   <input {...getInputProps()} disabled={uploading} />
                   {filePreview && selectedFile ? (

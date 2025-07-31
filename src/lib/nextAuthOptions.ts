@@ -79,7 +79,7 @@ const nextAuthOptions: NextAuthOptions = {
         token.points = user.points;
       }
       if (trigger === "update" && session?.user?.image) {
-            token.image = session.user.image;
+        token.image = session.user.image;
       }
       return token;
     },
