@@ -23,9 +23,20 @@ export interface DefaultSelectionPrisma36ProfilePayload {
   position: string;
   skills: string[];
   tools: string[];
+  accountType: string;
+  branchCode: string;
+  accountName: string;
+  accountNumber: string;
+  bankName: string;
   plan: string;
   industry: string;
   companyName: string;
   bio: string;
   id: string;
+  user: {
+    avatarUrl: string;
+    email: string;
+    name: string;
+    phoneNumber: string;
+  }
 }

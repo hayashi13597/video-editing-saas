@@ -19,6 +19,11 @@ export interface UserUpdateDto {
   companyName?: string;
   industry?: string;
   plan?: string;
+  bankName?: string;
+  accountNumber?: string;
+  accountName?: string;
+  branchCode?: string;
+  accountType?: string;
   tools?: string[];
   skills?: string[];
   position?: string;

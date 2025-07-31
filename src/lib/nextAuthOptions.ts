@@ -67,7 +67,7 @@ const nextAuthOptions: NextAuthOptions = {
     signIn: "/sign-in"
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -78,10 +78,13 @@ const nextAuthOptions: NextAuthOptions = {
         token.cognitoId = user.cognitoId;
         token.points = user.points;
       }
+      if (trigger === "update" && session?.user?.image) {
+            token.image = session.user.image;
+      }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
+      if (session.user) {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
         session.user.name = token.name as string;

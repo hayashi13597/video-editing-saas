@@ -24,13 +24,12 @@ export interface ProfileDto {
   position: string;
   skills: string[];
   tools: string[];
-  plan: string;
-  invoice: string;
-  bankName: string;
-  accountNumber: string;
-  accountName: string;
+  accountType: string;
   branchCode: string;
-  accountType: "普通預金" | "定期預金";
+  accountName: string;
+  accountNumber: string;
+  bankName: string;
+  plan: string;
   industry: string;
   companyName: string;
   bio: string;

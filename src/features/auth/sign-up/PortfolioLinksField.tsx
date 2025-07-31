@@ -91,6 +91,7 @@ const PortfolioLinksField: React.FC<PortfolioLinksFieldProps> = ({
       </div>
 
       <button
+        type="button"
         onClick={handleAddLink}
         className={cn(
           "button-text cursor-pointer flex items-center gap-1 text-green-main",

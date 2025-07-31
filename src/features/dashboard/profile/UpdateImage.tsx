@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn, getErrorMessage } from "@/lib/utils";
 import { toast } from "sonner";
+import { uploadFileToS3 } from "@/lib/upload";
 
 interface UpdateImageProps {
   src: string;
@@ -58,18 +59,16 @@ const UpdateImage = ({ src, name, role, setAvatarUrlHandler }: UpdateImageProps)
         return;
       }
 
-      // const { fileUrl } = await uploadFileToS3({
-      //   file: selectedFile,
-      //   entityType: "user",
-      //   purpose: "avatar"
-      // });
-      const fileUrl = URL.createObjectURL(selectedFile);
+      const { fileUrl } = await uploadFileToS3({
+        file: selectedFile,
+        entityType: "user",
+        purpose: "avatar"
+      });
+
       if (setAvatarUrlHandler) {
         setAvatarUrlHandler(fileUrl);
       }
-      setUploadedImage("");
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      toast.success("画像がアップロードされました");
+      setUploadedImage(fileUrl);
     } catch (error) {
       const errorMessage = getErrorMessage(
         error as ApiError,

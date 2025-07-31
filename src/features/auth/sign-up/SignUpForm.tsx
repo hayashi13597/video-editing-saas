@@ -85,13 +85,39 @@ const SignUpForm = () => {
       const accountData = accountForm.getValues();
       const fullData = {
         ...accountData,
-        ...data,
-        classification: kind === "client" ? "client" : "freelance",
-        avatarUrl: avatarUrl || "",
-        phoneNumber: accountData.phone || ""
+        ...data
       };
-      // eslint-disable-next-line
-      await getAuthentication().signUp(fullData as any);
+      const signUpData = {
+        name:
+          kind === "freelancer"
+            ? accountData.name || ""
+            : accountData.contactPerson || "",
+        companyName: kind === "client" ? accountData.name || "" : undefined,
+        email: accountData.email,
+        phoneNumber: accountData.phone,
+        password: accountData.password,
+        bio:
+          kind === "freelancer"
+            ? fullData.selfIntroduction
+            : data.companyOverview,
+        industry: kind === "client" ? fullData.industry : undefined,
+        specializations:
+          kind === "freelancer" && fullData.specialization
+            ? [fullData.specialization]
+            : undefined,
+        tools: kind === "freelancer" ? fullData.editingSoftware : undefined,
+        portfolioUrl:
+          kind === "freelancer" && fullData.portfolioLinks
+            ? (fullData.portfolioLinks
+              .map(link => link.url)
+              .filter(url => url && url.trim() !== "") as string[])
+            : undefined,
+        skills: kind === "freelancer" ? fullData.skills : undefined,
+        classification: kind === "client" ? "client" as const : "freelance" as const,
+        plan: kind === "client" ? fullData.plan : undefined,
+        avatarUrl: avatarUrl || ""
+      }
+      await getAuthentication().signUp(signUpData);
       setIsModalOpen(true);
       toast.success("プロフィールが更新されました");
     } catch (error) {

@@ -17,12 +17,16 @@ import { INDUSTRY_OPTIONS, SKILLS_OPTIONS, SOFTWARE_OPTIONS, SPECIALIZATION_OPTI
 import { Button } from "@/components/ui/button";
 import UpdateProfileSkeleton from "@/components/common/UpdateProfileSkeleton";
 import PortfolioLinksField from "@/features/auth/sign-up/PortfolioLinksField";
+import { getErrorMessage } from "@/lib/utils";
+import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 const UpdateProfileForm = () => {
   const [kind, setKind] = useState<"client" | "freelancer">("client");
   const [profile, setProfile] = useState<ProfileDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const { data: session, update } = useSession();
 
   const setAvatarUrlHandler = (url: string) => {
     setAvatarUrl(url);
@@ -44,8 +48,8 @@ const UpdateProfileForm = () => {
             : user?.user.name || "",
         contactPerson: user?.user.name || "",
         phone: user?.user.phoneNumber || "",
-        password: "",
-        confirmPassword: "",
+        password: "Lm123123@",
+        confirmPassword: "Lm123123@",
         avatarUrl: user?.user.avatarUrl || "",
         selfIntroduction: user?.bio || "",
         specialization: user?.specializations?.[0] || "",
@@ -59,12 +63,12 @@ const UpdateProfileForm = () => {
         companyOverview: user?.bio || "",
         industry: user?.industry || "",
         plan: userKind === "client" ? user?.plan || "" : undefined,
-        invoice: user?.invoice || "",
+        invoice: user?.invoice as string || "",
         bankName: user?.bankName || "",
         accountNumber: user?.accountNumber || "",
         accountName: user?.accountName || "",
         branchCode: user?.branchCode || "",
-        accountType: user?.accountType || undefined
+        accountType: user?.accountType as "普通預金" | "定期預金" || undefined
       });
     };
     fetchProfile();
@@ -78,10 +82,46 @@ const UpdateProfileForm = () => {
   const onSubmit = async (data: updateProfileSchemaType) => {
     const updatedData = {
       ...data,
-      avatarUrl: avatarUrl
+      avatarUrl: avatarUrl,
+      name: kind === "freelancer"
+        ? data.name || ""
+        : data.contactPerson || "",
+      companyName: kind === "client" ? data.name || "" : undefined,
+      phoneNumber: data.phone || "",
+      bio:
+        kind === "freelancer"
+          ? data.selfIntroduction
+          : data.companyOverview,
+      industry: kind === "client" ? data.industry : undefined,
+      specializations:
+        kind === "freelancer" && data.specialization
+          ? [data.specialization]
+          : undefined,
+      tools: kind === "freelancer" ? data.editingSoftware : undefined,
+      portfolioUrl:
+        kind === "freelancer" && data.portfolioLinks
+          ? (data.portfolioLinks
+            .map(link => link.url)
+            .filter(url => url && url.trim() !== "") as string[])
+          : undefined,
+      skills: kind === "freelancer" ? data.skills : undefined,
+      plan: kind === "client" ? data.plan : undefined
     }
-    // eslint-disable-next-line
-    console.log("Submitted data:", updatedData);
+    try {
+      const updatedProfile = await getProfiles().updateMyProfile(updatedData);
+      await update({
+        ...session,
+        user: {
+          ...session?.user,
+          image: updatedProfile.user.avatarUrl || ""
+        }
+      });
+      setAvatarUrl(updatedProfile.user.avatarUrl || "");
+      toast.success("プロフィールが更新されました");
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError, "プロフィールの更新中にエラーが発生しました");
+      toast.error(errorMessage);
+    }
   };
 
   if (loading) {
