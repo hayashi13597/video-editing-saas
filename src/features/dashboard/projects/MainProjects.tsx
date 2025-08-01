@@ -6,7 +6,7 @@ import { routesApp } from "@/constants/routesApp";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Table from "../Table";
-import StatusFilter from "./StatusFilter";
+import StatusFilter from "../StatusFilter";
 import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
