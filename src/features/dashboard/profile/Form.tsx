@@ -8,10 +8,6 @@ import { useForm } from "react-hook-form";
 
 import React, { useEffect, useState } from "react";
 import { ProfileDto } from "@/orvalApi/model";
-import {
-  updateProfileSchema,
-  updateProfileSchemaType
-} from "@/features/auth/sign-up/validate";
 import UpdateImage from "./UpdateImage";
 import {
   INDUSTRY_OPTIONS,
@@ -25,6 +21,7 @@ import PortfolioLinksField from "@/features/auth/sign-up/PortfolioLinksField";
 import { getErrorMessage } from "@/lib/utils";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { updateProfileSchema, updateProfileSchemaType } from "./validate";
 
 const UpdateProfileForm = () => {
   const [kind, setKind] = useState<"client" | "freelancer">("client");
@@ -61,8 +58,8 @@ const UpdateProfileForm = () => {
         editingSoftware: user?.tools || [],
         portfolioLinks: Array.isArray(user?.portfolioUrl)
           ? user.portfolioUrl.map((url: string | { url: string }) =>
-              typeof url === "string" ? { url } : url
-            )
+            typeof url === "string" ? { url } : url
+          )
           : [{ url: "" }],
         skills: user?.skills || [],
         companyOverview: user?.bio || "",
@@ -101,8 +98,8 @@ const UpdateProfileForm = () => {
       portfolioUrl:
         kind === "freelancer" && data.portfolioLinks
           ? (data.portfolioLinks
-              .map(link => link.url)
-              .filter(url => url && url.trim() !== "") as string[])
+            .map(link => link.url)
+            .filter(url => url && url.trim() !== "") as string[])
           : undefined,
       skills: kind === "freelancer" ? data.skills : undefined,
       plan: kind === "client" ? data.plan : undefined
@@ -337,6 +334,63 @@ const UpdateProfileForm = () => {
                   requiredBadge={false}
                   badgeText="任意"
                 />
+
+                {/* bank name */}
+                <FormFieldCustom
+                  control={profileForm.control}
+                  name="bankName"
+                  label="金融機関名"
+                  placeholder="金融機関名"
+                  type="text"
+                  requiredBadge={true}
+                  disabled={true}
+                />
+
+                {/* bank info */}
+                <div className="grid grid-cols-2 gap-5">
+                  <FormFieldCustom
+                    control={profileForm.control}
+                    name="accountNumber"
+                    label="口座番号"
+                    placeholder="xxx"
+                    type="text"
+                    requiredBadge={true}
+                    disabled={true}
+                  />
+                  <FormFieldCustom
+                    control={profileForm.control}
+                    name="accountName"
+                    label="口座名義"
+                    placeholder="xxx"
+                    type="text"
+                    requiredBadge={true}
+                    disabled={true}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-5">
+                  <FormFieldCustom
+                    control={profileForm.control}
+                    name="branchCode"
+                    label="支店コード"
+                    placeholder="xxx"
+                    type="text"
+                    requiredBadge={true}
+                    disabled={true}
+                  />
+                  <FormFieldCustom
+                    control={profileForm.control}
+                    name="accountType"
+                    label="口座種類"
+                    placeholder="xxx"
+                    type="select"
+                    requiredBadge={true}
+                    selectOptions={[
+                      { value: "普通預金", label: "普通預金" },
+                      { value: "定期預金", label: "定期預金" }
+                    ]}
+                    disabled={true}
+                  />
+                </div>
 
                 {/* Self Introduction */}
                 <FormFieldCustom
