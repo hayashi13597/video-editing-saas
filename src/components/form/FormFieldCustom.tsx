@@ -125,10 +125,10 @@ const FormFieldCustom = <T extends FormType>({
                 </FormLabel>
                 <FormControl>
                   <Textarea
+                    {...field}
                     className="rounded-1.5 !text-size-primary h-[86px] placeholder:text-placeholder"
                     placeholder={placeholder}
                     autoComplete={autoComplete}
-                    {...field}
                     value={field.value?.toString() || ""}
                   />
                 </FormControl>

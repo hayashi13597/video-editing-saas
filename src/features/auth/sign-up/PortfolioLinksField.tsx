@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useFieldArray, Control } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,10 +26,13 @@ const PortfolioLinksField: React.FC<PortfolioLinksFieldProps> = ({
     control,
     name: "portfolioLinks"
   });
+  
+  const isInitializedRef = useRef(false);
 
   useEffect(() => {
-    if (fields.length === 0) {
+    if (fields.length === 0 && !isInitializedRef.current) {
       append({ url: "" });
+      isInitializedRef.current = true;
     }
   }, [fields, append]);
 
@@ -68,6 +71,7 @@ const PortfolioLinksField: React.FC<PortfolioLinksFieldProps> = ({
                       {...inputField}
                       placeholder="リンクを貼り付け"
                       className="w-full"
+                      autoFocus={false}
                     />
                   </FormControl>
                   <FormMessage />

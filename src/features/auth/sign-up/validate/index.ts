@@ -155,10 +155,10 @@ const profileSchema = z
     industry: z.string().optional(),
     // required only for clients
     plan: z.string().optional(),
-    bankName: z.string().optional(),
-    accountNumber: z.string().optional(),
-    accountName: z.string().optional(),
-    branchCode: z.string().optional(),
+    bankName: z.string().nonempty("金融機関名は必須です"),
+    accountNumber: z.string().nonempty("口座番号は必須です"),
+    accountName: z.string().nonempty("口座名義は必須です"),
+    branchCode: z.string().nonempty("支店コードは必須です"),
     accountType: z.enum(["普通預金", "定期預金"]).optional()
   })
   .refine(
@@ -173,66 +173,66 @@ const profileSchema = z
       path: ["plan"]
     }
   )
-  .refine(
-    data => {
-      if (data.role === "client") {
-        return data.bankName && data.bankName.trim() !== "";
-      }
-      return true;
-    },
-    {
-      message: "金融機関名は必須です",
-      path: ["bankName"]
-    }
-  )
-  .refine(
-    data => {
-      if (data.role === "client") {
-        return data.accountNumber && data.accountNumber.trim() !== "";
-      }
-      return true;
-    },
-    {
-      message: "口座番号は必須です",
-      path: ["accountNumber"]
-    }
-  )
-  .refine(
-    data => {
-      if (data.role === "client") {
-        return data.accountName && data.accountName.trim() !== "";
-      }
-      return true;
-    },
-    {
-      message: "口座名義は必須です",
-      path: ["accountName"]
-    }
-  )
-  .refine(
-    data => {
-      if (data.role === "client") {
-        return data.branchCode && data.branchCode.trim() !== "";
-      }
-      return true;
-    },
-    {
-      message: "支店コードは必須です",
-      path: ["branchCode"]
-    }
-  )
-  .refine(
-    data => {
-      if (data.role === "client") {
-        return !!data.accountType;
-      }
-      return true;
-    },
-    {
-      message: "口座種別は必須です",
-      path: ["accountType"]
-    }
-  );
+  // .refine(
+  //   data => {
+  //     if (data.role === "client") {
+  //       return data.bankName && data.bankName.trim() !== "";
+  //     }
+  //     return true;
+  //   },
+  //   {
+  //     message: "金融機関名は必須です",
+  //     path: ["bankName"]
+  //   }
+  // )
+  // .refine(
+  //   data => {
+  //     if (data.role === "client") {
+  //       return data.accountNumber && data.accountNumber.trim() !== "";
+  //     }
+  //     return true;
+  //   },
+  //   {
+  //     message: "口座番号は必須です",
+  //     path: ["accountNumber"]
+  //   }
+  // )
+  // .refine(
+  //   data => {
+  //     if (data.role === "client") {
+  //       return data.accountName && data.accountName.trim() !== "";
+  //     }
+  //     return true;
+  //   },
+  //   {
+  //     message: "口座名義は必須です",
+  //     path: ["accountName"]
+  //   }
+  // )
+  // .refine(
+  //   data => {
+  //     if (data.role === "client") {
+  //       return data.branchCode && data.branchCode.trim() !== "";
+  //     }
+  //     return true;
+  //   },
+  //   {
+  //     message: "支店コードは必須です",
+  //     path: ["branchCode"]
+  //   }
+  // )
+  // .refine(
+  //   data => {
+  //     if (data.role === "client") {
+  //       return !!data.accountType;
+  //     }
+  //     return true;
+  //   },
+  //   {
+  //     message: "口座種別は必須です",
+  //     path: ["accountType"]
+  //   }
+  // );
 
 // TypeScript type for the profile schema
 type profileSchemaType = z.infer<typeof profileSchema>;

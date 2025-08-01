@@ -54,6 +54,58 @@ const ProfileForm = ({
                 badgeText="任意"
               />
 
+              {/* bank name */}
+              <FormFieldCustom
+                control={form.control}
+                name="bankName"
+                label="金融機関名"
+                placeholder="金融機関名"
+                type="text"
+                requiredBadge={true}
+              />
+
+              {/* bank info */}
+              <div className="grid grid-cols-2 gap-5">
+                <FormFieldCustom
+                  control={form.control}
+                  name="accountNumber"
+                  label="口座番号"
+                  placeholder="xxx"
+                  type="text"
+                  requiredBadge={true}
+                />
+                <FormFieldCustom
+                  control={form.control}
+                  name="accountName"
+                  label="口座名義"
+                  placeholder="xxx"
+                  type="text"
+                  requiredBadge={true}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-5">
+                <FormFieldCustom
+                  control={form.control}
+                  name="branchCode"
+                  label="支店コード"
+                  placeholder="xxx"
+                  type="text"
+                  requiredBadge={true}
+                />
+                <FormFieldCustom
+                  control={form.control}
+                  name="accountType"
+                  label="口座種類"
+                  placeholder="xxx"
+                  type="select"
+                  requiredBadge={true}
+                  selectOptions={[
+                    { value: "普通預金", label: "普通預金" },
+                    { value: "定期預金", label: "定期預金" }
+                  ]}
+                />
+              </div>
+
               {/* Self Introduction */}
               <FormFieldCustom
                 control={form.control}
