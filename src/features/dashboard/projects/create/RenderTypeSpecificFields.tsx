@@ -2,6 +2,7 @@ import { DefaultValuesMapKeys } from "@/lib/defaultValuesMap";
 import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "./validate";
 import LPComponent from "./components/LPComponent";
+import FlyerComponent from "./components/FlyerComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -19,7 +20,7 @@ const RenderTypeSpecificFields = ({ selectedType, form }: RenderTypeSpecificFiel
     case "LINE構築":
       return <div>LINE構築特有のフィールド</div>;
     case "チラシ作成":
-      return <div>チラシ作成特有のフィールド</div>;
+      return <FlyerComponent form={form} />;
     case "LP修正依頼":
       return <LPComponent form={form} />;
     case "SEO記事作成":

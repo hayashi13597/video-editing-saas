@@ -10,7 +10,7 @@ import { ONE_MONTH_OPTIONS } from "@/constants/selectOptions";
 import RenderTypeSpecificFields from "./RenderTypeSpecificFields";
 import { Button } from "@/components/ui/button";
 
-const formType = "LP修正依頼" as DefaultValuesMapKeys;
+const formType = "チラシ作成" as DefaultValuesMapKeys;
 
 const CreateProjectForm = () => {
   const form = useForm<DynamicFormData>({
@@ -100,7 +100,9 @@ const CreateProjectForm = () => {
         <div className="space-y-5">
           <h2 className="medium-title text-green-main">{selectedType}フォーム（クラウド発注用）</h2>
 
-          <RenderTypeSpecificFields selectedType={selectedType} form={form} />
+          <div className="space-y-3">
+            <RenderTypeSpecificFields selectedType={selectedType} form={form} />
+          </div>
 
           <div className="flex justify-end mt-10">
             <Button type="submit" className="button-submit w-fit">

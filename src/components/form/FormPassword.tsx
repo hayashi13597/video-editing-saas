@@ -51,7 +51,7 @@ const FormPassword = <T extends FormType>({
             {requiredBadge ? (
               <RequiredBadge required={true} text={badgeText} />
             ) : requiredBadge === false ? (
-              <RequiredBadge text={badgeText} />
+              <RequiredBadge required={false} text={badgeText} />
             ) : null}
           </FormLabel>
           <div className="relative">

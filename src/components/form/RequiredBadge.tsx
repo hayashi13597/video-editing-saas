@@ -16,7 +16,7 @@ const RequiredBadge = ({ required = false, text = "必須" }) => (
         "text-gray": !required
       })}
     >
-      {text}
+      {required ? text : "任意"}
     </span>
   </Badge>
 );

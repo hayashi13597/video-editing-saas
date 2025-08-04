@@ -132,6 +132,33 @@ const MODIFICATION_PURPOSE_OPTIONS = [
   { label: "その他（記入欄）", value: "その他（記入欄）" },
 ];
 
+const SIZE_OPTIONS = [
+  { label: "A4（一般的）", value: "A4" },
+  { label: "A5", value: "A3" },
+  { label: "B5", value: "B4" },
+  { label: "その他（記入欄あり）", value: "その他" }
+]
+
+const ATMOSPHERE_OPTIONS = [
+  { label: "高級感", value: "高級感" },
+  { label: "ナチュラル", value: "ナチュラル" },
+  { label: "ポップ", value: "ポップ" },
+  { label: "シンプル", value: "シンプル" },
+  { label: "女性向け", value: "女性向け" },
+  { label: "子ども向け", value: "子ども向け" },
+  { label: "信頼感", value: "信頼感" },
+  { label: "その他（記入欄あり）", value: "その他" }
+]
+
+const PURPOSE_OPTIONS = [
+  { label: "集客（新規）", value: "集客（新規）" },
+  { label: "来店促進", value: "来店促進" },
+  { label: "認知拡大", value: "認知拡大" },
+  { label: "採用", value: "採用" },
+  { label: "イベント告知", value: "イベント告知" },
+  { label: "その他", value: "その他" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -145,5 +172,8 @@ export {
   TONES,
   ELEMENTS,
   ONE_MONTH_OPTIONS,
-  MODIFICATION_PURPOSE_OPTIONS
+  MODIFICATION_PURPOSE_OPTIONS,
+  SIZE_OPTIONS,
+  ATMOSPHERE_OPTIONS,
+  PURPOSE_OPTIONS
 };

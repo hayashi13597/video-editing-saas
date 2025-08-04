@@ -13,33 +13,28 @@ const flyerSchema = baseSchema.extend({
   type: z.literal("チラシ作成"),
 
   // 1. 基本情報
-  size: z.enum(["A4", "A5", "B5", "その他"]),
+  size: z.array(z.string()).min(1, "ご希望のチラシサイズは必須です"),
   customSize: z.string().optional(),
-  sides: z.enum(["片面", "両面"]),
-  printOption: z.enum(["デザインのみ", "印刷まで希望"]),
+  sides: z.string().min(1, "片面 or 両面デザインは必須です"),
+  printOption: z.string().min(1, "印刷の有無は必須です"),
 
   // 2. 掲載したい情報
   catchCopy: z.string().optional(),
-  serviceDescription: z.string().min(1, "サービス・商品説明は必須です"),
-  contactInfo: z.string().min(1, "店舗情報・連絡先は必須です"),
+  serviceDescription: z.string().optional(),
+  contactInfo: z.string().optional(),
   photoLogos: z.array(z.string()).optional(),
   qrCodes: z.array(z.string()).optional(),
 
   // 3. デザインイメージ
-  atmosphere: z.array(z.enum([
-    "高級感", "ナチュラル", "ポップ", "シンプル",
-    "女性向け", "子ども向け", "信頼感", "その他"
-  ])).min(1, "雰囲気を1つ以上選択してください"),
+  atmosphere: z.array(z.string()).min(1, "ご希望の雰囲気は必須です"),
   customAtmosphere: z.string().optional(),
   colorPreferences: z.string().optional(),
   referenceDesigns: z.array(z.string()).optional(),
 
   // 4. 目的とターゲット
-  purpose: z.array(z.enum([
-    "集客（新規）", "来店促進", "認知拡大", "採用", "イベント告知", "その他"
-  ])).min(1, "目的を1つ以上選択してください"),
+  purpose: z.string().min(1, "チラシの目的は必須です"),
   customPurpose: z.string().optional(),
-  targetAudience: z.string().min(1, "想定ターゲットは必須です"),
+  targetAudience: z.string().optional(),
 
   // 5. 納期とスケジュール
   deliverySchedule: z.string().optional(),
@@ -47,20 +42,31 @@ const flyerSchema = baseSchema.extend({
   // 同意項目（すべて必須）
   agreements: z.array(z.string()).superRefine((val, ctx) => {
     const required = [
-      "修正回数制限",
-      "確認後の修正・返金不可",
-      "素材品質に関する注意事項",
-      "印刷費・送料別途",
-      "特急料金に関する注意事項",
+      "修正は2回まで無料（3回目以降は有料）",
+      "内容に関する確認後の「OK」以降の修正・返金はできかねます",
+      "ご提供素材（写真・ロゴ等）は解像度や構成によりデザインに影響します",
+      "印刷希望の場合、印刷費と送料は別途発生いたします",
+      "納期短縮・特急仕上げには追加料金が発生する場合があります",
     ];
     const missing = required.filter((item) => !val.includes(item));
     if (missing.length > 0) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `以下の同意事項に同意してください: ${missing.join("、")}`,
+        code: "custom",
+        message: `すべて同意事項に同意してください`,
       });
     }
   }),
+}).refine((data) => data.size.includes("その他") && data.customSize?.trim() !== "", {
+  message: "「その他」を選択した場合はカスタムサイズを入力してください",
+  path: ["customSize"],
+})
+.refine((data) => data.atmosphere?.includes("その他") && data.customAtmosphere?.trim() !== "", {
+  message: "「その他」を選択した場合はカスタム雰囲気を入力してください",
+  path: ["customAtmosphere"],
+})
+.refine((data) => data.purpose === "その他" && data.customPurpose?.trim() !== "", {
+  message: "「その他」を選択した場合はカスタム目的を入力してください",
+  path: ["customPurpose"],
 });
 
 const lpModificationSchema = baseSchema.extend({
@@ -105,7 +111,7 @@ const lpModificationSchema = baseSchema.extend({
     const missing = required.filter((item) => !val.includes(item));
     if (missing.length > 0) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: `以下の同意事項に同意してください: ${missing.join("、")}`,
       });
     }

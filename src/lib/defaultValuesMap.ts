@@ -9,10 +9,10 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     deadline: "",
     visibility: "public",
 
-    size: "A4",
+    size: [],
     customSize: "",
-    sides: "片面",
-    printOption: "デザインのみ",
+    sides: "",
+    printOption: "",
 
     catchCopy: "",
     serviceDescription: "",
@@ -25,7 +25,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     colorPreferences: "",
     referenceDesigns: [],
 
-    purpose: [],
+    purpose: "",
     customPurpose: "",
     targetAudience: "",
     deliverySchedule: "",

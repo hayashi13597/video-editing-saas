@@ -32,7 +32,7 @@ interface FormFieldCustomProps<T extends FormType> {
   control: ReturnType<typeof useForm<T>>["control"];
   name: Path<T>;
   placeholder?: string;
-  type?: "text" | "email" | "password" | "checkbox" | "textarea" | "select" | "multi-select" | "radio" | "date" | "upload-text" | "checkbox-group";
+  type?: "text" | "email" | "password" | "checkbox" | "textarea" | "select" | "multi-select" | "radio" | "date" | "upload-text" | "checkbox-group" | "single-checkbox-group";
   label?: string;
   autoComplete?: string;
   requiredBadge?: boolean;
@@ -45,6 +45,7 @@ interface FormFieldCustomProps<T extends FormType> {
   note?: string;
   radioPlan?: boolean;
   checkboxGroupOptions?: SelectOption[];
+  checkboxGroupClassName?: string;
 }
 
 const FormFieldCustom = <T extends FormType>({
@@ -63,7 +64,8 @@ const FormFieldCustom = <T extends FormType>({
   multiSelectClassName,
   note,
   radioPlan = true,
-  checkboxGroupOptions
+  checkboxGroupOptions,
+  checkboxGroupClassName
 }: FormFieldCustomProps<T>) => {
   const normalizedOptions: SelectOption[] = Array.isArray(selectOptions)
     ? selectOptions.map(option =>
@@ -94,7 +96,7 @@ const FormFieldCustom = <T extends FormType>({
                   {requiredBadge ? (
                     <RequiredBadge required={true} text={badgeText} />
                   ) : requiredBadge === false ? (
-                    <RequiredBadge text={badgeText} />
+                    <RequiredBadge required={false} text={badgeText} />
                   ) : null}
                 </FormLabel>
                 <FormControl>
@@ -144,7 +146,7 @@ const FormFieldCustom = <T extends FormType>({
                     {requiredBadge ? (
                       <RequiredBadge required={true} text={badgeText} />
                     ) : requiredBadge === false ? (
-                      <RequiredBadge text={badgeText} />
+                      <RequiredBadge required={false} text={badgeText} />
                     ) : null}
                   </span>
                   {note && <span className="small-text">{note}</span>}
@@ -169,7 +171,7 @@ const FormFieldCustom = <T extends FormType>({
                   {requiredBadge ? (
                     <RequiredBadge required={true} text={badgeText} />
                   ) : requiredBadge === false ? (
-                    <RequiredBadge text={badgeText} />
+                    <RequiredBadge required={false} text={badgeText} />
                   ) : null}
                 </FormLabel>
                 <FormControl>
@@ -211,7 +213,7 @@ const FormFieldCustom = <T extends FormType>({
                   {requiredBadge ? (
                     <RequiredBadge required={true} text={badgeText} />
                   ) : requiredBadge === false ? (
-                    <RequiredBadge text={badgeText} />
+                    <RequiredBadge required={false} text={badgeText} />
                   ) : null}
                 </FormLabel>
                 <FormControl>
@@ -237,7 +239,7 @@ const FormFieldCustom = <T extends FormType>({
                   {requiredBadge ? (
                     <RequiredBadge required={true} text={badgeText} />
                   ) : requiredBadge === false ? (
-                    <RequiredBadge text={badgeText} />
+                    <RequiredBadge required={false} text={badgeText} />
                   ) : null}
                 </FormLabel>
                 <FormControl>
@@ -305,7 +307,7 @@ const FormFieldCustom = <T extends FormType>({
               <FormItem className="flex flex-col gap-1">
                 <FormLabel className="body-text">
                   差し替え画像／バナー／アイコンなど
-                  <RequiredBadge required={false} />
+                  <RequiredBadge required={requiredBadge} />
                 </FormLabel>
                 <FormControl>
                   <div className="flex items-center gap-2 relative">
@@ -352,10 +354,13 @@ const FormFieldCustom = <T extends FormType>({
           case "checkbox-group":
             if (!checkboxGroupOptions) return <></>;
             return (
-              <FormItem className="space-y-3">
-                <FormLabel className="body-text">{label}</FormLabel>
+              <FormItem className="flex flex-col gap-3">
+                <FormLabel className="body-text">
+                  {label}
+                  <RequiredBadge required={requiredBadge} text={badgeText} />
+                </FormLabel>
                 <FormControl>
-                  <div className="space-y-2">
+                  <div className={cn("space-y-2", checkboxGroupClassName)}>
                     {
                       checkboxGroupOptions?.map((option, index) => (
                         <div key={option.value + String(index)} className="flex items-center gap-2">
@@ -385,8 +390,48 @@ const FormFieldCustom = <T extends FormType>({
                     }
                   </div>
                 </FormControl>
+                <FormMessage />
               </FormItem>
-            )
+            );
+          case "single-checkbox-group":
+            if (!checkboxGroupOptions) return <></>;
+            return (
+              <FormItem className="flex flex-col gap-3">
+                <FormLabel className="body-text">
+                  {label}
+                  <RequiredBadge required={requiredBadge} text={badgeText} />
+                </FormLabel>
+                <FormControl>
+                  <div className={cn("flex items-center gap-3", checkboxGroupClassName)}>
+                    {checkboxGroupOptions.map((option, index) => (
+                      <div key={option.value + String(index)} className="flex items-center gap-2">
+                        <Checkbox
+                          id={option.value + "sc" + String(index)}
+                          value={option.value}
+                          checked={field.value === option.value}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              field.onChange(option.value);
+                            } else {
+                              field.onChange(undefined);
+                            }
+                          }}
+                          className="data-[state=checked]:bg-green-main data-[state=checked]:border-green-main"
+                        />
+                        <Label
+                          htmlFor={option.value + "sc" + String(index)}
+                          className="body-text font-normal"
+                        >
+                          {option.label}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          
           default:
             return <></>;
         }
