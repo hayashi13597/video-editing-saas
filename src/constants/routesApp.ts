@@ -10,19 +10,14 @@ const routesApp = {
   create: "/dashboard/projects/create",
   projects: "/dashboard/projects",
   list: "/dashboard/projects/list",
+  feedback: "/dashboard/projects/feedback",
   chat: "/dashboard/chat",
   profile: "/dashboard/profile",
   points: "/dashboard/points"
 };
 
 const accessPathsWithRoles = {
-  "/dashboard": ["ADMIN", "FREELANCER", "CLIENT"],
-  "/dashboard/videos": ["FREELANCER"],
-  "/dashboard/videos/:id": ["FREELANCER", "CLIENT"],
-  "/dashboard/videos/projects": ["CLIENT"],
-  "/dashboard/videos/projects/:id": ["CLIENT"],
-  "/dashboard/videos/uploads": ["CLIENT"],
-  "/dashboard/points": ["ADMIN"]
+  "/dashboard": ["ADMIN", "FREELANCER", "CLIENT"]
 };
 
 export { routesApp, accessPathsWithRoles };

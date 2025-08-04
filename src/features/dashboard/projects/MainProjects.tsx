@@ -7,13 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Table from "../Table";
 import StatusFilter from "../StatusFilter";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const MainProjects = () => {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const page = searchParams.get("page") || "1";
+  const pathname = usePathname();
+  const isDashboard = pathname === routesApp.dashboard;
 
   return (
     <main className="space-y-6">
@@ -42,6 +44,7 @@ const MainProjects = () => {
         pagination={true}
         totalPages={14}
         currentPage={Number(page)}
+        isIconVisible={isDashboard}
       />
     </main>
   );
