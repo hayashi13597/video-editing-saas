@@ -89,7 +89,7 @@ const SidebarComponent = () => {
               <div
                 className={`flex items-center ${isCollapsed ? "" : "gap-2"}`}
               >
-                <SmartHomeIcon />
+                <SmartHomeIcon width={20} height={20} />
                 {!isCollapsed && (
                   <span className="line-clamp-1">ダッシュボード</span>
                 )}
@@ -128,7 +128,7 @@ const SidebarComponent = () => {
                         "bg-green-main text-white"
                     )}
                   >
-                    <PaperIcon />
+                    <PaperIcon width={20} height={20} />
                     {!isCollapsed && (
                       <span className="line-clamp-1">案件官理</span>
                     )}
@@ -177,7 +177,7 @@ const SidebarComponent = () => {
                 pathname === routesApp.chat && "bg-green-main text-white"
               )}
             >
-              <ChatIcon />
+              <ChatIcon width={20} height={20} />
               {!isCollapsed && "チャット"}
             </Link>
           </TooltipCustom>

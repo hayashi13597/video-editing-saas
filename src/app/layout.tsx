@@ -49,7 +49,7 @@ export default function RootLayout({
         <ProgressProvider>
           <CustomSessionProvider>{children}</CustomSessionProvider>
         </ProgressProvider>
-        <Toaster position="top-center" richColors expand={false} />
+        <Toaster position="top-center" richColors expand={true} />
       </body>
     </html>
   );
