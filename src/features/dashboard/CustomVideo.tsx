@@ -21,6 +21,7 @@ import {
   PopoverTrigger
 } from "@/components/ui/popover";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 // Dynamically import ReactPlayer to avoid SSR issues
 const ReactPlayer = dynamic(() => import("react-player"), {
   ssr: false,
@@ -54,6 +55,14 @@ export default function CustomVideo({
   const [speed, setSpeed] = useState(1);
   const [qualityOpen, setQualityOpen] = useState(false);
   const [quality, setQuality] = useState(720);
+
+  // hover preview
+  const previewVideoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [hoverTime, setHoverTime] = useState<number | null>(null);
+  const [hoverX, setHoverX] = useState<number>(0);
+  const [thumbnail, setThumbnail] = useState<string | null>(null);
+  const [lastCapturedTime, setLastCapturedTime] = useState<number>(-1);
 
   // Local state for component-specific functionality
   const [mounted, setMounted] = useState(false);
@@ -147,9 +156,53 @@ export default function CustomVideo({
   };
 
   const handleSeekerMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    handleSeekerClick(e);
+    if (!seekerRef.current || !playerRef.current) return;
+
+    const rect = seekerRef.current.getBoundingClientRect();
+    const posX = e.clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, posX / rect.width));
+    const time = percentage * (playerRef.current.duration || 0);
+
+    setHoverTime(time);
+    setHoverX(posX);
+
+    // Only capture thumbnail when moving into a new 2-second interval
+    const roundedTime = Math.floor(time / 2) * 2;
+    if (roundedTime !== lastCapturedTime) {
+      captureThumbnail(roundedTime);
+      setLastCapturedTime(roundedTime);
+    }
+
+    if (isDragging) handleSeekerClick(e);
   };
+
+  const handleSeekerMouseLeave = () => {
+    setHoverTime(null);
+    setThumbnail(null);
+  };
+
+  const captureThumbnail = useCallback((time: number) => {
+    if (!previewVideoRef.current || !canvasRef.current) return;
+
+    const video = previewVideoRef.current;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    video.currentTime = time;
+
+    // Wait for the frame to update
+    const onSeeked = () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
+      setThumbnail(canvas.toDataURL("image/jpeg"));
+      video.removeEventListener("seeked", onSeeked);
+    };
+
+    video.addEventListener("seeked", onSeeked);
+  }, []);
+
   const handleSeekerMouseUp = () => {
     setIsDragging(false);
   };
@@ -249,10 +302,10 @@ export default function CustomVideo({
   return (
     <>
       {/* video */}
-      <div className="relative w-full rounded-6 overflow-hidden">
+      <div className="relative w-full rounded-6">
         {mounted && (
           <>
-            <div className="relative w-full max-w-3xl mx-auto h-fit rounded-6 overflow-hidden group">
+            <div className="relative w-full max-w-3xl mx-auto h-fit rounded-6 group">
               <ReactPlayer
                 ref={playerRef}
                 src={src}
@@ -269,7 +322,18 @@ export default function CustomVideo({
                 onPlaying={() =>
                   handleEndBuffer({ playedSeconds: currentVideoTime })
                 }
+                className="rounded-6"
               />
+              {/* Hidden video & canvas for thumbnail generation */}
+              <video
+                ref={previewVideoRef}
+                src={src}
+                muted
+                preload="auto"
+                className="hidden"
+                crossOrigin="anonymous"
+              />
+              <canvas ref={canvasRef} className="hidden" />
               {/* Buffering indicator */}
               {buffered && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50 bg-opacity-50 z-50">
@@ -310,9 +374,9 @@ export default function CustomVideo({
                   {/* seeker */}
                   <div
                     ref={seekerRef}
-                    className="w-full h-1.5 bg-white/50 cursor-pointer"
+                    className="relative w-full h-1.5 bg-white/50 cursor-pointer"
                     onMouseEnter={() => setIsHovering(true)}
-                    onMouseLeave={() => setIsHovering(false)}
+                    onMouseLeave={handleSeekerMouseLeave}
                     onMouseDown={handleSeekerMouseDown}
                     onMouseMove={handleSeekerMouseMove}
                     onMouseUp={handleSeekerMouseUp}
@@ -321,6 +385,29 @@ export default function CustomVideo({
                     onTouchEnd={handleSeekerTouchEnd}
                     onClick={handleSeekerClick}
                   >
+                    {/* Hover Preview */}
+                    {hoverTime !== null && thumbnail && (
+                      <div
+                        className="absolute bottom-full mb-2 flex flex-col items-center z-50 w-full"
+                        style={{
+                          left: `${hoverX}px`,
+                          transform: "translateX(-50%)"
+                        }}
+                      >
+                        <Image
+                          src={thumbnail}
+                          alt="thumbnail preview"
+                          width={170}
+                          height={106}
+                          className="w-[170px] h-[106px] object-cover rounded-6"
+                        />
+                        <span className="text-xs text-white mt-1 bg-black/70 px-2 py-0.5 rounded-6">
+                          {formatTimeCode(hoverTime)}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Progress Bar */}
                     <div
                       className="h-full bg-red relative"
                       style={{
