@@ -1,7 +1,5 @@
 const ProjectDetails = () => {
-  return (
-    <div>ProjectDetails</div>
-  )
-}
+  return <div>ProjectDetails</div>;
+};
 
-export default ProjectDetails
+export default ProjectDetails;

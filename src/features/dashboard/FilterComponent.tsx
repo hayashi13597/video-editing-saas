@@ -12,14 +12,12 @@ const FilterComponent = () => {
     <div className="flex items-center gap-3">
       <SearchInput keySearch="keyword" currentPathname={routesApp.dashboard} />
 
-      {
-        session?.user.role === "CLIENT" && (
-          <Button className="button-text cursor-pointer">
-            <Plus className="text-white" size={20} />
-            新規案件追加
-          </Button>
-        )
-      }
+      {session?.user.role === "CLIENT" && (
+        <Button className="button-text cursor-pointer">
+          <Plus className="text-white" size={20} />
+          新規案件追加
+        </Button>
+      )}
     </div>
   );
 };

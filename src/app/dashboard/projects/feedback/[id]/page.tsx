@@ -1,11 +1,9 @@
-import Video from "@/features/dashboard/Video"
+import CustomVideo from "@/features/dashboard/CustomVideo";
 
 const FeedbackPage = () => {
   return (
-    <div>
-      <Video />
-    </div>
-  )
-}
+    <CustomVideo src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+  );
+};
 
-export default FeedbackPage
+export default FeedbackPage;

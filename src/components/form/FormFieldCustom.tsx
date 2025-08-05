@@ -32,7 +32,19 @@ interface FormFieldCustomProps<T extends FormType> {
   control: ReturnType<typeof useForm<T>>["control"];
   name: Path<T>;
   placeholder?: string;
-  type?: "text" | "email" | "password" | "checkbox" | "textarea" | "select" | "multi-select" | "radio" | "date" | "upload-text" | "checkbox-group" | "single-checkbox-group";
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "checkbox"
+    | "textarea"
+    | "select"
+    | "multi-select"
+    | "radio"
+    | "date"
+    | "upload-text"
+    | "checkbox-group"
+    | "single-checkbox-group";
   label?: string;
   autoComplete?: string;
   requiredBadge?: boolean;
@@ -69,10 +81,8 @@ const FormFieldCustom = <T extends FormType>({
 }: FormFieldCustomProps<T>) => {
   const normalizedOptions: SelectOption[] = Array.isArray(selectOptions)
     ? selectOptions.map(option =>
-      typeof option === "string"
-        ? { label: option, value: option }
-        : option
-    )
+        typeof option === "string" ? { label: option, value: option } : option
+      )
     : [];
 
   const [options, setOptions] = useState<SelectOption[]>(normalizedOptions);
@@ -106,7 +116,10 @@ const FormFieldCustom = <T extends FormType>({
                     placeholder={placeholder}
                     autoComplete={autoComplete}
                     value={field.value?.toString() || ""}
-                    className={cn("border-stroke placeholder:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100", inputClassName)}
+                    className={cn(
+                      "border-stroke placeholder:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100",
+                      inputClassName
+                    )}
                     disabled={disabled}
                   />
                 </FormControl>
@@ -140,7 +153,12 @@ const FormFieldCustom = <T extends FormType>({
           case "textarea":
             return (
               <FormItem className="flex flex-col gap-1">
-                <FormLabel className={cn("body-text", note ? "flex justify-between" : "")}>
+                <FormLabel
+                  className={cn(
+                    "body-text",
+                    note ? "flex justify-between" : ""
+                  )}
+                >
                   <span className="flex items-center gap-1">
                     {label}
                     {requiredBadge ? (
@@ -183,7 +201,10 @@ const FormFieldCustom = <T extends FormType>({
                       <SelectTrigger
                         {...field}
                         disabled={disabled}
-                        className={cn("rounded-6 body-text w-full [&_svg:not([class*='text-'])]:text-text [&_svg:not([class*='text-'])]:opacity-100 data-[placeholder]:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100 disabled:[&_svg:not([class*='text-'])]:opacity-0", selectClassName)}
+                        className={cn(
+                          "rounded-6 body-text w-full [&_svg:not([class*='text-'])]:text-text [&_svg:not([class*='text-'])]:opacity-100 data-[placeholder]:text-placeholder disabled:bg-light-gray disabled:text-placeholder disabled:opacity-100 disabled:[&_svg:not([class*='text-'])]:opacity-0",
+                          selectClassName
+                        )}
                       >
                         <SelectValue placeholder={placeholder} />
                       </SelectTrigger>
@@ -270,24 +291,31 @@ const FormFieldCustom = <T extends FormType>({
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />
-                {radioPlan && <div className="flex items-center gap-2 text-green-main small-text cursor-pointer">
-                  View plan detail <ChevronRight className="w-4 h-4" />
-                </div>}
+                {radioPlan && (
+                  <div className="flex items-center gap-2 text-green-main small-text cursor-pointer">
+                    View plan detail <ChevronRight className="w-4 h-4" />
+                  </div>
+                )}
               </FormItem>
             );
           case "upload-text":
             const handleFileSelect = () => {
-              const fileInput = document.createElement('input');
-              fileInput.type = 'file';
+              const fileInput = document.createElement("input");
+              fileInput.type = "file";
               fileInput.multiple = true;
-              fileInput.accept = 'image/*';
+              fileInput.accept = "image/*";
 
-              fileInput.onchange = (event) => {
+              fileInput.onchange = event => {
                 const target = event.target as HTMLInputElement;
                 if (target.files) {
                   const newFiles = Array.from(target.files);
-                  const currentFiles = Array.isArray(field.value) ? field.value : [];
-                  const updatedFiles = [...currentFiles, ...newFiles.map(file => file.name)];
+                  const currentFiles = Array.isArray(field.value)
+                    ? field.value
+                    : [];
+                  const updatedFiles = [
+                    ...currentFiles,
+                    ...newFiles.map(file => file.name)
+                  ];
                   field.onChange(updatedFiles);
                 }
               };
@@ -296,8 +324,12 @@ const FormFieldCustom = <T extends FormType>({
             };
 
             const handleRemoveFile = (indexToRemove: number) => {
-              const currentFiles = Array.isArray(field.value) ? field.value : [];
-              const updatedFiles = currentFiles.filter((_, index) => index !== indexToRemove);
+              const currentFiles = Array.isArray(field.value)
+                ? field.value
+                : [];
+              const updatedFiles = currentFiles.filter(
+                (_, index) => index !== indexToRemove
+              );
               field.onChange(updatedFiles);
             };
 
@@ -314,33 +346,35 @@ const FormFieldCustom = <T extends FormType>({
                     <Input
                       {...field}
                       type="text"
-                      value={Array.isArray(field.value) ? field.value.join(', ') : field.value?.toString() || ""}
+                      value={
+                        Array.isArray(field.value)
+                          ? field.value.join(", ")
+                          : field.value?.toString() || ""
+                      }
                       className="hidden"
                       disabled
                     />
                     <div className="w-full flex items-center flex-wrap gap-2 px-3 py-1.5 border border-stroke rounded-6 min-h-10">
-                      {fileNames.length > 0 ? (
-                        fileNames.map((fileName: string, index: number) => (
-                          <Badge
-                            key={index}
-                            className='rounded-full body-text text-text bg-light-gray flex items-center gap-2.5 px-3'
-                          >
-                            {fileName}
-                            <button type="button">
-                              <X
-                                className='w-3 h-3 cursor-pointer hover:text-red-500'
-                                onClick={() => handleRemoveFile(index)}
-                              />
-                            </button>
-                          </Badge>
-                        ))
-                      ) : (
-                        null
-                      )}
+                      {fileNames.length > 0
+                        ? fileNames.map((fileName: string, index: number) => (
+                            <Badge
+                              key={index}
+                              className="rounded-full body-text text-text bg-light-gray flex items-center gap-2.5 px-3"
+                            >
+                              {fileName}
+                              <button type="button">
+                                <X
+                                  className="w-3 h-3 cursor-pointer hover:text-red-500"
+                                  onClick={() => handleRemoveFile(index)}
+                                />
+                              </button>
+                            </Badge>
+                          ))
+                        : null}
                     </div>
                     <button
                       type="button"
-                      className='button-submit flex-center w-fit gap-2.5'
+                      className="button-submit flex-center w-fit gap-2.5"
                       onClick={handleFileSelect}
                     >
                       <Plus />
@@ -361,33 +395,37 @@ const FormFieldCustom = <T extends FormType>({
                 </FormLabel>
                 <FormControl>
                   <div className={cn("space-y-2", checkboxGroupClassName)}>
-                    {
-                      checkboxGroupOptions?.map((option, index) => (
-                        <div key={option.value + String(index)} className="flex items-center gap-2">
-                          <Checkbox
-                            id={option.value + "c" + String(index)}
-                            value={option.value}
-                            checked={field.value?.includes(option.value) || false}
-                            onCheckedChange={(checked) => {
-                              const currentValues = field.value || [];
-                              if (checked) {
-                                field.onChange([...currentValues, option.value]);
-                              }
-                              else {
-                                field.onChange(currentValues.filter(value => value !== option.value));
-                              }
-                            }}
-                            className="data-[state=checked]:bg-green-main data-[state=checked]:border-green-main"
-                          />
-                          <Label
-                            htmlFor={option.value + "c" + String(index)}
-                            className="body-text font-normal"
-                          >
-                            {option.label}
-                          </Label>
-                        </div>
-                      ))
-                    }
+                    {checkboxGroupOptions?.map((option, index) => (
+                      <div
+                        key={option.value + String(index)}
+                        className="flex items-center gap-2"
+                      >
+                        <Checkbox
+                          id={option.value + "c" + String(index)}
+                          value={option.value}
+                          checked={field.value?.includes(option.value) || false}
+                          onCheckedChange={checked => {
+                            const currentValues = field.value || [];
+                            if (checked) {
+                              field.onChange([...currentValues, option.value]);
+                            } else {
+                              field.onChange(
+                                currentValues.filter(
+                                  value => value !== option.value
+                                )
+                              );
+                            }
+                          }}
+                          className="data-[state=checked]:bg-green-main data-[state=checked]:border-green-main"
+                        />
+                        <Label
+                          htmlFor={option.value + "c" + String(index)}
+                          className="body-text font-normal"
+                        >
+                          {option.label}
+                        </Label>
+                      </div>
+                    ))}
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -402,14 +440,22 @@ const FormFieldCustom = <T extends FormType>({
                   <RequiredBadge required={requiredBadge} text={badgeText} />
                 </FormLabel>
                 <FormControl>
-                  <div className={cn("flex items-center gap-3", checkboxGroupClassName)}>
+                  <div
+                    className={cn(
+                      "flex items-center gap-3",
+                      checkboxGroupClassName
+                    )}
+                  >
                     {checkboxGroupOptions.map((option, index) => (
-                      <div key={option.value + String(index)} className="flex items-center gap-2">
+                      <div
+                        key={option.value + String(index)}
+                        className="flex items-center gap-2"
+                      >
                         <Checkbox
                           id={option.value + "sc" + String(index)}
                           value={option.value}
                           checked={field.value === option.value}
-                          onCheckedChange={(checked) => {
+                          onCheckedChange={checked => {
                             if (checked) {
                               field.onChange(option.value);
                             } else {
@@ -431,7 +477,7 @@ const FormFieldCustom = <T extends FormType>({
                 <FormMessage />
               </FormItem>
             );
-          
+
           default:
             return <></>;
         }

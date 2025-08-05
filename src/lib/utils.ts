@@ -92,6 +92,11 @@ export function getPageTile(pathname: string, role: UserRole): string {
   }
 }
 
+/**
+ * Returns the appropriate color class for a given project status
+ * @param status - The status of the project (e.g., OPEN, ASSIGNED, REVIEW, COMPLETED)
+ * @returns A string representing the color class for the status
+ */
 export function getColorStatus(status: StatusType): string {
   switch (status) {
     case "OPEN":
@@ -106,6 +111,12 @@ export function getColorStatus(status: StatusType): string {
       return "bg-green-main text-white";
   }
 }
+
+/**
+ * Returns the appropriate text for a given project status
+ * @param status - The status of the project (e.g., OPEN, ASSIGNED, REVIEW, COMPLETED)
+ * @returns A string representing the text for the status
+ */
 export function getColorStatusText(status: StatusType): string {
   switch (status) {
     case "OPEN":
@@ -120,3 +131,24 @@ export function getColorStatusText(status: StatusType): string {
       return "募集中";
   }
 }
+
+/**
+ * Formats a time in seconds into a timecode string (HH:MM:SS:FF)
+ * @param timeInSeconds
+ * @param frameRate
+ * @returns - A formatted timecode string in the format HH:MM:SS:FF
+ */
+export const formatTimeCode = (
+  timeInSeconds: number,
+  frameRate: number = 30
+) => {
+  const totalFrames = Math.floor(timeInSeconds * frameRate);
+  const frames = totalFrames % frameRate;
+  const totalSeconds = Math.floor(totalFrames / frameRate);
+  const seconds = totalSeconds % 60;
+  const totalMinutes = Math.floor(totalSeconds / 60);
+  const minutes = totalMinutes % 60;
+  const hours = Math.floor(totalMinutes / 60);
+
+  return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${frames.toString().padStart(2, "0")}`;
+};

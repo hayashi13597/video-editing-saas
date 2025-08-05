@@ -20,21 +20,26 @@ const MainProjects = () => {
   return (
     <main className="space-y-6">
       <div className="flex-between">
-        {session?.user.role === "CLIENT" ? <StatusFilter keySearch="status" currentPathname={routesApp.projects} /> : (<h3 className="h3-title">応募済みの案件</h3>)}
+        {session?.user.role === "CLIENT" ? (
+          <StatusFilter
+            keySearch="status"
+            currentPathname={routesApp.projects}
+          />
+        ) : (
+          <h3 className="h3-title">応募済みの案件</h3>
+        )}
 
         <div className="flex gap-2">
           <SearchInput
             keySearch="search"
             currentPathname={routesApp.projects}
           />
-          {
-            session?.user.role === "CLIENT" && (
-              <Button className="button-text cursor-pointer">
-                <Plus className="text-white" size={20} />
-                新規案件追加
-              </Button>
-            )
-          }
+          {session?.user.role === "CLIENT" && (
+            <Button className="button-text cursor-pointer">
+              <Plus className="text-white" size={20} />
+              新規案件追加
+            </Button>
+          )}
         </div>
       </div>
 

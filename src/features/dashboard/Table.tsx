@@ -10,7 +10,11 @@ import { StatusType } from "@/types/form";
 import { cn, getColorStatus, getColorStatusText } from "@/lib/utils";
 import PaginationCustom from "./PaginationCustom";
 import { routesApp } from "@/constants/routesApp";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "@/components/ui/popover";
 import ChatIcon from "../../../public/icons/chat.svg";
 
 // Define all possible field types
@@ -162,7 +166,9 @@ const renderCellContent = (
     case "applicant":
       return data.applicant ? (
         <p className="body-text line-clamp-1 wrap-anywhere">{data.applicant}</p>
-      ) : "-";
+      ) : (
+        "-"
+      );
 
     case "requestDate":
       return data.requestDate ? (
@@ -187,16 +193,31 @@ const renderCellContent = (
       return icon ? (
         <Popover>
           <PopoverTrigger asChild>
-            <div className={cn("flex-center justify-end cursor-pointer", isIconVisible ? "invisible" : "")}>
+            <div
+              className={cn(
+                "flex-center justify-end cursor-pointer",
+                isIconVisible ? "invisible" : ""
+              )}
+            >
               <EllipsisVertical size={16} />
             </div>
           </PopoverTrigger>
-          <PopoverContent align="end" sideOffset={7} className="border-none shadow-md space-y-1">
-            <Link href={`${routesApp.feedback}/${data.id}`} className="flex items-center gap-2 body-text p-1">
+          <PopoverContent
+            align="end"
+            sideOffset={7}
+            className="border-none shadow-md space-y-1"
+          >
+            <Link
+              href={`${routesApp.feedback}/${data.id}`}
+              className="flex items-center gap-2 body-text p-1"
+            >
               <SquarePen size={20} />
               案件フィードバック
             </Link>
-            <Link href={routesApp.chat} className="flex items-center gap-2 body-text p-1">
+            <Link
+              href={routesApp.chat}
+              className="flex items-center gap-2 body-text p-1"
+            >
               <ChatIcon width={20} height={20} />
               チャットに入る
             </Link>
@@ -220,7 +241,9 @@ const renderCellContent = (
         <p className="body-text line-clamp-1 wrap-anywhere">
           {data.freelancer}
         </p>
-      ) : "-";
+      ) : (
+        "-"
+      );
 
     case "startDate":
       return data.startDate ? (
@@ -303,12 +326,11 @@ const Table: React.FC<TableProps> = ({
         <PaginationCustom
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={onPageChange || (() => { })}
+          onPageChange={onPageChange || (() => {})}
         />
       ) : (
         <Link
-          href={routesApp.projects
-          }
+          href={routesApp.projects}
           className="body-text text-green-main flex-end gap-2"
         >
           <Grip4 /> もっと見る

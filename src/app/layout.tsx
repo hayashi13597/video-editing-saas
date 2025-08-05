@@ -4,33 +4,33 @@ import CustomSessionProvider from "@/contexts/CustomSessionProvider";
 import { Toaster } from "sonner";
 import { ProgressProvider } from "@/contexts/ProgressProvider";
 
-import localFont from 'next/font/local';
+import localFont from "next/font/local";
 
 const publicSans = localFont({
   src: [
     {
       path: "../../public/fonts/PublicSans-Regular.woff2",
-      weight: '400',
-      style: 'normal',
+      weight: "400",
+      style: "normal"
     },
     {
       path: "../../public/fonts/PublicSans-Medium.woff2",
-      weight: '500',
-      style: 'medium',
+      weight: "500",
+      style: "medium"
     },
     {
       path: "../../public/fonts/PublicSans-SemiBold.woff2",
-      weight: '600',
-      style: 'semibold',
+      weight: "600",
+      style: "semibold"
     },
     {
       path: "../../public/fonts/PublicSans-Bold.woff2",
-      weight: '700',
-      style: 'bold',
+      weight: "700",
+      style: "bold"
     }
   ],
-  variable: '--font-public-sans',
-  display: 'swap',
+  variable: "--font-public-sans",
+  display: "swap"
 });
 
 export const metadata: Metadata = {

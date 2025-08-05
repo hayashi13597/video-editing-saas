@@ -17,10 +17,7 @@ const ClientNotFound = () => {
         <ArrowLeft className="inline mr-2" />
         戻る
       </Button>
-      <Link
-        href={routesApp.dashboard}
-        className="button-submit w-fit"
-      >
+      <Link href={routesApp.dashboard} className="button-submit w-fit">
         ダッシュボードへ戻る
       </Link>
     </div>

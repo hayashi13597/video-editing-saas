@@ -1,7 +1,11 @@
-import { UseFormReturn } from "react-hook-form"
-import { DynamicFormData } from "../validate"
-import FormFieldCustom from "@/components/form/FormFieldCustom"
-import { ATMOSPHERE_OPTIONS, PURPOSE_OPTIONS, SIZE_OPTIONS } from "@/constants/selectOptions";
+import { UseFormReturn } from "react-hook-form";
+import { DynamicFormData } from "../validate";
+import FormFieldCustom from "@/components/form/FormFieldCustom";
+import {
+  ATMOSPHERE_OPTIONS,
+  PURPOSE_OPTIONS,
+  SIZE_OPTIONS
+} from "@/constants/selectOptions";
 
 const FlyerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
   const customSize = form.watch("size")?.includes("その他");
@@ -20,15 +24,13 @@ const FlyerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           checkboxGroupOptions={SIZE_OPTIONS}
           requiredBadge={true}
         />
-        {
-          customSize && (
-            <FormFieldCustom
-              control={form.control}
-              name="customSize"
-              type="text"
-            />
-          )
-        }
+        {customSize && (
+          <FormFieldCustom
+            control={form.control}
+            name="customSize"
+            type="text"
+          />
+        )}
 
         <FormFieldCustom
           control={form.control}
@@ -112,15 +114,13 @@ const FlyerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           checkboxGroupOptions={ATMOSPHERE_OPTIONS}
           requiredBadge={true}
         />
-        {
-          customAtmosphere && (
-            <FormFieldCustom
-              control={form.control}
-              name="customAtmosphere"
-              type="text"
-            />
-          )
-        }
+        {customAtmosphere && (
+          <FormFieldCustom
+            control={form.control}
+            name="customAtmosphere"
+            type="text"
+          />
+        )}
 
         <FormFieldCustom
           control={form.control}
@@ -152,15 +152,13 @@ const FlyerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           requiredBadge={true}
           checkboxGroupClassName="flex flex-col items-start"
         />
-        {
-          customPurpose && (
-            <FormFieldCustom
-              control={form.control}
-              name="customPurpose"
-              type="text"
-            />
-          )
-        }
+        {customPurpose && (
+          <FormFieldCustom
+            control={form.control}
+            name="customPurpose"
+            type="text"
+          />
+        )}
 
         <FormFieldCustom
           control={form.control}
@@ -186,24 +184,41 @@ const FlyerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
       </div>
 
       <div className="space-y-3">
-        <h3 className='small-title'>同意項目（チェック必須）</h3>
+        <h3 className="small-title">同意項目（チェック必須）</h3>
         <FormFieldCustom
           control={form.control}
           name="agreements"
           label="以下の事項に同意してください"
           type="checkbox-group"
           checkboxGroupOptions={[
-            { value: "修正は2回まで無料（3回目以降は有料）", label: "修正は2回まで無料（3回目以降は有料）" },
-            { value: "内容に関する確認後の「OK」以降の修正・返金はできかねます", label: "内容に関する確認後の「OK」以降の修正・返金はできかねます" },
-            { value: "ご提供素材（写真・ロゴ等）は解像度や構成によりデザインに影響します", label: "ご提供素材（写真・ロゴ等）は解像度や構成によりデザインに影響します" },
-            { value: "印刷希望の場合、印刷費と送料は別途発生いたします", label: "印刷希望の場合、印刷費と送料は別途発生いたします" },
-            { value: "納期短縮・特急仕上げには追加料金が発生する場合があります", label: "納期短縮・特急仕上げには追加料金が発生する場合があります" }
+            {
+              value: "修正は2回まで無料（3回目以降は有料）",
+              label: "修正は2回まで無料（3回目以降は有料）"
+            },
+            {
+              value: "内容に関する確認後の「OK」以降の修正・返金はできかねます",
+              label: "内容に関する確認後の「OK」以降の修正・返金はできかねます"
+            },
+            {
+              value:
+                "ご提供素材（写真・ロゴ等）は解像度や構成によりデザインに影響します",
+              label:
+                "ご提供素材（写真・ロゴ等）は解像度や構成によりデザインに影響します"
+            },
+            {
+              value: "印刷希望の場合、印刷費と送料は別途発生いたします",
+              label: "印刷希望の場合、印刷費と送料は別途発生いたします"
+            },
+            {
+              value: "納期短縮・特急仕上げには追加料金が発生する場合があります",
+              label: "納期短縮・特急仕上げには追加料金が発生する場合があります"
+            }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default FlyerComponent
+export default FlyerComponent;

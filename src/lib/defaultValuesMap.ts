@@ -1,6 +1,9 @@
 import { DynamicFormData } from "@/features/dashboard/projects/create/validate";
 
-export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> = {
+export const defaultValuesMap: Record<
+  DynamicFormData["type"],
+  DynamicFormData
+> = {
   チラシ作成: {
     type: "チラシ作成",
     title: "",
@@ -30,7 +33,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     targetAudience: "",
     deliverySchedule: "",
 
-    agreements: [],
+    agreements: []
   },
 
   LP修正依頼: {
@@ -42,19 +45,21 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     visibility: "public",
 
     targetUrl: "",
-    modificationDetails: [{
-      modificationLocation: "",
-      currentContent: "",
-      modifiedContent: "",
-      modificationNotes: "",
-    }],
+    modificationDetails: [
+      {
+        modificationLocation: "",
+        currentContent: "",
+        modifiedContent: "",
+        modificationNotes: ""
+      }
+    ],
     replacementImages: [],
     replacementText: [],
     modificationPurpose: [],
     customModificationPurpose: "",
     desiredDeadline: "",
 
-    agreements: [],
+    agreements: []
   },
 
   動画編集: {
@@ -86,7 +91,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeModificationLimit: true,
     agreeMaterialQuality: true,
     agreeCreativeControl: true,
-    agreeCopyright: true,
+    agreeCopyright: true
   },
 
   名刺作成: {
@@ -119,7 +124,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeModificationLimit: true,
     agreeProofreadingResponsibility: true,
     agreeMaterialQuality: true,
-    agreePrintingCost: true,
+    agreePrintingCost: true
   },
 
   バナー作成: {
@@ -152,7 +157,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeModificationLimit: true,
     agreeDesignChangePolicy: true,
     agreeMaterialQuality: true,
-    agreeNoEffectGuarantee: true,
+    agreeNoEffectGuarantee: true
   },
 
   Instagram投稿: {
@@ -185,7 +190,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeModificationLimit: true,
     agreeMaterialQuality: true,
     agreeApprovalPolicy: true,
-    agreeEffectDisclaimer: true,
+    agreeEffectDisclaimer: true
   },
 
   SEO記事作成: {
@@ -216,7 +221,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeModificationLimit: true,
     agreeSeoDisclaimer: true,
     agreeSearchIntentClarification: true,
-    agreeInitialProofResponsibility: true,
+    agreeInitialProofResponsibility: true
   },
 
   サムネイル作成: {
@@ -244,7 +249,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeModificationLimit: true,
     agreeCopyrightPolicy: true,
     agreeEffectDisclaimer: true,
-    agreeCreativeDirection: true,
+    agreeCreativeDirection: true
   },
 
   LINE構築: {
@@ -275,7 +280,7 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeModificationLimit: true,
     agreeMaterialDelay: true,
     agreeLineSpecChanges: true,
-    agreeEffectDisclaimer: true,
+    agreeEffectDisclaimer: true
   },
 
   台本作成: {
@@ -308,8 +313,8 @@ export const defaultValuesMap: Record<DynamicFormData["type"], DynamicFormData> 
     agreeDirectionChangePolicy: true,
     agreeModificationLimit: true,
     agreeEffectDisclaimer: true,
-    agreeMaterialDelay: true,
-  },
+    agreeMaterialDelay: true
+  }
 };
 
 export type DefaultValuesMapKeys = keyof typeof defaultValuesMap;

@@ -76,7 +76,7 @@ const PLATFORMS = [
   "Instagramリール",
   "YouTubeショート／本編",
   "LINE VOOM",
-  "その他",
+  "その他"
 ] as const;
 
 const VIDEO_DURATION = [
@@ -84,7 +84,7 @@ const VIDEO_DURATION = [
   "30秒前後",
   "60秒以内",
   "3分以内",
-  "指定なし",
+  "指定なし"
 ] as const;
 
 const OBJECTIVES = [
@@ -95,7 +95,7 @@ const OBJECTIVES = [
   "信頼獲得",
   "エンタメ・共感",
   "ノウハウ提供",
-  "その他",
+  "その他"
 ] as const;
 
 const SCRIPT_FORMATS = [
@@ -103,7 +103,7 @@ const SCRIPT_FORMATS = [
   "独白形式（ナレーション・解説）",
   "モノローグ＋字幕中心",
   "お客様の声（架空インタビュー）",
-  "その他",
+  "その他"
 ] as const;
 
 const TONES = [
@@ -112,7 +112,7 @@ const TONES = [
   "ストーリー仕立て（感動／ビフォーアフター）",
   "ウケ狙い・ユーモラス",
   "セールス・クロージング重視",
-  "その他",
+  "その他"
 ] as const;
 
 const ELEMENTS = [
@@ -121,15 +121,21 @@ const ELEMENTS = [
   "商品／サービスの特徴・強み",
   "比較／他社との違い",
   "専門性・実績の提示",
-  "CTA（LINE登録・資料請求・申し込みなど）",
+  "CTA（LINE登録・資料請求・申し込みなど）"
 ] as const;
 
 const MODIFICATION_PURPOSE_OPTIONS = [
-  { label: "コンバージョン率改善（CVR）", value: "コンバージョン率改善（CVR）" },
-  { label: "情報の最新化（価格・期間など）", value: "情報の最新化（価格・期間など）" },
+  {
+    label: "コンバージョン率改善（CVR）",
+    value: "コンバージョン率改善（CVR）"
+  },
+  {
+    label: "情報の最新化（価格・期間など）",
+    value: "情報の最新化（価格・期間など）"
+  },
   { label: "デザインの印象を変えたい", value: "デザインの印象を変えたい" },
   { label: "スマホ対応強化／UI改善", value: "スマホ対応強化／UI改善" },
-  { label: "その他（記入欄）", value: "その他（記入欄）" },
+  { label: "その他（記入欄）", value: "その他（記入欄）" }
 ];
 
 const SIZE_OPTIONS = [
@@ -137,7 +143,7 @@ const SIZE_OPTIONS = [
   { label: "A5", value: "A3" },
   { label: "B5", value: "B4" },
   { label: "その他（記入欄あり）", value: "その他" }
-]
+];
 
 const ATMOSPHERE_OPTIONS = [
   { label: "高級感", value: "高級感" },
@@ -148,7 +154,7 @@ const ATMOSPHERE_OPTIONS = [
   { label: "子ども向け", value: "子ども向け" },
   { label: "信頼感", value: "信頼感" },
   { label: "その他（記入欄あり）", value: "その他" }
-]
+];
 
 const PURPOSE_OPTIONS = [
   { label: "集客（新規）", value: "集客（新規）" },
@@ -157,7 +163,7 @@ const PURPOSE_OPTIONS = [
   { label: "採用", value: "採用" },
   { label: "イベント告知", value: "イベント告知" },
   { label: "その他", value: "その他" }
-]
+];
 
 export {
   SPECIALIZATION_OPTIONS,

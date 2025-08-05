@@ -3,8 +3,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "案件登録",
-  description: "新しい案件を登録するページです。",
-}
+  description: "新しい案件を登録するページです。"
+};
 
 const CreateProject = () => {
   return <CreateProjectForm />;

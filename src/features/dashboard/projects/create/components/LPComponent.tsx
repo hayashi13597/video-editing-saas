@@ -1,12 +1,14 @@
-import FormFieldCustom from '@/components/form/FormFieldCustom';
-import React from 'react'
-import { UseFormReturn } from 'react-hook-form';
-import { DynamicFormData } from '../validate';
-import ModificationDetails from '../ModificationDetails';
-import { MODIFICATION_PURPOSE_OPTIONS } from '@/constants/selectOptions';
+import FormFieldCustom from "@/components/form/FormFieldCustom";
+import React from "react";
+import { UseFormReturn } from "react-hook-form";
+import { DynamicFormData } from "../validate";
+import ModificationDetails from "../ModificationDetails";
+import { MODIFICATION_PURPOSE_OPTIONS } from "@/constants/selectOptions";
 
 const LPComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const customModificationPurpose = form.watch("modificationPurpose")?.includes("その他（記入欄）");
+  const customModificationPurpose = form
+    .watch("modificationPurpose")
+    ?.includes("その他（記入欄）");
   return (
     <>
       <div className="space-y-3">
@@ -56,15 +58,13 @@ const LPComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           checkboxGroupOptions={MODIFICATION_PURPOSE_OPTIONS}
           requiredBadge={false}
         />
-        {
-          customModificationPurpose && (
-            <FormFieldCustom
-              control={form.control}
-              name="customModificationPurpose"
-              type="text"
-            />
-          )
-        }
+        {customModificationPurpose && (
+          <FormFieldCustom
+            control={form.control}
+            name="customModificationPurpose"
+            type="text"
+          />
+        )}
       </div>
 
       <div className="space-y-3">
@@ -79,23 +79,43 @@ const LPComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
       </div>
 
       <div className="space-y-3">
-        <h3 className='small-title'>同意項目（チェック必須）</h3>
+        <h3 className="small-title">同意項目（チェック必須）</h3>
         <FormFieldCustom
           control={form.control}
           name="agreements"
           label="以下の事項に同意してください"
           type="checkbox-group"
           checkboxGroupOptions={[
-            { value: "修正回数は原則2回まで無料。以降は1回ごとに別途お見積りいたします。", label: "修正回数は原則2回まで無料。以降は1回ごとに別途お見積りいたします。" },
-            { value: "デザイン構成が大きく変わる場合は「修正」ではなく「再制作扱い」となる可能性があります。", label: "デザイン構成が大きく変わる場合は「修正」ではなく「再制作扱い」となる可能性があります。" },
-            { value: "修正内容が不明確な場合は着手できない可能性がございます（目的・意図の記載をお願いします）。", label: "修正内容が不明確な場合は着手できない可能性がございます（目的・意図の記載をお願いします）。" },
-            { value: "画像や原稿など素材の不足がある場合、納期が延びる場合がございます。", label: "画像や原稿など素材の不足がある場合、納期が延びる場合がございます。" }
+            {
+              value:
+                "修正回数は原則2回まで無料。以降は1回ごとに別途お見積りいたします。",
+              label:
+                "修正回数は原則2回まで無料。以降は1回ごとに別途お見積りいたします。"
+            },
+            {
+              value:
+                "デザイン構成が大きく変わる場合は「修正」ではなく「再制作扱い」となる可能性があります。",
+              label:
+                "デザイン構成が大きく変わる場合は「修正」ではなく「再制作扱い」となる可能性があります。"
+            },
+            {
+              value:
+                "修正内容が不明確な場合は着手できない可能性がございます（目的・意図の記載をお願いします）。",
+              label:
+                "修正内容が不明確な場合は着手できない可能性がございます（目的・意図の記載をお願いします）。"
+            },
+            {
+              value:
+                "画像や原稿など素材の不足がある場合、納期が延びる場合がございます。",
+              label:
+                "画像や原稿など素材の不足がある場合、納期が延びる場合がございます。"
+            }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
+  );
 };
 
-export default LPComponent
+export default LPComponent;

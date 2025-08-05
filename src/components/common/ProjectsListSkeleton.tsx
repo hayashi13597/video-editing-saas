@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const columns = [
@@ -12,7 +11,9 @@ const columns = [
 ];
 
 const Skeleton = ({ className }: { className?: string }) => (
-  <div className={`bg-green-main animate-pulse rounded ${className || "h-5 w-full"}`} />
+  <div
+    className={`bg-green-main animate-pulse rounded ${className || "h-5 w-full"}`}
+  />
 );
 
 const ProjectsListSkeleton = () => {
@@ -36,7 +37,13 @@ const ProjectsListSkeleton = () => {
           className="grid px-3 gap-6"
           style={{
             gridTemplateColumns: columns
-              .map((col, idx) => (idx === columns.length - 1 ? "max-content" : col.key === "title" ? `${12 - columns.length}fr` : "minmax(auto,1fr)"))
+              .map((col, idx) =>
+                idx === columns.length - 1
+                  ? "max-content"
+                  : col.key === "title"
+                    ? `${12 - columns.length}fr`
+                    : "minmax(auto,1fr)"
+              )
               .join(" ")
           }}
         >
@@ -52,11 +59,17 @@ const ProjectsListSkeleton = () => {
             className="grid gap-6 px-3 py-2 bg-white rounded-6 items-center"
             style={{
               gridTemplateColumns: columns
-                .map((col, idx) => (idx === columns.length - 1 ? "max-content" : col.key === "title" ? `${12 - columns.length}fr` : "1fr"))
+                .map((col, idx) =>
+                  idx === columns.length - 1
+                    ? "max-content"
+                    : col.key === "title"
+                      ? `${12 - columns.length}fr`
+                      : "1fr"
+                )
                 .join(" ")
             }}
           >
-            {columns.map((col) => (
+            {columns.map(col => (
               <Skeleton key={col.key} className="h-20 w-full" />
             ))}
           </div>

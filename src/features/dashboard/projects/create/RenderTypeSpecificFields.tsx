@@ -9,7 +9,10 @@ interface RenderTypeSpecificFieldsProps {
   form: UseFormReturn<DynamicFormData>;
 }
 
-const RenderTypeSpecificFields = ({ selectedType, form }: RenderTypeSpecificFieldsProps) => {
+const RenderTypeSpecificFields = ({
+  selectedType,
+  form
+}: RenderTypeSpecificFieldsProps) => {
   switch (selectedType) {
     case "動画編集":
       return <div>動画編集特有のフィールド</div>;
@@ -34,6 +37,6 @@ const RenderTypeSpecificFields = ({ selectedType, form }: RenderTypeSpecificFiel
     default:
       return <div>選択されたタイプに特有のフィールドはありません</div>;
   }
-}
+};
 
-export default RenderTypeSpecificFields
+export default RenderTypeSpecificFields;

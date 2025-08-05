@@ -90,7 +90,4 @@ const updateProfileSchema = z
 
 type updateProfileSchemaType = z.infer<typeof updateProfileSchema>;
 
-export {
-  updateProfileSchema,
-  type updateProfileSchemaType
-}
+export { updateProfileSchema, type updateProfileSchemaType };

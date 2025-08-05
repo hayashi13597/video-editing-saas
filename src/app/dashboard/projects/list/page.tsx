@@ -14,7 +14,7 @@ const ProjectsList = () => {
     <Suspense fallback={<ProjectsListSkeleton />}>
       <MainProjects />
     </Suspense>
-  )
-}
+  );
+};
 
-export default ProjectsList
+export default ProjectsList;

@@ -15,25 +15,30 @@ const formType = "チラシ作成" as DefaultValuesMapKeys;
 const CreateProjectForm = () => {
   const form = useForm<DynamicFormData>({
     resolver: zodResolver(dynamicFormSchema),
-    defaultValues: defaultValuesMap[formType],
+    defaultValues: defaultValuesMap[formType]
   });
 
   const selectedType = form.watch("type");
 
   const onSubmit = (data: DynamicFormData) => {
     console.log("Form submitted with data:", data);
-  }
+  };
 
   return (
     <Form {...form}>
-      <form className="bg-white rounded-6 p-6 space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="bg-white rounded-6 p-6 space-y-8"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="space-y-5">
           <FormFieldCustom
             control={form.control}
             name="type"
             label="案件の種類"
             type="select"
-            selectOptions={Object.keys(defaultValuesMap) as DefaultValuesMapKeys[]}
+            selectOptions={
+              Object.keys(defaultValuesMap) as DefaultValuesMapKeys[]
+            }
             autoComplete="type"
             requiredBadge={true}
             selectClassName="w-1/2"
@@ -98,7 +103,9 @@ const CreateProjectForm = () => {
         </div>
 
         <div className="space-y-5">
-          <h2 className="medium-title text-green-main">{selectedType}フォーム（クラウド発注用）</h2>
+          <h2 className="medium-title text-green-main">
+            {selectedType}フォーム（クラウド発注用）
+          </h2>
 
           <div className="space-y-3">
             <RenderTypeSpecificFields selectedType={selectedType} form={form} />
@@ -112,7 +119,7 @@ const CreateProjectForm = () => {
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default CreateProjectForm
+export default CreateProjectForm;

@@ -5,9 +5,18 @@ import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import RequiredBadge from "@/components/form/RequiredBadge";
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage
+} from "@/components/ui/form";
 
-const ModificationDetails = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
+const ModificationDetails = ({
+  form
+}: {
+  form: UseFormReturn<DynamicFormData>;
+}) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "modificationDetails"
@@ -39,18 +48,28 @@ const ModificationDetails = ({ form }: { form: UseFormReturn<DynamicFormData> })
     <div className="space-y-3">
       <div className="space-y-1">
         <div className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-2">
-          <p className="body-text flex items-center gap-1">修正箇所（セクション名・位置）<RequiredBadge required={true} /></p>
-          <p className="body-text flex items-center gap-1">現在の内容 <RequiredBadge required={true} /></p>
-          <p className="body-text flex items-center gap-1">修正後の内容 <RequiredBadge required={true} /></p>
-          <p className="body-text flex items-center gap-1">補足・意図 <RequiredBadge required={false} /></p>
-          {fields.length > 1 && (
-            <div className="w-10" />
-          )}
+          <p className="body-text flex items-center gap-1">
+            修正箇所（セクション名・位置）
+            <RequiredBadge required={true} />
+          </p>
+          <p className="body-text flex items-center gap-1">
+            現在の内容 <RequiredBadge required={true} />
+          </p>
+          <p className="body-text flex items-center gap-1">
+            修正後の内容 <RequiredBadge required={true} />
+          </p>
+          <p className="body-text flex items-center gap-1">
+            補足・意図 <RequiredBadge required={false} />
+          </p>
+          {fields.length > 1 && <div className="w-10" />}
         </div>
         <div className="space-y-2">
           {fields.map((field, index) => {
             return (
-              <div key={field.id} className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-2">
+              <div
+                key={field.id}
+                className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-2"
+              >
                 <FormField
                   control={form.control}
                   name={`modificationDetails.${index}.modificationLocation`}
@@ -130,9 +149,8 @@ const ModificationDetails = ({ form }: { form: UseFormReturn<DynamicFormData> })
                   </div>
                 )}
               </div>
-            )
-          }
-          )}
+            );
+          })}
         </div>
       </div>
 
@@ -146,6 +164,6 @@ const ModificationDetails = ({ form }: { form: UseFormReturn<DynamicFormData> })
       </button>
     </div>
   );
-}
+};
 
-export default ModificationDetails
+export default ModificationDetails;

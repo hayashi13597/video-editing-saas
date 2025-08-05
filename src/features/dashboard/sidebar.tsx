@@ -142,7 +142,9 @@ const SidebarComponent = () => {
             {!isCollapsed && (
               <CollapsibleContent>
                 <Link
-                  href={userRole === "CLIENT" ? routesApp.create : routesApp.list}
+                  href={
+                    userRole === "CLIENT" ? routesApp.create : routesApp.list
+                  }
                   className={cn(
                     "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
                     pathname === routesApp.create && "bg-green-main text-white"

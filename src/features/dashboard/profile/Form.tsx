@@ -58,8 +58,8 @@ const UpdateProfileForm = () => {
         editingSoftware: user?.tools || [],
         portfolioLinks: Array.isArray(user?.portfolioUrl)
           ? user.portfolioUrl.map((url: string | { url: string }) =>
-            typeof url === "string" ? { url } : url
-          )
+              typeof url === "string" ? { url } : url
+            )
           : [{ url: "" }],
         skills: user?.skills || [],
         companyOverview: user?.bio || "",
@@ -98,8 +98,8 @@ const UpdateProfileForm = () => {
       portfolioUrl:
         kind === "freelancer" && data.portfolioLinks
           ? (data.portfolioLinks
-            .map(link => link.url)
-            .filter(url => url && url.trim() !== "") as string[])
+              .map(link => link.url)
+              .filter(url => url && url.trim() !== "") as string[])
           : undefined,
       skills: kind === "freelancer" ? data.skills : undefined,
       plan: kind === "client" ? data.plan : undefined
