@@ -93,6 +93,9 @@ export function getPageTile(pathname: string, role: UserRole): string {
       if (pathname.startsWith(routesApp.feedback)) {
         return "案件詳細";
       }
+      if (pathname.startsWith(`${routesApp.projects}/`)) {
+        return "案件詳細";
+      }
       return "ダッシュボード";
   }
 }

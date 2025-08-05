@@ -35,11 +35,15 @@ const ReactPlayer = dynamic(() => import("react-player"), {
 interface VideoPlayerProps {
   src: string;
   onTimeUpdate?: (_time: number) => void;
+  className?: string;
+  videoClassName?: string;
 }
 
 export default function CustomVideo({
   src = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-  onTimeUpdate
+  onTimeUpdate,
+  className,
+  videoClassName
 }: VideoPlayerProps) {
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const [duration, setDuration] = useState(0);
@@ -305,7 +309,12 @@ export default function CustomVideo({
       <div className="relative w-full rounded-6">
         {mounted && (
           <>
-            <div className="relative w-full max-w-3xl mx-auto h-fit rounded-6 group">
+            <div
+              className={cn(
+                "relative w-full max-w-3xl mx-auto h-fit rounded-6 group",
+                className
+              )}
+            >
               <ReactPlayer
                 ref={playerRef}
                 src={src}
@@ -322,7 +331,7 @@ export default function CustomVideo({
                 onPlaying={() =>
                   handleEndBuffer({ playedSeconds: currentVideoTime })
                 }
-                className="rounded-6"
+                className={cn("rounded-6", videoClassName)}
               />
               {/* Hidden video & canvas for thumbnail generation */}
               <video
