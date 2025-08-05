@@ -6,15 +6,16 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+  AccordionTrigger
+} from "@/components/ui/accordion";
+import { use } from "react";
 
-const FeedbackPage = async ({
-  params,
-}: {
-  params: { id: string };
-}) => {
-  const { id } = await params;
+interface FeedbackPageProps {
+  params: Promise<{ id: string }>;
+}
+
+const FeedbackPage = ({ params }: FeedbackPageProps) => {
+  const { id } = use(params);
 
   return (
     <main className="space-y-5">
@@ -25,7 +26,9 @@ const FeedbackPage = async ({
             <h1 className="medium-title">企業紹介のリール動画 {id}</h1>
             <p className="body-text text-gray">株式会社ABC</p>
           </div>
-          <Badge className="bg-light-green text-green-main py-1 px-3 body-text">Tiktok</Badge>
+          <Badge className="bg-light-green text-green-main py-1 px-3 body-text">
+            Tiktok
+          </Badge>
         </div>
         <div className="bg-light-gray">
           <CustomVideo src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
@@ -36,26 +39,36 @@ const FeedbackPage = async ({
       <section className="space-y-3 bg-white rounded-6 p-6">
         <div className="flex-between">
           <h2 className="small-title">フィードバック</h2>
-          <Button className="button-submit w-fit">フリーランスに提出する</Button>
+          <Button className="button-submit w-fit">
+            フリーランスに提出する
+          </Button>
         </div>
 
         <div className="space-y-6">
           <div className="space-y-1">
             <div className="p-3 flex flex-col odd:bg-white even:bg-bg-main">
               <p className="small-text text-placeholder">20:23:20:frame1003</p>
-              <p className="body-text">イントロの音楽が大きすぎます。音量を下げてください。</p>
+              <p className="body-text">
+                イントロの音楽が大きすぎます。音量を下げてください。
+              </p>
             </div>
             <div className="p-3 flex flex-col odd:bg-white even:bg-bg-main">
               <p className="small-text text-placeholder">20:23:20:frame1003</p>
-              <p className="body-text">イントロの音楽が大きすぎます。音量を下げてください。</p>
+              <p className="body-text">
+                イントロの音楽が大きすぎます。音量を下げてください。
+              </p>
             </div>
             <div className="p-3 flex flex-col odd:bg-white even:bg-bg-main">
               <p className="small-text text-placeholder">20:23:20:frame1003</p>
-              <p className="body-text">イントロの音楽が大きすぎます。音量を下げてください。</p>
+              <p className="body-text">
+                イントロの音楽が大きすぎます。音量を下げてください。
+              </p>
             </div>
             <div className="p-3 flex flex-col odd:bg-white even:bg-bg-main">
               <p className="small-text text-placeholder">20:23:20:frame1003</p>
-              <p className="body-text">イントロの音楽が大きすぎます。音量を下げてください。</p>
+              <p className="body-text">
+                イントロの音楽が大きすぎます。音量を下げてください。
+              </p>
             </div>
           </div>
 
@@ -70,7 +83,9 @@ const FeedbackPage = async ({
       <section className="space-y-6 bg-white rounded-6 p-6">
         <div className="flex items-center gap-5">
           <h2 className="small-title">フィードバック履歴</h2>
-          <Badge className="bg-light-green text-green-main button-text px-3 py-2.5 font-semibold">FB回数：3回</Badge>
+          <Badge className="bg-light-green text-green-main button-text px-3 py-2.5 font-semibold">
+            FB回数：3回
+          </Badge>
         </div>
 
         <div className="space-y-3">
@@ -81,29 +96,25 @@ const FeedbackPage = async ({
             defaultValue="history-3"
           >
             <AccordionItem value="history-1" className="border-none">
-              <AccordionTrigger className="bg-light-gray hover:no-underline px-2.5 py-1.5 body-text-bold [&_svg]:text-text">第1回フィードバック（10）</AccordionTrigger>
+              <AccordionTrigger className="bg-light-gray hover:no-underline px-2.5 py-1.5 body-text-bold [&_svg]:text-text">
+                第1回フィードバック（10）
+              </AccordionTrigger>
               <AccordionContent className="border rounded-6 border-stroke p-3 mt-1">
                 <div className="space-y-2">
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
                   </div>
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
                   </div>
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
@@ -113,29 +124,25 @@ const FeedbackPage = async ({
             </AccordionItem>
 
             <AccordionItem value="history-2" className="border-none">
-              <AccordionTrigger className="bg-light-gray hover:no-underline px-2.5 py-1.5 body-text-bold [&_svg]:text-text">第2回フィードバック（6）</AccordionTrigger>
+              <AccordionTrigger className="bg-light-gray hover:no-underline px-2.5 py-1.5 body-text-bold [&_svg]:text-text">
+                第2回フィードバック（6）
+              </AccordionTrigger>
               <AccordionContent className="border rounded-6 border-stroke p-3 mt-1">
                 <div className="space-y-2">
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
                   </div>
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
                   </div>
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
@@ -145,29 +152,25 @@ const FeedbackPage = async ({
             </AccordionItem>
 
             <AccordionItem value="history-3" className="border-none">
-              <AccordionTrigger className="bg-light-gray hover:no-underline px-2.5 py-1.5 body-text-bold [&_svg]:text-text">第3回フィードバック（6）</AccordionTrigger>
+              <AccordionTrigger className="bg-light-gray hover:no-underline px-2.5 py-1.5 body-text-bold [&_svg]:text-text">
+                第3回フィードバック（6）
+              </AccordionTrigger>
               <AccordionContent className="border rounded-6 border-stroke p-3 mt-1">
                 <div className="space-y-2">
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
                   </div>
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>
                   </div>
                   <div className="flex items-center gap-10 text-balance ">
-                    <p className="intro-text text-gray">
-                      20:20:20:frame1000
-                    </p>
+                    <p className="intro-text text-gray">20:20:20:frame1000</p>
                     <p className="intro-text">
                       テキストテキストテキストテキストテキストテキスト
                     </p>

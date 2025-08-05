@@ -36,42 +36,51 @@ const UpdateProfileForm = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const user = await getProfiles().getMyProfile();
-      const userKind = user.user.role === "CLIENT" ? "client" : "freelancer";
-      setKind(userKind);
-      setProfile(user);
-      setLoading(false);
+      try {
+        const user = await getProfiles().getMyProfile();
+        const userKind = user.user.role === "CLIENT" ? "client" : "freelancer";
+        setKind(userKind);
+        setProfile(user);
+        setLoading(false);
 
-      profileForm.reset({
-        role: userKind,
-        name:
-          userKind === "client"
-            ? user?.companyName || ""
-            : user?.user.name || "",
-        contactPerson: user?.user.name || "",
-        phone: user?.user.phoneNumber || "",
-        password: "Lm123123@",
-        confirmPassword: "Lm123123@",
-        avatarUrl: user?.user.avatarUrl || "",
-        selfIntroduction: user?.bio || "",
-        specialization: user?.specializations?.[0] || "",
-        editingSoftware: user?.tools || [],
-        portfolioLinks: Array.isArray(user?.portfolioUrl)
-          ? user.portfolioUrl.map((url: string | { url: string }) =>
-              typeof url === "string" ? { url } : url
-            )
-          : [{ url: "" }],
-        skills: user?.skills || [],
-        companyOverview: user?.bio || "",
-        industry: user?.industry || "",
-        plan: userKind === "client" ? user?.plan || "" : undefined,
-        invoice: (user?.invoice as string) || "",
-        bankName: user?.bankName || "",
-        accountNumber: user?.accountNumber || "",
-        accountName: user?.accountName || "",
-        branchCode: user?.branchCode || "",
-        accountType: (user?.accountType as "普通預金" | "定期預金") || undefined
-      });
+        profileForm.reset({
+          role: userKind,
+          name:
+            userKind === "client"
+              ? user?.companyName || ""
+              : user?.user.name || "",
+          contactPerson: user?.user.name || "",
+          phone: user?.user.phoneNumber || "",
+          password: "Lm123123@",
+          confirmPassword: "Lm123123@",
+          avatarUrl: user?.user.avatarUrl || "",
+          selfIntroduction: user?.bio || "",
+          specialization: user?.specializations?.[0] || "",
+          editingSoftware: user?.tools || [],
+          portfolioLinks: Array.isArray(user?.portfolioUrl)
+            ? user.portfolioUrl.map((url: string | { url: string }) =>
+                typeof url === "string" ? { url } : url
+              )
+            : [{ url: "" }],
+          skills: user?.skills || [],
+          companyOverview: user?.bio || "",
+          industry: user?.industry || "",
+          plan: userKind === "client" ? user?.plan || "" : undefined,
+          invoice: (user?.invoice as string) || "",
+          bankName: user?.bankName || "",
+          accountNumber: user?.accountNumber || "",
+          accountName: user?.accountName || "",
+          branchCode: user?.branchCode || "",
+          accountType:
+            (user?.accountType as "普通預金" | "定期預金") || undefined
+        });
+      } catch (error) {
+        const errorMessage = getErrorMessage(
+          error as ApiError,
+          "プロフィールの取得中にエラーが発生しました"
+        );
+        toast.error(errorMessage);
+      }
     };
     fetchProfile();
     // eslint-disable-next-line

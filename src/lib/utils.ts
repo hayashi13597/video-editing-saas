@@ -84,10 +84,15 @@ export function getPageTile(pathname: string, role: UserRole): string {
     case routesApp.create:
       return role === "CLIENT" ? "案件登録" : "応募可能な案件";
     case routesApp.projects:
-      return role === "CLIENT" ? "案件一覧" : "応募済みの案件";
+      return "案件一覧";
     case routesApp.chat:
       return "チャット";
+    case routesApp.list:
+      return "案件一覧";
     default:
+      if (pathname.startsWith(routesApp.feedback)) {
+        return "案件詳細";
+      }
       return "ダッシュボード";
   }
 }

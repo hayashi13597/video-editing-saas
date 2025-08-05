@@ -147,7 +147,8 @@ const SidebarComponent = () => {
                   }
                   className={cn(
                     "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
-                    pathname === routesApp.create && "bg-green-main text-white"
+                    pathname === routesApp.create && "bg-green-main text-white",
+                    pathname === routesApp.list && "bg-green-main text-white"
                   )}
                 >
                   <span className="block w-2.5 h-2.5 border-2 rounded-full" />

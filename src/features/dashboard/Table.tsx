@@ -1,12 +1,17 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { EllipsisVertical, SquarePen } from "lucide-react";
+import {
+  ChevronRight,
+  CircleAlert,
+  EllipsisVertical,
+  SquarePen
+} from "lucide-react";
 import Link from "next/link";
 import Grip4 from "../../../public/icons/grip-4.svg";
 import React from "react";
 import Image from "next/image";
-import { StatusType } from "@/types/form";
+import { StatusType, UserRole } from "@/types/form";
 import { cn, getColorStatus, getColorStatusText } from "@/lib/utils";
 import PaginationCustom from "./PaginationCustom";
 import { routesApp } from "@/constants/routesApp";
@@ -16,6 +21,8 @@ import {
   PopoverTrigger
 } from "@/components/ui/popover";
 import ChatIcon from "../../../public/icons/chat.svg";
+import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 // Define all possible field types
 export type FieldType =
@@ -143,7 +150,9 @@ const renderCellContent = (
   field: FieldType,
   data: TableRowData,
   icon: boolean = true,
-  isIconVisible: boolean = false
+  isIconVisible: boolean = false,
+  role?: UserRole,
+  pathname?: string
 ) => {
   switch (field) {
     case "status":
@@ -191,38 +200,58 @@ const renderCellContent = (
 
     case "action":
       return icon ? (
-        <Popover>
-          <PopoverTrigger asChild>
-            <div
-              className={cn(
-                "flex-center justify-end cursor-pointer",
-                isIconVisible ? "invisible" : ""
-              )}
-            >
-              <EllipsisVertical size={16} />
-            </div>
-          </PopoverTrigger>
-          <PopoverContent
-            align="end"
-            sideOffset={7}
-            className="border-none shadow-md space-y-1"
+        pathname === routesApp.list ? (
+          <Link
+            href={`${routesApp.projects}/${data.id}`}
+            className="flex items-center gap-2"
           >
-            <Link
-              href={`${routesApp.feedback}/${data.id}`}
-              className="flex items-center gap-2 body-text p-1"
+            <ChevronRight size={16} />
+          </Link>
+        ) : (
+          <Popover>
+            <PopoverTrigger asChild>
+              <div
+                className={cn(
+                  "flex-center justify-end cursor-pointer",
+                  isIconVisible ? "invisible" : ""
+                )}
+              >
+                <EllipsisVertical size={16} />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent
+              align="end"
+              sideOffset={7}
+              className="border-none shadow-md space-y-1"
             >
-              <SquarePen size={20} />
-              案件フィードバック
-            </Link>
-            <Link
-              href={routesApp.chat}
-              className="flex items-center gap-2 body-text p-1"
-            >
-              <ChatIcon width={20} height={20} />
-              チャットに入る
-            </Link>
-          </PopoverContent>
-        </Popover>
+              {role === "CLIENT" && (
+                <Link
+                  href={`${routesApp.feedback}/${data.id}`}
+                  className="flex items-center gap-2 body-text p-1"
+                >
+                  <SquarePen size={20} />
+                  案件フィードバック
+                </Link>
+              )}
+              {role === "FREELANCER" && (
+                <Link
+                  href={`${routesApp.projects}/${data.id}`}
+                  className="flex items-center gap-2 body-text p-1"
+                >
+                  <CircleAlert size={20} />
+                  案件詳細をみる
+                </Link>
+              )}
+              <Link
+                href={routesApp.chat}
+                className="flex items-center gap-2 body-text p-1"
+              >
+                <ChatIcon width={20} height={20} />
+                チャットに入る
+              </Link>
+            </PopoverContent>
+          </Popover>
+        )
       ) : null;
 
     case "image":
@@ -273,6 +302,10 @@ const Table: React.FC<TableProps> = ({
   onPageChange,
   isIconVisible = true
 }) => {
+  const pathname = usePathname();
+  const { data: session } = useSession();
+  const role = session?.user.role;
+
   return (
     <div className="space-y-4 pb-[60px]">
       <div className="space-y-2">
@@ -315,7 +348,14 @@ const Table: React.FC<TableProps> = ({
           >
             {columns.map(column => (
               <React.Fragment key={column.key}>
-                {renderCellContent(column.key, row, icon, isIconVisible)}
+                {renderCellContent(
+                  column.key,
+                  row,
+                  icon,
+                  isIconVisible,
+                  role,
+                  pathname
+                )}
               </React.Fragment>
             ))}
           </div>

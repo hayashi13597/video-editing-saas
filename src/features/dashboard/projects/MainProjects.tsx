@@ -26,7 +26,11 @@ const MainProjects = () => {
             currentPathname={routesApp.projects}
           />
         ) : (
-          <h3 className="h3-title">応募済みの案件</h3>
+          <h3 className="h3-title">
+            {pathname === routesApp.projects
+              ? "応募済みの案件"
+              : "応募可能な案件"}
+          </h3>
         )}
 
         <div className="flex gap-2">
