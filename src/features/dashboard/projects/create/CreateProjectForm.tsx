@@ -9,6 +9,8 @@ import FormFieldCustom from "@/components/form/FormFieldCustom";
 import { ONE_MONTH_OPTIONS } from "@/constants/selectOptions";
 import RenderTypeSpecificFields from "./RenderTypeSpecificFields";
 import { Button } from "@/components/ui/button";
+import MicroIcon from "../../../../../public/icons/micro.svg"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const formType = "チラシ作成" as DefaultValuesMapKeys;
 
@@ -88,22 +90,39 @@ const CreateProjectForm = () => {
             selectClassName="w-1/2"
           />
 
-          <FormFieldCustom
-            control={form.control}
-            name="visibility"
-            label="公開／非公開"
-            type="radio"
-            selectOptions={[
-              { label: "公開", value: "public" },
-              { label: "非公開", value: "private" }
-            ]}
-            requiredBadge={true}
-            radioPlan={false}
-          />
+          <div className="flex-between">
+            <FormFieldCustom
+              control={form.control}
+              name="visibility"
+              label="公開／非公開"
+              type="radio"
+              selectOptions={[
+                { label: "公開", value: "public" },
+                { label: "非公開", value: "private" }
+              ]}
+              requiredBadge={true}
+              radioPlan={false}
+            />
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button type="button" className="button-submit w-fit h-fit rounded-full !small-title flex items-center gap-2 !px-6 !py-[7.5px] green-gradient">
+                  <MicroIcon className="!w-6 !h-6" />
+                  AIを使って案件登録
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent align="center" side="top" className="bg-white text-text shadow-custom [&_svg]:bg-white [&_svg]:!fill-white [&_svg]:shadow-custom">
+                <p>AIが入力内容をサポートし、<br />
+                  案件情報を自動で補完・提案します。<br />
+                  簡単・スピーディーに登録が可能です！</p>
+              </TooltipContent>
+            </Tooltip>
+
+          </div>
         </div>
 
         <div className="space-y-5">
-          <h2 className="medium-title text-green-main">
+          <h2 className="medium-title text-green-main bg-light-green px-3 py-2 rounded-6">
             {selectedType}フォーム（クラウド発注用）
           </h2>
 
@@ -118,7 +137,7 @@ const CreateProjectForm = () => {
           </div>
         </div>
       </form>
-    </Form>
+    </Form >
   );
 };
 
