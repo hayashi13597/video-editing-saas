@@ -3,6 +3,7 @@
 import RequiredBadge from "@/components/form/RequiredBadge";
 import { Label } from "@/components/ui/label";
 import { cn, formatSize } from "@/lib/utils";
+import { X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -34,10 +35,11 @@ const ProfileImageUpload = ({
     onDrop,
     multiple: false,
     accept: { "image/*": [] },
-    maxSize: maxFileSize
+    maxSize: maxFileSize,
+    maxFiles: 1,
+    disabled: selectedFile !== null
   });
 
-  const filePreview = selectedFile ? URL.createObjectURL(selectedFile) : null;
   const file = selectedFile;
 
   return (
@@ -52,31 +54,34 @@ const ProfileImageUpload = ({
           className={cn(
             "border border-stroke border-dashed rounded-6 py-4 px-3 cursor-pointer",
             {
-              "flex-col-center": !filePreview && !file,
-              "flex-between": filePreview || file
+              "cursor-default": selectedFile !== null,
             }
           )}
         >
-          {filePreview && file ? (
-            <>
-              <Image
-                src={filePreview}
-                alt="Profile Image"
-                width={90}
-                height={90}
-                className="w-24 h-24 object-cover"
-              />
-              <div className="flex items-center space-x-3">
-                <div>
-                  <p className="text-text body-text">{file.name}</p>
-                  <p className="small-text text-gray text-center">
-                    {formatSize(file.size)}
-                  </p>
-                </div>
+          <div className="flex-col-center">
+            <Image
+              src="/icons/upload.svg"
+              alt="upload"
+              width={45}
+              height={35}
+              className="w-auto h-auto object-contain"
+            />
+            <p className="medium-title mt-2 mb-[3px]">
+              ドラッグ＆ドロップでアップロード
+            </p>
+            <p className="small-text text-green-main">またはファイルを選択</p>
+          </div>
+          {file ? (
+            <div className="flex-between bg-light-gray rounded-6 px-3 py-1.5 mt-2.5">
+              <div>
+                <p className="body-text-bold">{file.name}</p>
+                <p className="small-text text-gray">
+                  {formatSize(file.size)}
+                </p>
               </div>
               <button
                 type="button"
-                className="p-2 cursor-pointer"
+                className="p-2 cursor-pointer hover:text-red"
                 onClick={e => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -84,30 +89,10 @@ const ProfileImageUpload = ({
                   onFileSelect?.(null);
                 }}
               >
-                <Image
-                  src="/icons/cross.svg"
-                  alt="remove"
-                  width={16}
-                  height={16}
-                  className="w-4 h-4"
-                />
+                <X size={16} />
               </button>
-            </>
-          ) : (
-            <>
-              <Image
-                src="/icons/upload.svg"
-                alt="upload"
-                width={45}
-                height={35}
-                className="w-auto h-auto object-contain"
-              />
-              <p className="medium-title mt-2 mb-[3px]">
-                ドラッグ＆ドロップでアップロード
-              </p>
-              <p className="small-text text-green-main">またはファイルを選択</p>
-            </>
-          )}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

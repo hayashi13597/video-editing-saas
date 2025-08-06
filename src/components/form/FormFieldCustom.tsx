@@ -23,28 +23,29 @@ import { MultiSelect } from "../ui/multi-select";
 import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
-import { ChevronRight, Plus, X } from "lucide-react";
+import { ChevronRight, Circle, Plus, X } from "lucide-react";
 import { DefaultValuesMapKeys } from "@/lib/defaultValuesMap";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 interface FormFieldCustomProps<T extends FormType> {
   control: ReturnType<typeof useForm<T>>["control"];
   name: Path<T>;
   placeholder?: string;
   type?:
-    | "text"
-    | "email"
-    | "password"
-    | "checkbox"
-    | "textarea"
-    | "select"
-    | "multi-select"
-    | "radio"
-    | "date"
-    | "upload-text"
-    | "checkbox-group"
-    | "single-checkbox-group";
+  | "text"
+  | "email"
+  | "password"
+  | "checkbox"
+  | "textarea"
+  | "select"
+  | "multi-select"
+  | "radio"
+  | "date"
+  | "upload-text"
+  | "checkbox-group"
+  | "single-checkbox-group";
   label?: string;
   autoComplete?: string;
   requiredBadge?: boolean;
@@ -79,10 +80,18 @@ const FormFieldCustom = <T extends FormType>({
   checkboxGroupOptions,
   checkboxGroupClassName
 }: FormFieldCustomProps<T>) => {
+  const [selectedPlan, setSelectedPlan] = useState<string | undefined>(undefined);
+  const [selectPlanPopupOpen, setSelectPlanPopupOpen] = useState(false);
+
+  const handleSelectPlan = (plan: string) => {
+    setSelectedPlan(plan);
+    setSelectPlanPopupOpen(false);
+  }
+
   const normalizedOptions: SelectOption[] = Array.isArray(selectOptions)
     ? selectOptions.map(option =>
-        typeof option === "string" ? { label: option, value: option } : option
-      )
+      typeof option === "string" ? { label: option, value: option } : option
+    )
     : [];
 
   const [options, setOptions] = useState<SelectOption[]>(normalizedOptions);
@@ -279,6 +288,7 @@ const FormFieldCustom = <T extends FormType>({
                           value={option.value}
                           id={option + "r" + String(index)}
                           className="border-green-main"
+                          checked={field.value === option.value || selectedPlan === option.value}
                         />
                         <Label
                           htmlFor={option + "r" + String(index)}
@@ -292,9 +302,58 @@ const FormFieldCustom = <T extends FormType>({
                 </FormControl>
                 <FormMessage />
                 {radioPlan && (
-                  <div className="flex items-center gap-2 text-green-main small-text cursor-pointer">
-                    View plan detail <ChevronRight className="w-4 h-4" />
-                  </div>
+                  <>
+                    <div
+                      className="flex items-center gap-1 text-green-main small-text cursor-pointer"
+                      onClick={() => setSelectPlanPopupOpen(true)}
+                    >
+                      プランの詳細を見る <ChevronRight className="w-4 h-4" />
+                    </div>
+                    {selectPlanPopupOpen && (
+                      <div className="fixed inset-0 bg-black/70 flex-center gap-5">
+                        {normalizedOptions.map((option, index) => (
+                          <div key={option + String(index)} className="bg-white p-5 rounded-6 flex-col-center space-y-4 w-full max-w-[360px]">
+                            <div className="flex-col-center space-y-1 w-full max-w-[75%]">
+                              <h3 className="medium-title text-green-main">定額プラン</h3>
+                              <p className="body-text text-center">テキストテキストテキストテキストテキストテキスト</p>
+                            </div>
+
+                            <div className="flex-col-center">
+                              <span className="text-[40px] font-semibold leading-[1.75] tracking-[0.25px]">¥60,000</span>
+                              <span>1ユーザー／月</span>
+                            </div>
+
+                            <div className="flex flex-col gap-3 w-full px-2">
+                              <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+                                <Circle className="w-2 h-2 stroke-accent fill-accent" />
+                                <p>テキストテキストテキストテキストテキスト</p>
+                              </div>
+                              <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+                                <Circle className="w-2 h-2 stroke-accent fill-accent" />
+                                <p>テキストテキストテキストテキストテキスト</p>
+                              </div>
+                              <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+                                <Circle className="w-2 h-2 stroke-accent fill-accent" />
+                                <p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+                              </div>
+                              <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+                                <Circle className="w-2 h-2 stroke-accent fill-accent" />
+                                <p>テキストテキストテキストテキストテキスト</p>
+                              </div>
+                              <div className="grid grid-cols-[auto_1fr] items-center gap-3">
+                                <Circle className="w-2 h-2 stroke-accent fill-accent" />
+                                <p>テキストテキストテキストテキストテキスト</p>
+                              </div>
+                            </div>
+
+                            <Button className="button-submit mt-4" onClick={() => handleSelectPlan(option.value)}>
+                              このプランを選択
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </FormItem>
             );
@@ -357,19 +416,19 @@ const FormFieldCustom = <T extends FormType>({
                     <div className="w-full flex items-center flex-wrap gap-2 px-3 py-1.5 border border-stroke rounded-6 min-h-10">
                       {fileNames.length > 0
                         ? fileNames.map((fileName: string, index: number) => (
-                            <Badge
-                              key={index}
-                              className="rounded-full body-text text-text bg-light-gray flex items-center gap-2.5 px-3"
-                            >
-                              {fileName}
-                              <button type="button">
-                                <X
-                                  className="w-3 h-3 cursor-pointer hover:text-red-500"
-                                  onClick={() => handleRemoveFile(index)}
-                                />
-                              </button>
-                            </Badge>
-                          ))
+                          <Badge
+                            key={index}
+                            className="rounded-full body-text text-text bg-light-gray flex items-center gap-2.5 px-3"
+                          >
+                            {fileName}
+                            <button type="button">
+                              <X
+                                className="w-3 h-3 cursor-pointer hover:text-red-500"
+                                onClick={() => handleRemoveFile(index)}
+                              />
+                            </button>
+                          </Badge>
+                        ))
                         : null}
                     </div>
                     <button
