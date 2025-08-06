@@ -70,25 +70,47 @@ const flyerSchema = baseSchema
     })
   })
   .refine(
-    data => data.size.includes("その他") && data.customSize?.trim() !== "",
+    data => {
+      if (
+        Array.isArray(data.size) &&
+        data.size.includes("その他")
+      ) {
+        return !!data.customSize && data.customSize.trim() !== "";
+      }
+      return true;
+    },
     {
-      message: "「その他」を選択した場合はカスタムサイズを入力してください",
+      error: "「その他」を選択した場合はカスタムサイズを入力してください",
       path: ["customSize"]
     }
   )
   .refine(
-    data =>
-      data.atmosphere?.includes("その他") &&
-      data.customAtmosphere?.trim() !== "",
+    data => {
+      if (
+        Array.isArray(data.atmosphere) &&
+        data.atmosphere.includes("その他")
+      ) {
+        return !!data.customAtmosphere && data.customAtmosphere.trim() !== "";
+      }
+      return true;
+    },
     {
-      message: "「その他」を選択した場合はカスタム雰囲気を入力してください",
+      error: "「その他」を選択した場合はカスタム雰囲気を入力してください",
       path: ["customAtmosphere"]
     }
   )
   .refine(
-    data => data.purpose === "その他" && data.customPurpose?.trim() !== "",
+    data => {
+      if (
+        Array.isArray(data.purpose) &&
+        data.purpose.includes("その他")
+      ) {
+        return !!data.customPurpose && data.customPurpose.trim() !== "";
+      }
+      return true;
+    },
     {
-      message: "「その他」を選択した場合はカスタム目的を入力してください",
+      error: "「その他」を選択した場合はカスタム目的を入力してください",
       path: ["customPurpose"]
     }
   );
