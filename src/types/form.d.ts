@@ -23,3 +23,5 @@ interface SelectOption {
 }
 
 type StatusType = "OPEN" | "REVIEW" | "ASSIGNED" | "COMPLETED";
+
+type uploadFileField = "replacementImages" | "replacementText";

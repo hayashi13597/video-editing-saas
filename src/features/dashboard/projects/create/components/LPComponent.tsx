@@ -4,11 +4,13 @@ import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "../validate";
 import ModificationDetails from "../ModificationDetails";
 import { MODIFICATION_PURPOSE_OPTIONS } from "@/constants/selectOptions";
+import UploadFile from "./UploadFile";
 
 const LPComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
   const customModificationPurpose = form
     .watch("modificationPurpose")
-    ?.includes("その他（記入欄）");
+    ?.includes("その他");
+
   return (
     <>
       <div className="space-y-3">
@@ -31,20 +33,24 @@ const LPComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
 
       <div className="space-y-3">
         <h3 className="small-title">3. 素材提供（ある場合のみ）</h3>
-        <FormFieldCustom
-          control={form.control}
-          name="replacementImages"
+        <UploadFile
           label="差し替え画像／バナー／アイコンなど"
-          type="upload-text"
           requiredBadge={false}
+          multiple={false}
+          maxFiles={1}
+          acceptedFileTypes={{ "image/*": [] }}
+          name="replacementImages"
+          form={form}
         />
 
-        <FormFieldCustom
-          control={form.control}
-          name="replacementText"
+        <UploadFile
           label="差し替えたいテキストやキャッチコピー（テキストファイル可）"
-          type="upload-text"
           requiredBadge={false}
+          multiple={false}
+          maxFiles={1}
+          acceptedFileTypes={{ "image/*": [] }}
+          name="replacementText"
+          form={form}
         />
       </div>
 
@@ -56,7 +62,7 @@ const LPComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           label="なぜこの修正を行いたいのか？（複数選択可）"
           type="checkbox-group"
           checkboxGroupOptions={MODIFICATION_PURPOSE_OPTIONS}
-          requiredBadge={false}
+          requiredBadge={true}
         />
         {customModificationPurpose && (
           <FormFieldCustom

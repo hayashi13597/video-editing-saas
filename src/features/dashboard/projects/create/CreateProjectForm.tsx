@@ -11,8 +11,9 @@ import RenderTypeSpecificFields from "./RenderTypeSpecificFields";
 import { Button } from "@/components/ui/button";
 import MicroIcon from "../../../../../public/icons/micro.svg"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { toast } from "sonner";
 
-const formType = "チラシ作成" as DefaultValuesMapKeys;
+const formType = "LP修正依頼" as DefaultValuesMapKeys;
 
 const CreateProjectForm = () => {
   const form = useForm<DynamicFormData>({
@@ -24,6 +25,7 @@ const CreateProjectForm = () => {
 
   const onSubmit = (data: DynamicFormData) => {
     console.log("Form submitted with data:", data);
+    toast.success("案件が正常に登録されました。");
   };
 
   return (

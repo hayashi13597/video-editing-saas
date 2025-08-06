@@ -97,7 +97,7 @@ const lpModificationSchema = baseSchema.extend({
   type: z.literal("LP修正依頼"),
 
   // 1. 修正対象のURL／ページ
-  targetUrl: z.string().min(1, "修正したいLPのURLまたはファイル名は必須です"),
+  targetUrl: z.string().min(1, "修正対象のページは必須です"),
 
   // 2. 修正内容について
   modificationDetails: z
@@ -109,7 +109,7 @@ const lpModificationSchema = baseSchema.extend({
         modificationNotes: z.string().optional()
       })
     )
-    .min(1, "少なくとも1つの修正項目を入力してください"),
+    .optional(),
 
   // 3. 素材提供
   replacementImages: z.array(z.string()).optional(),
@@ -118,13 +118,7 @@ const lpModificationSchema = baseSchema.extend({
   // 4. 修正の目的と意図
   modificationPurpose: z
     .array(
-      z.enum([
-        "コンバージョン率改善（CVR）",
-        "情報の最新化（価格・期間など）",
-        "デザインの印象を変えたい",
-        "スマホ対応強化／UI改善",
-        "その他（記入欄）"
-      ])
+      z.string()
     )
     .min(1, "修正の目的を1つ以上選択してください"),
   customModificationPurpose: z.string().optional(),
@@ -144,11 +138,26 @@ const lpModificationSchema = baseSchema.extend({
     if (missing.length > 0) {
       ctx.addIssue({
         code: "custom",
-        message: `以下の同意事項に同意してください: ${missing.join("、")}`
+        message: `すべて同意事項に同意してください`
       });
     }
   })
-});
+})
+  .refine(
+    data => {
+      // modificationPurposeが存在し、「その他」が含まれている場合はcustomModificationPurposeが必須
+      if (
+        Array.isArray(data.modificationPurpose) &&
+        data.modificationPurpose.includes("その他")
+      ) {
+        return !!data.customModificationPurpose && data.customModificationPurpose.trim() !== "";
+      }
+      return true;
+    }, {
+    error: "「その他」を選択した場合はカスタム修正目的を入力してください",
+    path: ["customModificationPurpose"]
+  }
+  );
 
 const videoEditingSchema = baseSchema.extend({
   type: z.literal("動画編集"),

@@ -135,7 +135,7 @@ const MODIFICATION_PURPOSE_OPTIONS = [
   },
   { label: "デザインの印象を変えたい", value: "デザインの印象を変えたい" },
   { label: "スマホ対応強化／UI改善", value: "スマホ対応強化／UI改善" },
-  { label: "その他（記入欄）", value: "その他（記入欄）" }
+  { label: "その他（記入欄）", value: "その他" }
 ];
 
 const SIZE_OPTIONS = [
