@@ -12,6 +12,7 @@ import { redirect } from "next/navigation";
 import SubmitButton from "@/components/auth/SubmitButton";
 import { toast } from "sonner";
 import { Check, X } from "lucide-react";
+import { useEffect } from "react";
 
 const SignInForm = () => {
   // Password validation functions
@@ -28,11 +29,21 @@ const SignInForm = () => {
     }
   });
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const rememberedEmail = localStorage.getItem("rememberedEmail");
+      if (rememberedEmail) {
+        form.setValue("email", rememberedEmail);
+        form.setValue("rememberMe", true);
+      }
+    }
+  }, [form]);
+
   // Watch password field for real-time validation
   const watchedPassword = form.watch("password");
 
   const onSubmit = async (data: SignInSchemaType) => {
-    const { email, password } = data;
+    const { email, password, rememberMe } = data;
     const res = await signIn("credentials", {
       redirect: false,
       email,
@@ -40,6 +51,11 @@ const SignInForm = () => {
     });
     if (res?.ok) {
       toast.success("ログインに成功しました。");
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
     }
     if (!res?.error) redirect(routesApp.dashboard);
     if (res?.error)
@@ -78,10 +94,10 @@ const SignInForm = () => {
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <div className={`w-4 h-4 rounded-full border flex-center ${!watchedPassword
-                  ? "border-gray-300 bg-white"
-                  : validateLength(watchedPassword)
-                    ? "border-green-500 bg-green-500 text-white"
-                    : "border-red-500 bg-red-500 text-white"
+                ? "border-gray-300 bg-white"
+                : validateLength(watchedPassword)
+                  ? "border-green-500 bg-green-500 text-white"
+                  : "border-red-500 bg-red-500 text-white"
                 }`}>
                 {!watchedPassword ? null : validateLength(watchedPassword) ? (
                   <Check size={8} />
@@ -93,10 +109,10 @@ const SignInForm = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className={`w-4 h-4 rounded-full border flex-center ${!watchedPassword
-                  ? "border-gray-300 bg-white"
-                  : validateComplexity(watchedPassword)
-                    ? "border-green-500 bg-green-500 text-white"
-                    : "border-red-500 bg-red-500 text-white"
+                ? "border-gray-300 bg-white"
+                : validateComplexity(watchedPassword)
+                  ? "border-green-500 bg-green-500 text-white"
+                  : "border-red-500 bg-red-500 text-white"
                 }`}>
                 {!watchedPassword ? null : validateComplexity(watchedPassword) ? (
                   <Check size={8} />
@@ -108,10 +124,10 @@ const SignInForm = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className={`w-4 h-4 rounded-full border flex-center ${!watchedPassword
-                  ? "border-gray-300 bg-white"
-                  : validateSpecialChars(watchedPassword)
-                    ? "border-green-500 bg-green-500 text-white"
-                    : "border-red-500 bg-red-500 text-white"
+                ? "border-gray-300 bg-white"
+                : validateSpecialChars(watchedPassword)
+                  ? "border-green-500 bg-green-500 text-white"
+                  : "border-red-500 bg-red-500 text-white"
                 }`}>
                 {!watchedPassword ? null : validateSpecialChars(watchedPassword) ? (
                   <Check size={8} />
