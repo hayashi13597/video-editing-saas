@@ -204,6 +204,18 @@ const SUBTITLE_STYLE_OPTIONS = [
   { label: "テロップ不要", value: "テロップ不要" }
 ]
 
+const DESIGN_STYLE_OPTIONS = [
+  { label: "シンプル", value: "シンプル" },
+  { label: "高級感", value: "高級感" },
+  { label: "ナチュラル", value: "ナチュラル" },
+  { label: "信頼感", value: "信頼感" },
+  { label: "かわいい", value: "かわいい" },
+  { label: "スタイリッシュ", value: "スタイリッシュ" },
+  { label: "カラフル", value: "カラフル" },
+  { label: "モノトーン", value: "モノトーン" },
+  { label: "その他（自由記入）", value: "その他" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -225,5 +237,6 @@ export {
   VIDEO_DURATION_OPTIONS,
   VIDEO_ASPECT_RATIO_OPTIONS,
   EDITING_STYLE_OPTIONS,
-  SUBTITLE_STYLE_OPTIONS
+  SUBTITLE_STYLE_OPTIONS,
+  DESIGN_STYLE_OPTIONS
 };

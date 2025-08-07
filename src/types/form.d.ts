@@ -24,4 +24,4 @@ interface SelectOption {
 
 type StatusType = "OPEN" | "REVIEW" | "ASSIGNED" | "COMPLETED";
 
-type uploadFileField = "replacementImages" | "replacementText" | "sourceVideoUrl" | "sourceVideoUploadUrl" | "additionalImages";
+type uploadFileField = "replacementImages" | "replacementText" | "sourceVideoUrl" | "sourceVideoUploadUrl" | "additionalImages" | "logoPhotos" | "referenceImages";

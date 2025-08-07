@@ -1,3 +1,5 @@
+"use client";
+
 import FormFieldCustom from "@/components/form/FormFieldCustom";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";

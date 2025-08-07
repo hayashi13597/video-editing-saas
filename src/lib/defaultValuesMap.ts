@@ -102,8 +102,8 @@ export const defaultValuesMap: Record<
     visibility: "public",
 
     quantity: "",
-    printOption: "デザインのみ希望",
-    sides: "片面",
+    printOption: "",
+    sides: "",
     fullName: "",
     nameReading: "",
     jobTitle: "",

@@ -316,34 +316,20 @@ const businessCardSchema = baseSchema.extend({
 
   // 1. 基本情報
   quantity: z.string().min(1, "名刺枚数は必須です"),
-  printOption: z.enum(["デザインのみ希望", "印刷まで希望"]),
-  sides: z.enum(["片面", "両面"]),
+  printOption: z.string().min(1, "印刷の有無は必須です"),
+  sides: z.string().min(1, "両面デザインの希望は必須です"),
 
   // 2. 表記内容
   fullName: z.string().min(1, "お名前は必須です"),
   nameReading: z.string().optional(),
-  jobTitle: z.string().optional(),
-  companyName: z.string().optional(),
+  jobTitle: z.string().min(1, "役職名は必須です"),
+  companyName: z.string().min(1, "会社名は必須です"),
   contactInfo: z.string().min(1, "電話番号・メールアドレスは必須です"),
-  address: z.string().optional(),
+  address: z.string().min(1, "※不要な場合は「なし」とご記入ください"),
   socialMediaUrls: z.string().optional(),
 
   // 3. デザインに関して
-  designStyle: z
-    .array(
-      z.enum([
-        "シンプル",
-        "高級感",
-        "ナチュラル",
-        "信頼感",
-        "かわいい",
-        "スタイリッシュ",
-        "カラフル",
-        "モノトーン",
-        "その他"
-      ])
-    )
-    .min(1, "デザインの雰囲気を1つ以上選択してください"),
+  designStyle: z.array(z.string()).optional(),
   customDesignStyle: z.string().optional(),
   colorPreferences: z.string().optional(),
   logoPhotos: z.array(z.string()).optional(),
@@ -359,10 +345,10 @@ const businessCardSchema = baseSchema.extend({
   // 同意項目（すべて必須）
   agreements: z.array(z.string()).superRefine((val, ctx) => {
     const required = [
-      "修正は原則2回まで無料、以降は別途お見積りになります",
-      "いただいた素材の状態（画質・音声）によっては仕上がりに影響が出る場合があります",
-      "「おまかせ」部分の表現については一任されることを了承しています",
-      "BGM・音源の著作権には十分ご注意ください（商用利用OKの素材をご提供ください）"
+      "修正は原則2回まで無料です（3回目以降は都度料金が発生します）",
+      "印刷後の誤字脱字などの責任は負いかねますので、ご確認後のご承認が必要です",
+      "ご提供素材（ロゴ・画像）の解像度やサイズにより、仕上がりに影響が出る可能性があります",
+      "印刷費・送料は別途お見積りとなります（ご希望時のみ）"
     ];
     const missing = required.filter(item => !val.includes(item));
     if (missing.length > 0) {
@@ -372,7 +358,23 @@ const businessCardSchema = baseSchema.extend({
       });
     }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.designStyle) &&
+        data.designStyle.includes("その他")
+      ) {
+        return !!data.customDesignStyle && data.customDesignStyle.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムデザインスタイルを入力してください",
+      path: ["customDesignStyle"]
+    }
+  )
+  ;
 
 const bannerSchema = baseSchema.extend({
   type: z.literal("バナー作成"),

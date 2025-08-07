@@ -4,6 +4,7 @@ import { DynamicFormData } from "./validate";
 import LPComponent from "./components/LPComponent";
 import FlyerComponent from "./components/FlyerComponent";
 import VideoComponent from "./components/VideoComponent";
+import BusinessCardComponent from "./components/BusinessCardComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -34,7 +35,7 @@ const RenderTypeSpecificFields = ({
     case "バナー作成":
       return <div>バナー作成特有のフィールド</div>;
     case "名刺作成":
-      return <div>名刺作成特有のフィールド</div>;
+      return <BusinessCardComponent form={form} />;
     default:
       return <div>選択されたタイプに特有のフィールドはありません</div>;
   }

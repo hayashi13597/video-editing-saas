@@ -1,3 +1,5 @@
+"use client";
+
 import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "../validate";
 import FormFieldCustom from "@/components/form/FormFieldCustom";
