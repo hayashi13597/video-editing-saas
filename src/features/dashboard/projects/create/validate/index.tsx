@@ -784,6 +784,21 @@ const thumbnailSchema = baseSchema.extend({
       path: ["customSize"]
     }
   )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.designTones) &&
+        data.designTones.includes("その他")
+      ) {
+        return !!data.customDesignTone && data.customDesignTone.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムサイズを入力してください",
+      path: ["cu.customDesignTone"]
+    }
+  )
   ;
 
 const lineSetupSchema = baseSchema.extend({
