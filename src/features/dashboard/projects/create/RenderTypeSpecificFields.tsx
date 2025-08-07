@@ -10,6 +10,7 @@ import { InstagramComponent } from "./components/InstagramComponent";
 import SEOArticleComponent from "./components/SEOArticleComponent";
 import ThumbnailComponent from "./components/ThumbnailComponent";
 import LineComponent from "./components/LineComponent";
+import ScriptComponent from "./components/ScriptComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -26,7 +27,7 @@ const RenderTypeSpecificFields = ({
     case "Instagram投稿":
       return <InstagramComponent form={form} />;
     case "台本作成":
-      return <div>台本作成特有のフィールド</div>;
+      return <ScriptComponent form={form} />;
     case "LINE構築":
       return <LineComponent form={form} />;
     case "チラシ作成":

@@ -281,7 +281,7 @@ export const defaultValuesMap: Record<
 
     platforms: [],
     customPlatform: "",
-    videoDuration: [],
+    videoDuration: "",
     videoGoals: [],
     customVideoGoal: "",
     targetAudience: "",
@@ -293,15 +293,16 @@ export const defaultValuesMap: Record<
     keyElements: [],
     requiredKeywords: "",
     ngKeywords: "",
-    referencePosts: [],
-    pastExamples: [],
+    referencePostsMethod: "",
+    referencePostsUpload: [],
+    referencePostsUrls: "",
+    pastExamplesMethod: "",
+    pastExamplesUpload: [],
+    pastExamplesUrls: "",
     desiredDeadline: "",
     otherRequests: "",
 
-    agreeDirectionChangePolicy: true,
-    agreeModificationLimit: true,
-    agreeEffectDisclaimer: true,
-    agreeMaterialDelay: true
+    agreements: []
   }
 };
 

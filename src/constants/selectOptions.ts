@@ -352,6 +352,51 @@ const DESIGN_PREFERENCE_OPTIONS = [
   { label: "カラー／雰囲気指定あり", value: "カラー／雰囲気指定あり" }
 ]
 
+const SCRIPT_PLATFORM_OPTIONS = [
+  { label: "TikTok", value: "TikTok" },
+  { label: "Instagramリール", value: "Instagramリール" },
+  { label: "YouTubeショート／本編", value: "YouTubeショート／本編" },
+  { label: "LINE VOOM", value: "LINE VOOM" },
+  { label: "その他", value: "その他" }
+]
+
+const VIDEO_GLOBAL_OPTIONS = [
+  { label: "認知拡大", value: "認知拡大" },
+  { label: "サービス・商品購入", value: "サービス・商品購入" },
+  { label: "LINE登録", value: "LINE登録" },
+  { label: "問い合わせ誘導", value: "問い合わせ誘導" },
+  { label: "信頼獲得", value: "信頼獲得" },
+  { label: "エンタメ・共感", value: "エンタメ・共感" },
+  { label: "ノウハウ提供", value: "ノウハウ提供" },
+  { label: "その他", value: "その他" }
+]
+
+const SCRIPT_STYLE_OPTIONS = [
+  { label: "会話形式（対話型）", value: "会話形式（対話型）" },
+  { label: "独白形式（ナレーション・解説）", value: "独白形式（ナレーション・解説）" },
+  { label: "モノローグ＋字幕中心", value: "モノローグ＋字幕中心" },
+  { label: "お客様の声（架空インタビュー）", value: "お客様の声（架空インタビュー）" },
+  { label: "その他　", value: "その他　" }
+]
+
+const TONE_PREFERENCE_OPTIONS = [
+  { label: "砕けた・フレンドリー", value: "砕けた・フレンドリー" },
+  { label: "信頼感・誠実系", value: "信頼感・誠実系" },
+  { label: "ストーリー仕立て（感動／ビフォーアフター）", value: "ストーリー仕立て（感動／ビフォーアフター）" },
+  { label: "ウケ狙い・ユーモラス", value: "ウケ狙い・ユーモラス" },
+  { label: "セールス・クロージング重視", value: "セールス・クロージング重視" },
+  { label: "その他", value: "その他" }
+]
+
+const KEY_ELEMENTS_OPTIONS = [
+  { label: "問題提起 → 解決（フック重視）", value: "問題提起 → 解決（フック重視）" },
+  { label: "お客様の声・事例紹介", value: "お客様の声・事例紹介" },
+  { label: "商品／サービスの特徴・強み", value: "商品／サービスの特徴・強み" },
+  { label: "比較／他社との違い", value: "比較／他社との違い" },
+  { label: "専門性・実績の提示", value: "専門性・実績の提示" },
+  { label: "CTA（LINE登録・資料請求・申し込みなど）", value: "CTA（LINE登録・資料請求・申し込みなど）" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -391,5 +436,10 @@ export {
   DESIGN_TONES_OPTIONS,
   LINE_TYPE_OPTIONS,
   OBJECTIVES_OPTIONS,
-  DESIGN_PREFERENCE_OPTIONS
+  SCRIPT_PLATFORM_OPTIONS,
+  DESIGN_PREFERENCE_OPTIONS,
+  VIDEO_GLOBAL_OPTIONS,
+  SCRIPT_STYLE_OPTIONS,
+  TONE_PREFERENCE_OPTIONS,
+  KEY_ELEMENTS_OPTIONS
 };

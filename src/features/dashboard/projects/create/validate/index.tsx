@@ -910,34 +910,19 @@ const scriptSchema = baseSchema.extend({
   // 1. 基本情報
   platforms: z
     .array(
-      z.enum([
-        "TikTok",
-        "Instagramリール",
-        "YouTubeショート／本編",
-        "LINE VOOM",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "使用媒体を1つ以上選択してください"),
   customPlatform: z.string().optional(),
 
   videoDuration: z
-    .array(z.enum(["15秒以内", "30秒前後", "60秒以内", "3分以内", "指定なし"]))
+    .string()
     .min(1, "想定尺を1つ以上選択してください"),
 
   // 2. 動画の目的・ターゲット
   videoGoals: z
     .array(
-      z.enum([
-        "認知拡大",
-        "サービス・商品購入",
-        "LINE登録",
-        "問い合わせ誘導",
-        "信頼獲得",
-        "エンタメ・共感",
-        "ノウハウ提供",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "目的を1つ以上選択してください"),
   customVideoGoal: z.string().optional(),
@@ -948,27 +933,14 @@ const scriptSchema = baseSchema.extend({
   // 3. 台本のスタイル・演出について
   scriptStyles: z
     .array(
-      z.enum([
-        "会話形式（対話型）",
-        "独白形式（ナレーション・解説）",
-        "モノローグ＋字幕中心",
-        "お客様の声（架空インタビュー）",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "台本形式を1つ以上選択してください"),
   customScriptStyle: z.string().optional(),
 
   tonePreferences: z
     .array(
-      z.enum([
-        "砕けた・フレンドリー",
-        "信頼感・誠実系",
-        "ストーリー仕立て（感動／ビフォーアフター）",
-        "ウケ狙い・ユーモラス",
-        "セールス・クロージング重視",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "トーン・雰囲気を1つ以上選択してください"),
   customTonePreference: z.string().optional(),
@@ -976,14 +948,7 @@ const scriptSchema = baseSchema.extend({
   // 4. 構成要素・盛り込みたい要点
   keyElements: z
     .array(
-      z.enum([
-        "問題提起 → 解決（フック重視）",
-        "お客様の声・事例紹介",
-        "商品／サービスの特徴・強み",
-        "比較／他社との違い",
-        "専門性・実績の提示",
-        "CTA（LINE登録・資料請求・申し込みなど）"
-      ])
+      z.string()
     )
     .min(1, "盛り込みたい要素を1つ以上選択してください"),
 
@@ -991,27 +956,95 @@ const scriptSchema = baseSchema.extend({
   ngKeywords: z.string().optional(),
 
   // 5. 参考資料・過去投稿
-  referencePosts: z.array(z.string()).optional(),
-  pastExamples: z.array(z.string()).optional(),
+  referencePostsMethod: z.string().optional(),
+  referencePostsUpload: z.array(z.string()).optional(),
+  referencePostsUrls: z.string().optional(),
+  pastExamplesMethod: z.string().optional(),
+  pastExamplesUpload: z.array(z.string()).optional(),
+  pastExamplesUrls: z.string().optional(),
 
   // 6. 納期・その他希望
   desiredDeadline: z.string().optional(),
   otherRequests: z.string().optional(),
 
   // 同意項目（全て必須）
-  agreeDirectionChangePolicy: z.literal(true, {
-    message: "構成・表現の方向性変更に関する注意事項に同意してください"
-  }),
-  agreeModificationLimit: z.literal(true, {
-    message: "修正は原則1回まで無料に同意してください"
-  }),
-  agreeEffectDisclaimer: z.literal(true, {
-    message: "効果保証不可に同意してください"
-  }),
-  agreeMaterialDelay: z.literal(true, {
-    message: "素材不足や方向性不備による納期遅延に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "構成・表現の方向性が大きく変わる場合、再作成扱いとなる可能性があります",
+      "修正は原則1回まで無料、それ以降は別途見積もりとなります",
+      "台本の効果（再生数・成約率）は内容以外の要因にも影響されるため、保証はできません",
+      "提供素材や方向性に不備がある場合は納期が遅れることがあります"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.platforms) &&
+        data.platforms.includes("その他")
+      ) {
+        return !!data.customPlatform && data.customPlatform.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム投稿形式を入力してください",
+      path: ["customPlatform"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.videoGoals) &&
+        data.videoGoals.includes("その他")
+      ) {
+        return !!data.customVideoGoal && data.customVideoGoal.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム投稿形式を入力してください",
+      path: ["customVideoGoal"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.scriptStyles) &&
+        data.scriptStyles.includes("その他　")
+      ) {
+        return !!data.customScriptStyle && data.customScriptStyle.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム投稿形式を入力してください",
+      path: ["customScriptStyle"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.tonePreferences) &&
+        data.tonePreferences.includes("その他")
+      ) {
+        return !!data.customTonePreference && data.customTonePreference.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム投稿形式を入力してください",
+      path: ["customTonePreference"]
+    }
+  )
+  ;
 
 export const dynamicFormSchema = z.discriminatedUnion("type", [
   flyerSchema,
