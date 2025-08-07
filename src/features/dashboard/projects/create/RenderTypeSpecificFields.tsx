@@ -5,6 +5,7 @@ import LPComponent from "./components/LPComponent";
 import FlyerComponent from "./components/FlyerComponent";
 import VideoComponent from "./components/VideoComponent";
 import BusinessCardComponent from "./components/BusinessCardComponent";
+import BannerComponent from "./components/BannerComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -33,7 +34,7 @@ const RenderTypeSpecificFields = ({
     case "サムネイル作成":
       return <div>サムネイル作成特有のフィールド</div>;
     case "バナー作成":
-      return <div>バナー作成特有のフィールド</div>;
+      return <BannerComponent form={form} />;
     case "名刺作成":
       return <BusinessCardComponent form={form} />;
     default:

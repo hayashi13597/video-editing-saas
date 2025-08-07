@@ -382,80 +382,108 @@ const bannerSchema = baseSchema.extend({
   // 1. 基本情報
   bannerTypes: z
     .array(
-      z.enum([
-        "Instagram広告用",
-        "Facebook広告用",
-        "Googleリスティング広告",
-        "LINE広告",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "バナーの種類を1つ以上選択してください"),
-  customBannerType: z.string().optional(), // "その他"選択時の記入欄
+  customBannerType: z.string().optional(),
 
-  sizeSpecification: z.string().optional(), // サイズ(px)指定
-  quantity: z.string().optional(), // 枚数
+  sizeSpecification: z.string().min(1, "サイズ指定は必須です"),
+  quantity: z.string().min(1, "バナーの枚数は必須です"),
 
   // 2. 掲載する内容（テキスト・コピー）
-  mainCatchCopy: z.string().optional(), // メインキャッチコピー
-  subCopy: z.string().optional(), // サブコピー
-  requiredInformation: z.string().optional(), // 表記必須の情報
+  mainCatchCopy: z.string().optional(),
+  subCopy: z.string().optional(),
+  requiredInformation: z.string().optional(),
 
   // 3. ターゲット・訴求目的
   targetAudience: z.string().min(1, "想定ターゲットは必須です"),
   desiredEffect: z
     .array(
-      z.enum([
-        "認知拡大",
-        "資料請求",
-        "LINE登録",
-        "サービス申し込み",
-        "記憶に残るインパクト重視",
-        "その他"
-      ])
+      z.string()
     )
-    .min(1, "狙いたい効果を1つ以上選択してください"),
-  customDesiredEffect: z.string().optional(), // "その他"選択時の記入欄
+    .optional(),
+  customDesiredEffect: z.string().optional(),
 
   // 4. デザインイメージ
   designAtmosphere: z
     .array(
-      z.enum([
-        "高級感",
-        "ポップ",
-        "シンプル",
-        "かわいい",
-        "信頼感",
-        "スタイリッシュ",
-        "女性向け",
-        "その他"
-      ])
+      z.string()
     )
-    .min(1, "雰囲気を1つ以上選択してください"),
-  customDesignAtmosphere: z.string().optional(), // "その他"選択時の記入欄
-  colorPreferences: z.string().optional(), // 希望色味／NGカラー
-  logoPhotos: z.array(z.string()).optional(), // ロゴ・写真素材のアップロード
-  referenceBanners: z.array(z.string()).optional(), // 参考バナーのアップロード
-  referenceBannerUrls: z.string().optional(), // 参考バナーのURL
+    .optional(),
+  customDesignAtmosphere: z.string().optional(),
+  colorPreferences: z.string().optional(),
+  logoPhotos: z.array(z.string()).optional(),
+  referenceBannersMethod: z.string().optional(),
+  referenceBannersUpload: z.array(z.string()).optional(),
+  referenceBannerUrls: z.string().optional(),
 
   // 5. 納期・希望スケジュール
-  desiredDeliveryDate: z.string().optional(), // 希望納品日
-  intermediateCheckTiming: z.string().optional(), // 中間チェック希望タイミング
+  desiredDeliveryDate: z.string().optional(),
+  intermediateCheckTiming: z.string().optional(),
 
   // 同意項目（すべて必須）
-  agreeModificationLimit: z.literal(true, {
-    message: "修正回数制限に同意してください"
-  }),
-  agreeDesignChangePolicy: z.literal(true, {
-    message: "デザイン構成変更に関する注意事項に同意してください"
-  }),
-  agreeMaterialQuality: z.literal(true, {
-    message: "素材品質による影響に同意してください"
-  }),
-  agreeNoEffectGuarantee: z.literal(true, {
-    message: "広告効果の保証に関する注意事項に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "修正は原則2回まで無料です（以降は有料となります）",
+      "デザイン構成変更や大幅な方向転換は「新規扱い」になる場合があります",
+      "ご提供素材（画像・ロゴ等）の画質により仕上がり品質に影響が出る可能性があります",
+      "広告効果の保証は含まれておりません（効果測定は別途相談）"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.bannerTypes) &&
+        data.bannerTypes.includes("その他")
+      ) {
+        return !!data.customBannerType && data.customBannerType.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムバナータイプを入力してください",
+      path: ["customBannerType"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.desiredEffect) &&
+        data.desiredEffect.includes("その他")
+      ) {
+        return !!data.customDesiredEffect && data.customDesiredEffect.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムバナータイプを入力してください",
+      path: ["customDesiredEffect"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.designAtmosphere) &&
+        data.designAtmosphere.includes("その他")
+      ) {
+        return !!data.customDesignAtmosphere && data.customDesignAtmosphere.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムバナータイプを入力してください",
+      path: ["customDesignAtmosphere"]
+    }
+  )
+  ;
 
 const instagramSchema = baseSchema.extend({
   type: z.literal("Instagram投稿"),

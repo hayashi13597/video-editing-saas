@@ -145,15 +145,13 @@ export const defaultValuesMap: Record<
     customDesignAtmosphere: "",
     colorPreferences: "",
     logoPhotos: [],
-    referenceBanners: [],
+    referenceBannersMethod: "",
+    referenceBannersUpload: [],
     referenceBannerUrls: "",
     desiredDeliveryDate: "",
     intermediateCheckTiming: "",
 
-    agreeModificationLimit: true,
-    agreeDesignChangePolicy: true,
-    agreeMaterialQuality: true,
-    agreeNoEffectGuarantee: true
+    agreements: []
   },
 
   Instagram投稿: {

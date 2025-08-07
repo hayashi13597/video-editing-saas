@@ -216,6 +216,34 @@ const DESIGN_STYLE_OPTIONS = [
   { label: "その他（自由記入）", value: "その他" }
 ]
 
+const BANNER_TYPE_OPTIONS = [
+  { label: "Instagram広告用", value: "Instagram広告用" },
+  { label: "Facebook広告用", value: "Facebook広告用" },
+  { label: "Googleリスティング広告", value: "Googleリスティング広告" },
+  { label: "LINE広告", value: "LINE広告" },
+  { label: "その他（記入欄）", value: "その他" }
+]
+
+const DESIRE_EFFECT_OPTIONS = [
+  { label: "認知拡大", value: "認知拡大" },
+  { label: "資料請求", value: "資料請求" },
+  { label: "LINE登録", value: "LINE登録" },
+  { label: "サービス申し込み", value: "サービス申し込み" },
+  { label: "記憶に残るインパクト重視", value: "記憶に残るインパクト重視" },
+  { label: "その他（記入欄）", value: "その他" }
+]
+
+const DESIGN_ATMOSPHERE_OPTIONS = [
+  { label: "高級感", value: "高級感" },
+  { label: "ポップ", value: "ポップ" },
+  { label: "シンプル", value: "シンプル" },
+  { label: "かわいい", value: "かわいい" },
+  { label: "信頼感", value: "信頼感" },
+  { label: "スタイリッシュ", value: "スタイリッシュ" },
+  { label: "女性向け", value: "女性向け" },
+  { label: "その他（自由記入）", value: "その他" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -238,5 +266,8 @@ export {
   VIDEO_ASPECT_RATIO_OPTIONS,
   EDITING_STYLE_OPTIONS,
   SUBTITLE_STYLE_OPTIONS,
-  DESIGN_STYLE_OPTIONS
+  DESIGN_STYLE_OPTIONS,
+  BANNER_TYPE_OPTIONS,
+  DESIRE_EFFECT_OPTIONS,
+  DESIGN_ATMOSPHERE_OPTIONS
 };
