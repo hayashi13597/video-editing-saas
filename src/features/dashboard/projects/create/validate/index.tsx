@@ -796,7 +796,7 @@ const thumbnailSchema = baseSchema.extend({
     },
     {
       error: "「その他」を選択した場合はカスタムサイズを入力してください",
-      path: ["cu.customDesignTone"]
+      path: ["customDesignTone"]
     }
   )
   ;
