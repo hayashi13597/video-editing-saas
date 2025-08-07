@@ -330,6 +330,28 @@ const DESIGN_TONES_OPTIONS = [
   { label: "その他", value: "その他" }
 ]
 
+const LINE_TYPE_OPTIONS = [
+  { label: "LINE公式アカウント（通常）", value: "LINE公式アカウント（通常）" },
+  { label: "LINEミニアプリ", value: "LINEミニアプリ" },
+  { label: "その他", value: "その他" }
+]
+
+const OBJECTIVES_OPTIONS = [
+  { label: "自動返信による問い合わせ対応", value: "自動返信による問い合わせ対応" },
+  { label: "LINEからの予約／購入導線", value: "LINEからの予約／購入導線" },
+  { label: "ステップ配信による教育・販売", value: "ステップ配信による教育・販売" },
+  { label: "リッチメニューを活用したサービス案内", value: "リッチメニューを活用したサービス案内" },
+  { label: "友だち登録キャンペーン／クーポン配布", value: "友だち登録キャンペーン／クーポン配布" },
+  { label: "顧客管理・CRM強化", value: "顧客管理・CRM強化" },
+  { label: "その他", value: "その他" }
+]
+
+const DESIGN_PREFERENCE_OPTIONS = [
+  { label: "おまかせ（トンマナだけ伝える）", value: "おまかせ" },
+  { label: "自社ロゴ・写真あり（添付してください）", value: "自社ロゴ・写真あり" },
+  { label: "カラー／雰囲気指定あり", value: "カラー／雰囲気指定あり" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -366,5 +388,8 @@ export {
   SENTENCE_STYLE_OPTIONS,
   PLATFORM_OPTIONS,
   IMAGE_SIZES_OPTIONS,
-  DESIGN_TONES_OPTIONS
+  DESIGN_TONES_OPTIONS,
+  LINE_TYPE_OPTIONS,
+  OBJECTIVES_OPTIONS,
+  DESIGN_PREFERENCE_OPTIONS
 };

@@ -805,20 +805,12 @@ const lineSetupSchema = baseSchema.extend({
   type: z.literal("LINE構築"),
 
   // 1. 基本情報
-  lineType: z.enum(["LINE公式アカウント（通常）", "LINEミニアプリ", "その他"]),
+  lineType: z.string().min(1, "LINEの種類は必須です"),
   customLineType: z.string().optional(),
 
   objectives: z
     .array(
-      z.enum([
-        "自動返信による問い合わせ対応",
-        "LINEからの予約／購入導線",
-        "ステップ配信による教育・販売",
-        "リッチメニューを活用したサービス案内",
-        "友だち登録キャンペーン／クーポン配布",
-        "顧客管理・CRM強化",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "目的を1つ以上選択してください"),
   customObjective: z.string().optional(),
@@ -850,19 +842,67 @@ const lineSetupSchema = baseSchema.extend({
   otherRequests: z.string().optional(),
 
   // 同意項目（すべて必須）
-  agreeModificationLimit: z.literal(true, {
-    message: "修正は原則2回まで無料に同意してください"
-  }),
-  agreeMaterialDelay: z.literal(true, {
-    message: "未提出の素材による納期影響に同意してください"
-  }),
-  agreeLineSpecChanges: z.literal(true, {
-    message: "LINE仕様変更による影響に同意してください"
-  }),
-  agreeEffectDisclaimer: z.literal(true, {
-    message: "構築による成果保証不可に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "構築後の変更・修正は原則2回まで無料です（以降は都度お見積り）",
+      "未提出の素材がある場合、納期に影響が出る可能性があります",
+      "LINEの仕様変更によって挙動が変わる可能性があります（LINE側要因）",
+      "LINE構築による成果（登録数／売上）の保証はいたしかねます"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        data.lineType.includes("その他")
+      ) {
+        return !!data.customLineType && data.customLineType.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムサイズを入力してください",
+      path: ["customLineType"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.objectives) &&
+        data.objectives.includes("その他")
+      ) {
+        return !!data.customObjective && data.customObjective.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムサイズを入力してください",
+      path: ["customObjective"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.designPreference) &&
+        data.designPreference.includes("カラー／雰囲気指定あり")
+      ) {
+        return !!data.designDetails && data.designDetails.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「カラー／雰囲気指定あり」を選択した場合はデザイン詳細を入力してください",
+      path: ["designDetails"]
+    }
+  )
+  ;
 
 const scriptSchema = baseSchema.extend({
   type: z.literal("台本作成"),

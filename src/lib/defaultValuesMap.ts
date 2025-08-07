@@ -251,7 +251,7 @@ export const defaultValuesMap: Record<
     deadline: "",
     visibility: "public",
 
-    lineType: "LINE公式アカウント（通常）",
+    lineType: "",
     customLineType: "",
     objectives: [],
     customObjective: "",
@@ -268,10 +268,7 @@ export const defaultValuesMap: Record<
     desiredDeadline: "",
     otherRequests: "",
 
-    agreeModificationLimit: true,
-    agreeMaterialDelay: true,
-    agreeLineSpecChanges: true,
-    agreeEffectDisclaimer: true
+    agreements: []
   },
 
   台本作成: {
