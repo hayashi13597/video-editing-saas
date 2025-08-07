@@ -7,6 +7,7 @@ import VideoComponent from "./components/VideoComponent";
 import BusinessCardComponent from "./components/BusinessCardComponent";
 import BannerComponent from "./components/BannerComponent";
 import { InstagramComponent } from "./components/InstagramComponent";
+import SEOArticleComponent from "./components/SEOArticleComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -31,7 +32,7 @@ const RenderTypeSpecificFields = ({
     case "LP修正依頼":
       return <LPComponent form={form} />;
     case "SEO記事作成":
-      return <div>SEO記事作成特有のフィールド</div>;
+      return <SEOArticleComponent form={form} />;
     case "サムネイル作成":
       return <div>サムネイル作成特有のフィールド</div>;
     case "バナー作成":

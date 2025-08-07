@@ -276,6 +276,36 @@ const SUBTITLES_OPTIONS = [
   { label: "両方不要", value: "両方不要" }
 ]
 
+const DELIVERY_FORMAT_OPTIONS = [
+  { label: "Wordファイル", value: "Wordファイル" },
+  { label: "Googleドキュメント", value: "Googleドキュメント" },
+  { label: "テキストファイル（.txt）", value: "テキストファイル（.txt）" },
+  { label: "CMSに直接入稿（WordPressなど）", value: "CMSに直接入稿（WordPressなど）" }
+]
+
+const SEARCH_INTENT_OPTIONS = [
+  { label: "情報提供", value: "情報提供" },
+  { label: "比較・検討", value: "比較・検討" },
+  { label: "問題解決", value: "問題解決" },
+  { label: "購入・申し込み誘導", value: "購入・申し込み誘導" },
+  { label: "その他（自由記入）", value: "その他" }
+]
+
+const TONES_OPTIONS = [
+  { label: "丁寧・信頼感重視", value: "丁寧・信頼感重視" },
+  { label: "砕けた口調で読みやすく", value: "砕けた口調で読みやすく" },
+  { label: "専門的・論文調", value: "専門的・論文調" },
+  { label: "セールス寄り", value: "セールス寄り" },
+  { label: "初心者向けに優しく", value: "初心者向けに優しく" },
+  { label: "その他（記入欄）", value: "その他" }
+]
+
+const SENTENCE_STYLE_OPTIONS = [
+  { label: "「です・ます」調", value: "です・ます" },
+  { label: "「だ・である」調", value: "だ・である" },
+  { label: "指定なし", value: "指定なし" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -305,5 +335,9 @@ export {
   POST_FORMATS_OPTIONS,
   POST_PURPOSES_OPTIONS,
   REEL_DURATION_OPTIONS,
-  SUBTITLES_OPTIONS
+  SUBTITLES_OPTIONS,
+  DELIVERY_FORMAT_OPTIONS,
+  SEARCH_INTENT_OPTIONS,
+  TONES_OPTIONS,
+  SENTENCE_STYLE_OPTIONS
 };

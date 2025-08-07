@@ -602,60 +602,41 @@ const seoArticleSchema = baseSchema.extend({
   type: z.literal("SEO記事作成"),
 
   // 1. 基本情報
-  publicationTarget: z.string().optional(), // 記事の掲載先（URLまたは媒体名）
-  wordCountDescription: z.string().optional(), // 希望文字数（例：2,000文字前後）
+  publicationTarget: z.string().min(1, "記事の掲載先は必須です"),
+  wordCountDescription: z.string().min(1, "文字数の説明は必須です"),
 
-  deliveryFormat: z
-    .array(
-      z.enum([
-        "Wordファイル",
-        "Googleドキュメント",
-        "テキストファイル（.txt）",
-        "CMSに直接入稿（WordPressなど）"
-      ])
-    )
-    .min(1, "納品形式を1つ以上選択してください"),
+  deliveryFormat: z.string()
+    .min(1, "納品形式は必須です"),
 
   // 2. SEO対策に関する情報
   mainKeyword: z.string().min(1, "メインキーワードは必須です"),
-  subKeywords: z.array(z.string()).optional(),
+  subKeywords: z.string().optional(),
 
   searchIntents: z
     .array(
-      z.enum([
-        "情報提供",
-        "比較・検討",
-        "問題解決",
-        "購入・申し込み誘導",
-        "その他"
-      ])
+      z.string()
     )
-    .min(1, "検索意図を1つ以上選択してください"),
+    .optional(),
   customSearchIntent: z.string().optional(),
 
   targetReader: z.string().optional(),
 
   // 3. 記事の構成・方向性
   desiredStructure: z.string().optional(),
-  referenceArticles: z.array(z.string()).optional(),
+  referenceArticlesMethod: z.string().optional(),
+  referenceArticlesUpload: z.array(z.string()).optional(),
+  referenceArticlesUrls: z.string().optional(),
 
   // 4. トーン・文体について
   tones: z
     .array(
-      z.enum([
-        "丁寧・信頼感重視",
-        "砕けた口調で読みやすく",
-        "専門的・論文調",
-        "セールス寄り",
-        "初心者向けに優しく",
-        "その他"
-      ])
+      z.string()
     )
-    .min(1, "記事のトーンを1つ以上選択してください"),
+    .optional(),
   customTone: z.string().optional(),
 
   sentenceStyle: z
-    .enum(["です・ます調", "だ・である調", "指定なし"])
+    .string()
     .optional(),
 
   callToAction: z.string().optional(),
@@ -665,19 +646,51 @@ const seoArticleSchema = baseSchema.extend({
   firstDraftCheckDate: z.string().optional(),
 
   // 同意項目（全て必須）
-  agreeModificationLimit: z.literal(true, {
-    message: "修正は原則1回まで無料に同意してください"
-  }),
-  agreeSeoDisclaimer: z.literal(true, {
-    message: "SEO順位保証不可に同意してください"
-  }),
-  agreeSearchIntentClarification: z.literal(true, {
-    message: "検索意図の明確化に同意してください"
-  }),
-  agreeInitialProofResponsibility: z.literal(true, {
-    message: "初稿時の誤字脱字確認責任に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "修正は原則1回まで無料（2回目以降は内容により追加料金あり）",
+      "SEO順位の保証はできかねます（構成・設計は対策に基づいて行います）",
+      "検索意図が不明確な場合、意図とずれる可能性があるため記載をお願いします",
+      "誤字脱字・事実確認は初稿時にご確認いただく形となります"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.searchIntents) &&
+        data.searchIntents.includes("その他")
+      ) {
+        return !!data.customSearchIntent && data.customSearchIntent.trim() !== "";
+      }
+      return true;
+    }, {
+    error: "「その他」を選択した場合はカスタム検索意図を入力してください",
+    path: ["customSearchIntent"]
+  }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.tones) &&
+        data.tones.includes("その他")
+      ) {
+        return !!data.customTone && data.customTone.trim() !== "";
+      }
+      return true;
+    }, {
+    error: "「その他」を選択した場合はカスタム検索意図を入力してください",
+    path: ["customTone"]
+  }
+  )
+  ;
 
 const thumbnailSchema = baseSchema.extend({
   type: z.literal("サムネイル作成"),

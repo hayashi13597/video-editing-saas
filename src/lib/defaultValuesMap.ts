@@ -196,14 +196,16 @@ export const defaultValuesMap: Record<
 
     publicationTarget: "",
     wordCountDescription: "",
-    deliveryFormat: [],
+    deliveryFormat: "",
     mainKeyword: "",
-    subKeywords: [],
+    subKeywords: "",
     searchIntents: [],
     customSearchIntent: "",
     targetReader: "",
     desiredStructure: "",
-    referenceArticles: [],
+    referenceArticlesMethod: "",
+    referenceArticlesUpload: [],
+    referenceArticlesUrls: "",
     tones: [],
     customTone: "",
     sentenceStyle: "です・ます調",
@@ -211,10 +213,7 @@ export const defaultValuesMap: Record<
     desiredDeadline: "",
     firstDraftCheckDate: "",
 
-    agreeModificationLimit: true,
-    agreeSeoDisclaimer: true,
-    agreeSearchIntentClarification: true,
-    agreeInitialProofResponsibility: true
+    agreements: []
   },
 
   サムネイル作成: {

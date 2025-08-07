@@ -199,7 +199,7 @@ export const InstagramComponent = ({ form }: { form: UseFormReturn<DynamicFormDa
       </div>
 
       <div className="space-y-3">
-        <h3 className="small-title">5. 納期について</h3>
+        <h3 className="small-title">5. 納期と希望スケジュール</h3>
         <FormFieldCustom
           control={form.control}
           name="desiredDeadline"
