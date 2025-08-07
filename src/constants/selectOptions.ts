@@ -165,6 +165,45 @@ const PURPOSE_OPTIONS = [
   { label: "その他", value: "その他" }
 ];
 
+const VIDEO_USAGE_OPTIONS = [
+  { label: "TikTok", value: "TikTok" },
+  { label: "Instagramリール", value: "Instagramリール" },
+  { label: "YouTubeショート／本編", value: "YouTubeショート／本編" },
+  { label: "PR用動画（企業／店舗）", value: "PR用動画（企業／店舗）" },
+  { label: "セミナー動画", value: "セミナー動画" },
+  { label: "その他", value: "その他" }
+]
+
+const VIDEO_DURATION_OPTIONS = [
+  { label: "15秒以内", value: "15秒以内" },
+  { label: "30秒以内", value: "30秒以内" },
+  { label: "1分以内", value: "1分以内" },
+  { label: "3分以内", value: "3分以内" },
+  { label: "指定なし", value: "指定なし" }
+]
+
+const VIDEO_ASPECT_RATIO_OPTIONS = [
+  { label: "縦（9:16）", value: "縦（9:16）" },
+  { label: "横（16:9）", value: "横（16:9）" },
+  { label: "正方形（1:1）", value: "正方形（1:1）" }
+]
+
+const EDITING_STYLE_OPTIONS = [
+  { label: "ポップ", value: "ポップ" },
+  { label: "シネマティック", value: "シネマティック" },
+  { label: "ビジネス寄り", value: "ビジネス寄り" },
+  { label: "テロップ多め", value: "テロップ多め" },
+  { label: "インパクト重視", value: "インパクト重視" },
+  { label: "かわいい・やさしい", value: "かわいい・やさしい" },
+  { label: "その他（記入欄）", value: "その他" }
+]
+
+const SUBTITLE_STYLE_OPTIONS = [
+  { label: "セリフすべて表示", value: "セリフすべて表示" },
+  { label: "要点のみ表示", value: "要点のみ表示" },
+  { label: "テロップ不要", value: "テロップ不要" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -181,5 +220,10 @@ export {
   MODIFICATION_PURPOSE_OPTIONS,
   SIZE_OPTIONS,
   ATMOSPHERE_OPTIONS,
-  PURPOSE_OPTIONS
+  PURPOSE_OPTIONS,
+  VIDEO_USAGE_OPTIONS,
+  VIDEO_DURATION_OPTIONS,
+  VIDEO_ASPECT_RATIO_OPTIONS,
+  EDITING_STYLE_OPTIONS,
+  SUBTITLE_STYLE_OPTIONS
 };

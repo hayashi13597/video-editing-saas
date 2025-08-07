@@ -3,6 +3,7 @@ import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "./validate";
 import LPComponent from "./components/LPComponent";
 import FlyerComponent from "./components/FlyerComponent";
+import VideoComponent from "./components/VideoComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -15,7 +16,7 @@ const RenderTypeSpecificFields = ({
 }: RenderTypeSpecificFieldsProps) => {
   switch (selectedType) {
     case "動画編集":
-      return <div>動画編集特有のフィールド</div>;
+      return <VideoComponent form={form} />;
     case "Instagram投稿":
       return <div>Instagram投稿特有のフィールド</div>;
     case "台本作成":

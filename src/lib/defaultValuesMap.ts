@@ -72,26 +72,25 @@ export const defaultValuesMap: Record<
 
     videoUsage: [],
     customVideoUsage: "",
-    videoDuration: "15秒以内",
-    aspectRatio: "縦（9:16）",
+    videoDuration: "",
+    aspectRatio: "",
     sourceVideoUrl: "",
+    sourceVideoUploadUrl: "",
+    sourceVideoUploadMethod: "",
     additionalImages: [],
     bgmRequirements: "",
     editingStyle: [],
     customEditingStyle: "",
-    subtitleStyle: "セリフすべて表示",
+    subtitleStyle: "",
     cuttingInstructions: "",
     graphicsRequirements: "",
     ngItems: "",
     referenceVideos: "",
     additionalInstructions: "",
     desiredDeadline: "",
-    intermediateCheck: false,
+    intermediateCheck: "",
 
-    agreeModificationLimit: true,
-    agreeMaterialQuality: true,
-    agreeCreativeControl: true,
-    agreeCopyright: true
+    agreements: []
   },
 
   名刺作成: {
@@ -121,10 +120,7 @@ export const defaultValuesMap: Record<
     additionalRequirements: "",
     desiredSchedule: "",
 
-    agreeModificationLimit: true,
-    agreeProofreadingResponsibility: true,
-    agreeMaterialQuality: true,
-    agreePrintingCost: true
+    agreements: []
   },
 
   バナー作成: {

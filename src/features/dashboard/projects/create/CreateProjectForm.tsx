@@ -13,7 +13,7 @@ import MicroIcon from "../../../../../public/icons/micro.svg"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 
-const formType = "LP修正依頼" as DefaultValuesMapKeys;
+const formType = "動画編集" as DefaultValuesMapKeys;
 
 const CreateProjectForm = () => {
   const form = useForm<DynamicFormData>({
@@ -22,6 +22,8 @@ const CreateProjectForm = () => {
   });
 
   const selectedType = form.watch("type");
+
+  // console.log(form.formState.errors);
 
   const onSubmit = (data: DynamicFormData) => {
     console.log("Form submitted with data:", data);

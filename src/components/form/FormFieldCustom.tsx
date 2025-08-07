@@ -59,6 +59,7 @@ interface FormFieldCustomProps<T extends FormType> {
   radioPlan?: boolean;
   checkboxGroupOptions?: SelectOption[];
   checkboxGroupClassName?: string;
+  defaultValueSingleCheckBox?: string | boolean;
 }
 
 const FormFieldCustom = <T extends FormType>({
@@ -518,7 +519,7 @@ const FormFieldCustom = <T extends FormType>({
                             if (checked) {
                               field.onChange(option.value);
                             } else {
-                              field.onChange(undefined);
+                              field.onChange("");
                             }
                           }}
                           className="data-[state=checked]:bg-green-main data-[state=checked]:border-green-main"

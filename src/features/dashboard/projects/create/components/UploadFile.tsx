@@ -115,7 +115,7 @@ const UploadFile = ({
 
   return (
     <div className="space-y-2">
-      <Label className="!body-text">
+      <Label className="leading-[1.75] mb-1">
         {label || "プロフィール画像"}
         {requiredBadge ? (
           <RequiredBadge required={true} />
@@ -130,6 +130,7 @@ const UploadFile = ({
             "border border-stroke border-dashed rounded-6 py-4 px-3 cursor-pointer",
             {
               "cursor-default": selectedFiles && selectedFiles.length >= maxFiles,
+              "border-red": (form.formState.errors as Record<string, any>)[name]
             }
           )}
         >
@@ -169,6 +170,11 @@ const UploadFile = ({
           )}
         </div>
       </div>
+      {(form.formState.errors as Record<string, any>)[name] && (
+        <p className="body-text text-red">
+          {(form.formState.errors as Record<string, any>)[name]?.message}
+        </p>
+      )}
     </div>
   );
 };

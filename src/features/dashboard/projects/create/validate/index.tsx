@@ -187,32 +187,20 @@ const videoEditingSchema = baseSchema.extend({
   // 1. 基本情報
   videoUsage: z
     .array(
-      z.enum([
-        "TikTok",
-        "Instagramリール",
-        "YouTubeショート／本編",
-        "PR用動画（企業／店舗）",
-        "セミナー動画",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "動画の用途を1つ以上選択してください"),
   customVideoUsage: z.string().optional(),
 
-  videoDuration: z.enum([
-    "15秒以内",
-    "30秒以内",
-    "1分以内",
-    "3分以内",
-    "指定なし"
-  ]),
+  videoDuration: z.string().min(1, "動画の長さは必須です"),
 
-  aspectRatio: z.enum(["縦（9:16）", "横（16:9）", "正方形（1:1）"]),
+  aspectRatio: z.string().min(1, "希望する画面比率は必須です"),
 
   // 2. 素材提供について
-  sourceVideoUrl: z
-    .string()
-    .min(1, "素材動画のURL又はアップロード情報は必須です"),
+  sourceVideoUploadMethod: z.string().min(1, "素材動画のアップロード方法は必須です"),
+  sourceVideoUrl: z.string().optional(),
+  sourceVideoUploadUrl: z.string().optional(),
+
   additionalImages: z.array(z.string()).optional(),
   bgmRequirements: z.string().optional(),
 
@@ -229,10 +217,10 @@ const videoEditingSchema = baseSchema.extend({
         "その他"
       ])
     )
-    .min(1, "編集の雰囲気を1つ以上選択してください"),
+    .optional(),
   customEditingStyle: z.string().optional(),
 
-  subtitleStyle: z.enum(["セリフすべて表示", "要点のみ表示", "テロップ不要"]),
+  subtitleStyle: z.string().optional(),
 
   cuttingInstructions: z.string().optional(),
   graphicsRequirements: z.string().optional(),
@@ -244,22 +232,84 @@ const videoEditingSchema = baseSchema.extend({
 
   // 5. 納期・スケジュール
   desiredDeadline: z.string().optional(),
-  intermediateCheck: z.boolean().optional(),
+  intermediateCheck: z.string().optional(),
 
   // 同意項目（すべて必須）
-  agreeModificationLimit: z.literal(true, {
-    message: "修正回数制限に同意してください"
-  }),
-  agreeMaterialQuality: z.literal(true, {
-    message: "素材の状態による影響に同意してください"
-  }),
-  agreeCreativeControl: z.literal(true, {
-    message: "「おまかせ」部分の一任に同意してください"
-  }),
-  agreeCopyright: z.literal(true, {
-    message: "BGM・音源の著作権に関する注意事項に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "修正は原則2回まで無料、以降は別途お見積りになります",
+      "いただいた素材の状態（画質・音声）によっては仕上がりに影響が出る場合があります",
+      "「おまかせ」部分の表現については一任されることを了承しています",
+      "BGM・音源の著作権には十分ご注意ください（商用利用OKの素材をご提供ください）"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.videoUsage) &&
+        data.videoUsage.includes("その他")
+      ) {
+        return !!data.customVideoUsage && data.customVideoUsage.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム動画用途を入力してください",
+      path: ["customVideoUsage"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        data.sourceVideoUploadMethod.includes("URL")
+      ) {
+        return !!data.sourceVideoUrl && data.sourceVideoUrl.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "素材動画のURLは必須です",
+      path: ["sourceVideoUrl"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        data.sourceVideoUploadMethod.includes("ファイルアップロード")
+      ) {
+        return !!data.sourceVideoUploadUrl && data.sourceVideoUploadUrl.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "動画ファイルのアップロードは必須です",
+      path: ["sourceVideoUploadUrl"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.editingStyle) &&
+        data.editingStyle.includes("その他")
+      ) {
+        return !!data.customEditingStyle && data.customEditingStyle.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム動画用途を入力してください",
+      path: ["customEditingStyle"]
+    }
+  )
+  ;
 
 const businessCardSchema = baseSchema.extend({
   type: z.literal("名刺作成"),
@@ -307,17 +357,20 @@ const businessCardSchema = baseSchema.extend({
   desiredSchedule: z.string().optional(),
 
   // 同意項目（すべて必須）
-  agreeModificationLimit: z.literal(true, {
-    message: "修正回数制限に同意してください"
-  }),
-  agreeProofreadingResponsibility: z.literal(true, {
-    message: "印刷後の誤字脱字責任に関する注意事項に同意してください"
-  }),
-  agreeMaterialQuality: z.literal(true, {
-    message: "素材の解像度・サイズによる影響に同意してください"
-  }),
-  agreePrintingCost: z.literal(true, {
-    message: "印刷費・送料別途に関する注意事項に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "修正は原則2回まで無料、以降は別途お見積りになります",
+      "いただいた素材の状態（画質・音声）によっては仕上がりに影響が出る場合があります",
+      "「おまかせ」部分の表現については一任されることを了承しています",
+      "BGM・音源の著作権には十分ご注意ください（商用利用OKの素材をご提供ください）"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
 });
 
