@@ -13,7 +13,7 @@ import MicroIcon from "../../../../../public/icons/micro.svg"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 
-const formType = "SEO記事作成" as DefaultValuesMapKeys;
+const formType = "サムネイル作成" as DefaultValuesMapKeys;
 
 const CreateProjectForm = () => {
   const form = useForm<DynamicFormData>({

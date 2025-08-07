@@ -698,27 +698,16 @@ const thumbnailSchema = baseSchema.extend({
   // 1. 基本情報
   platforms: z
     .array(
-      z.enum([
-        "YouTube",
-        "Instagramリール（カバー）",
-        "TikTok",
-        "LINE VOOM",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "使用媒体を1つ以上選択してください"),
   customPlatform: z.string().optional(),
 
-  videoTitle: z.string().optional(),
+  videoTitle: z.string().min(1, "動画タイトルは必須です"),
 
   imageSizes: z
     .array(
-      z.enum([
-        "横型（1280×720など）",
-        "正方形（1080×1080）",
-        "縦型（1080×1920）",
-        "指定サイズ"
-      ])
+      z.string()
     )
     .min(1, "希望する画像サイズを1つ以上選択してください"),
   customSize: z.string().optional(),
@@ -728,45 +717,74 @@ const thumbnailSchema = baseSchema.extend({
 
   designTones: z
     .array(
-      z.enum([
-        "信頼感・高級感",
-        "ポップ・親しみやすい",
-        "エモーショナル・感動系",
-        "怖い・煽り系",
-        "笑える・バズ狙い",
-        "その他"
-      ])
+      z.string()
     )
-    .min(1, "イメージ・トーンを1つ以上選択してください"),
+    .optional(),
   customDesignTone: z.string().optional(),
 
   colorPreferences: z.string().optional(),
 
   assets: z.array(z.string()).optional(),
 
-  referenceThumbnails: z.array(z.string()).optional(),
+  referenceThumbnailsMethod: z.string().optional(),
+  referenceThumbnailsUpload: z.array(z.string()).optional(),
+  referenceThumbnailsUrls: z.string().optional(),
 
   // 3. 修正と納期
   desiredDeadline: z.string().optional(),
 
   intermediateCheck: z
-    .enum(["初稿提出時に確認したい", "完成品だけでOK"])
+    .string()
     .optional(),
 
   // 同意項目（全て必須）
-  agreeModificationLimit: z.literal(true, {
-    message: "修正は原則2回まで無料に同意してください"
-  }),
-  agreeCopyrightPolicy: z.literal(true, {
-    message: "著作権に関わる素材の使用不可に同意してください"
-  }),
-  agreeEffectDisclaimer: z.literal(true, {
-    message: "効果保証不可に同意してください"
-  }),
-  agreeCreativeDirection: z.literal(true, {
-    message: "「おまかせ」の場合デザイン一任に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "修正は原則2回まで無料（以降は追加料金発生の場合あり）",
+      "著作権に関わる素材（芸能人写真・商標ロゴなど）の使用はお控えください",
+      "完成品の効果（クリック率や再生数）を保証するものではありません",
+      "「おまかせ」で依頼された場合のデザイン方向性は弊社に一任されます"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.platforms) &&
+        data.platforms.includes("その他")
+      ) {
+        return !!data.customPlatform && data.customPlatform.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタムサイズを入力してください",
+      path: ["customPlatform"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.imageSizes) &&
+        data.imageSizes.includes("指定サイズ")
+      ) {
+        return !!data.customSize && data.customSize.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「指定サイズ」を選択した場合はカスタムサイズを入力してください",
+      path: ["customSize"]
+    }
+  )
+  ;
 
 const lineSetupSchema = baseSchema.extend({
   type: z.literal("LINE構築"),

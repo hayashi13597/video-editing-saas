@@ -8,6 +8,7 @@ import BusinessCardComponent from "./components/BusinessCardComponent";
 import BannerComponent from "./components/BannerComponent";
 import { InstagramComponent } from "./components/InstagramComponent";
 import SEOArticleComponent from "./components/SEOArticleComponent";
+import ThumbnailComponent from "./components/ThumbnailComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -34,7 +35,7 @@ const RenderTypeSpecificFields = ({
     case "SEO記事作成":
       return <SEOArticleComponent form={form} />;
     case "サムネイル作成":
-      return <div>サムネイル作成特有のフィールド</div>;
+      return <ThumbnailComponent form={form} />;
     case "バナー作成":
       return <BannerComponent form={form} />;
     case "名刺作成":

@@ -234,14 +234,13 @@ export const defaultValuesMap: Record<
     customDesignTone: "",
     colorPreferences: "",
     assets: [],
-    referenceThumbnails: [],
+    referenceThumbnailsMethod: "",
+    referenceThumbnailsUpload: [],
+    referenceThumbnailsUrls: "",
     desiredDeadline: "",
-    intermediateCheck: "完成品だけでOK",
+    intermediateCheck: "",
 
-    agreeModificationLimit: true,
-    agreeCopyrightPolicy: true,
-    agreeEffectDisclaimer: true,
-    agreeCreativeDirection: true
+    agreements: []
   },
 
   LINE構築: {

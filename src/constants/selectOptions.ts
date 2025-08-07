@@ -306,6 +306,30 @@ const SENTENCE_STYLE_OPTIONS = [
   { label: "指定なし", value: "指定なし" }
 ]
 
+const PLATFORM_OPTIONS = [
+  { label: "YouTube", value: "YouTube" },
+  { label: "Instagramリール（カバー）", value: "Instagramリール（カバー）" },
+  { label: "TikTok", value: "TikTok" },
+  { label: "LINE VOOM", value: "LINE VOOM" },
+  { label: "その他", value: "その他" }
+]
+
+const IMAGE_SIZES_OPTIONS = [
+  { label: "横型（1280×720など）", value: "横型（1280×720など）" },
+  { label: "正方形（1080×1080）", value: "正方形（1080×1080）" },
+  { label: "縦型（1080×1920）", value: "縦型（1080×1920）" },
+  { label: "指定サイズ", value: "指定サイズ" }
+]
+
+const DESIGN_TONES_OPTIONS = [
+  { label: "信頼感・高級感", value: "信頼感・高級感" },
+  { label: "ポップ・親しみやすい", value: "ポップ・親しみやすい" },
+  { label: "エモーショナル・感動系", value: "エモーショナル・感動系" },
+  { label: "怖い・煽り系", value: "怖い・煽り系" },
+  { label: "笑える・バズ狙い", value: "笑える・バズ狙い" },
+  { label: "その他", value: "その他" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -339,5 +363,8 @@ export {
   DELIVERY_FORMAT_OPTIONS,
   SEARCH_INTENT_OPTIONS,
   TONES_OPTIONS,
-  SENTENCE_STYLE_OPTIONS
+  SENTENCE_STYLE_OPTIONS,
+  PLATFORM_OPTIONS,
+  IMAGE_SIZES_OPTIONS,
+  DESIGN_TONES_OPTIONS
 };
