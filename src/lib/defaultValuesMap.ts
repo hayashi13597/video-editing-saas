@@ -173,18 +173,17 @@ export const defaultValuesMap: Record<
     designStyles: [],
     customDesignStyle: "",
     colorPreferences: "",
-    assets: [],
+    assetsMethod: "",
+    assetsUrls: [],
+    assetsUpload: [],
     referencePosts: [],
-    reelDuration: "〜15秒",
-    subtitles: "テロップ希望",
+    reelDuration: "",
+    subtitles: "",
     musicPreference: "",
     desiredDeadline: "",
     scheduleNotes: "",
 
-    agreeModificationLimit: true,
-    agreeMaterialQuality: true,
-    agreeApprovalPolicy: true,
-    agreeEffectDisclaimer: true
+    agreements: []
   },
 
   SEO記事作成: {

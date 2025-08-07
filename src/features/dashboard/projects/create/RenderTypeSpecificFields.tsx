@@ -6,6 +6,7 @@ import FlyerComponent from "./components/FlyerComponent";
 import VideoComponent from "./components/VideoComponent";
 import BusinessCardComponent from "./components/BusinessCardComponent";
 import BannerComponent from "./components/BannerComponent";
+import { InstagramComponent } from "./components/InstagramComponent";
 
 interface RenderTypeSpecificFieldsProps {
   selectedType: DefaultValuesMapKeys;
@@ -20,7 +21,7 @@ const RenderTypeSpecificFields = ({
     case "動画編集":
       return <VideoComponent form={form} />;
     case "Instagram投稿":
-      return <div>Instagram投稿特有のフィールド</div>;
+      return <InstagramComponent form={form} />;
     case "台本作成":
       return <div>台本作成特有のフィールド</div>;
     case "LINE構築":

@@ -491,64 +491,42 @@ const instagramSchema = baseSchema.extend({
   // 1. 投稿の目的・タイプ
   postFormats: z
     .array(
-      z.enum([
-        "フィード画像（1枚）",
-        "フィード画像（複数スライド）",
-        "リール動画（15秒〜60秒）",
-        "ストーリーズ",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "投稿形式を1つ以上選択してください"),
   customPostFormat: z.string().optional(),
 
   postPurposes: z
     .array(
-      z.enum([
-        "認知拡大",
-        "LINE登録促進",
-        "サービス販売",
-        "ブランディング",
-        "役立ち情報の発信",
-        "採用／求人",
-        "来店促進",
-        "その他"
-      ])
+      z.string()
     )
     .min(1, "投稿の目的を1つ以上選択してください"),
   customPostPurpose: z.string().optional(),
 
   // 2. 投稿内容について
-  headline: z.string().optional(),
-  bodyText: z.string().optional(),
+  headline: z.string().min(1, "タイトル・見出しは必須です"),
+  bodyText: z.string().min(1, "投稿内容は必須です"),
   hashtags: z.string().optional(),
   tagInfo: z.string().optional(),
 
   // 3. デザイン・構成
   designStyles: z
     .array(
-      z.enum([
-        "シンプル",
-        "高級感",
-        "かわいい",
-        "ポップ",
-        "情報重視（インフォ系）",
-        "スタイリッシュ",
-        "女性向け",
-        "その他"
-      ])
+      z.string()
     )
-    .min(1, "雰囲気を1つ以上選択してください"),
+    .optional(),
   customDesignStyle: z.string().optional(),
 
   colorPreferences: z.string().optional(),
-  assets: z.array(z.string()).optional(),
+  assetsMethod: z.string().optional(),
+  assetsUrls: z.array(z.string()).optional(),
+  assetsUpload: z.array(z.string()).optional(),
   referencePosts: z.array(z.string()).optional(),
 
   // 4. リール動画に関する情報（任意）
-  reelDuration: z.enum(["〜15秒", "30秒", "60秒", "指定なし"]).optional(),
+  reelDuration: z.string().optional(),
   subtitles: z
-    .enum(["テロップ希望", "ナレーション希望", "両方不要"])
+    .string()
     .optional(),
   musicPreference: z.string().optional(),
 
@@ -557,19 +535,68 @@ const instagramSchema = baseSchema.extend({
   scheduleNotes: z.string().optional(),
 
   // 同意項目（全て必須）
-  agreeModificationLimit: z.literal(true, {
-    message: "修正は原則2回まで無料に同意してください"
-  }),
-  agreeMaterialQuality: z.literal(true, {
-    message: "素材の状態による仕上がり差に同意してください"
-  }),
-  agreeApprovalPolicy: z.literal(true, {
-    message: "事前チェック後の修正対応制限に同意してください"
-  }),
-  agreeEffectDisclaimer: z.literal(true, {
-    message: "効果保証不可に同意してください"
+  agreements: z.array(z.string()).superRefine((val, ctx) => {
+    const required = [
+      "修正は原則2回まで無料です（3回目以降は有料）",
+      "ご提供素材の状態（画質・構図）により、仕上がりに差が出ることを了承します",
+      "投稿内容（表現・情報）の事前チェック・承認後の修正には対応できない場合があります",
+      "効果（再生数・フォロワー数）の保証はいたしかねます"
+    ];
+    const missing = required.filter(item => !val.includes(item));
+    if (missing.length > 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: `すべて同意事項に同意してください`
+      });
+    }
   })
-});
+})
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.postFormats) &&
+        data.postFormats.includes("その他")
+      ) {
+        return !!data.customPostFormat && data.customPostFormat.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム投稿形式を入力してください",
+      path: ["customPostFormat"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.postPurposes) &&
+        data.postPurposes.includes("その他")
+      ) {
+        return !!data.customPostPurpose && data.customPostPurpose.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム投稿形式を入力してください",
+      path: ["customPostPurpose"]
+    }
+  )
+  .refine(
+    data => {
+      if (
+        Array.isArray(data.designStyles) &&
+        data.designStyles.includes("その他")
+      ) {
+        return !!data.customDesignStyle && data.customDesignStyle.trim() !== "";
+      }
+      return true;
+    },
+    {
+      error: "「その他」を選択した場合はカスタム投稿形式を入力してください",
+      path: ["customDesignStyle"]
+    }
+  )
+  ;
 
 const seoArticleSchema = baseSchema.extend({
   type: z.literal("SEO記事作成"),

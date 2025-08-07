@@ -244,6 +244,38 @@ const DESIGN_ATMOSPHERE_OPTIONS = [
   { label: "その他（自由記入）", value: "その他" }
 ]
 
+const POST_FORMATS_OPTIONS = [
+  { label: "フィード画像（1枚）", value: "フィード画像（1枚）" },
+  { label: "フィード画像（複数スライド）", value: "フィード画像（複数スライド）" },
+  { label: "リール動画（15秒〜60秒）", value: "リール動画（15秒〜60秒）" },
+  { label: "ストーリーズ", value: "ストーリーズ" },
+  { label: "その他（記入欄）", value: "その他" }
+]
+
+const POST_PURPOSES_OPTIONS = [
+  { label: "認知拡大", value: "認知拡大" },
+  { label: "LINE登録促進", value: "LINE登録促進" },
+  { label: "サービス販売", value: "サービス販売" },
+  { label: "ブランディング", value: "ブランディング" },
+  { label: "役立ち情報の発信", value: "役立ち情報の発信" },
+  { label: "採用／求人", value: "採用／求人" },
+  { label: "来店促進", value: "来店促進" },
+  { label: "その他（記入欄）", value: "その他" }
+]
+
+const REEL_DURATION_OPTIONS = [
+  { label: "〜15秒", value: "〜15秒" },
+  { label: "30秒", value: "30秒" },
+  { label: "60秒", value: "60秒" },
+  { label: "指定なし", value: "指定なし" }
+];
+
+const SUBTITLES_OPTIONS = [
+  { label: "テロップ希望", value: "テロップ希望" },
+  { label: "ナレーション希望", value: "ナレーション希望" },
+  { label: "両方不要", value: "両方不要" }
+]
+
 export {
   SPECIALIZATION_OPTIONS,
   SOFTWARE_OPTIONS,
@@ -269,5 +301,9 @@ export {
   DESIGN_STYLE_OPTIONS,
   BANNER_TYPE_OPTIONS,
   DESIRE_EFFECT_OPTIONS,
-  DESIGN_ATMOSPHERE_OPTIONS
+  DESIGN_ATMOSPHERE_OPTIONS,
+  POST_FORMATS_OPTIONS,
+  POST_PURPOSES_OPTIONS,
+  REEL_DURATION_OPTIONS,
+  SUBTITLES_OPTIONS
 };
