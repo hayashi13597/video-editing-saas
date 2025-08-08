@@ -61,7 +61,11 @@ const nextAuthOptions: NextAuthOptions = {
     })
   ],
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60 // 24 hours
+  },
+  jwt: {
+    maxAge: 24 * 60 * 60
   },
   pages: {
     signIn: "/sign-in"
