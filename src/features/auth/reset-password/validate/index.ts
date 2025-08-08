@@ -1,4 +1,4 @@
-import { passwordRegex } from "@/constants";
+import { passwordRegex } from "@/constants/validation";
 import { z } from "zod";
 
 // Schema for validating the reset password form

@@ -1,4 +1,4 @@
-import { passwordRegex, phoneRegex } from "@/constants";
+import { passwordRegex, phoneRegex } from "@/constants/validation";
 import z from "zod";
 
 // update profile

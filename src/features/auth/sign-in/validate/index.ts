@@ -1,4 +1,4 @@
-import { passwordRegex } from "@/constants";
+import { passwordRegex } from "@/constants/validation";
 import { z } from "zod";
 
 // signIn form validation schema using Zod

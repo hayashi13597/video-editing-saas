@@ -11,7 +11,8 @@ import Link from "next/link";
 import Grip4 from "../../../public/icons/grip-4.svg";
 import React from "react";
 import Image from "next/image";
-import { StatusType, UserRole } from "@/types/form";
+import { UserRole } from "@/types/form";
+import { ColumnConfig, TableRowData, FieldType } from "@/types/table";
 import { cn, getColorStatus, getColorStatusText } from "@/lib/utils";
 import PaginationCustom from "./PaginationCustom";
 import { routesApp } from "@/constants/routesApp";
@@ -23,45 +24,6 @@ import {
 import ChatIcon from "../../../public/icons/chat.svg";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-
-// Define all possible field types
-export type FieldType =
-  | "status"
-  | "title"
-  | "applicant"
-  | "requestDate"
-  | "deadline"
-  | "points"
-  | "action"
-  | "image"
-  | "freelancer"
-  | "startDate"
-  | "endDate"
-  | "rating";
-
-// Define column configuration
-export interface ColumnConfig {
-  key: FieldType;
-  label: string;
-  className?: string;
-}
-
-// Define row data structure
-export interface TableRowData {
-  id: string;
-  status?: StatusType;
-  title?: string;
-  applicant?: string;
-  requestDate?: string;
-  deadline?: string;
-  points?: number | string;
-  href?: string;
-  image?: string;
-  freelancer?: string;
-  startDate?: string;
-  endDate?: string;
-  rating?: number;
-}
 
 // Table props interface
 export interface TableProps {
