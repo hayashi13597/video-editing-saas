@@ -2,9 +2,9 @@ import SignUpForm from "@/features/auth/sign-up/SignUpForm";
 import { notFound } from "next/navigation";
 
 interface SignUpFormPageProps {
-  params: {
+  params: Promise<{
     role: string;
-  };
+  }>;
 }
 
 const SignUpFormPage = async ({ params }: SignUpFormPageProps) => {
@@ -26,5 +26,5 @@ export const generateMetadata = async ({ params }: SignUpFormPageProps) => {
   return {
     title: `${role === "freelancer" ? "フリーランサー" : "クライアント"}登録`,
     description: `新しい${role === "freelancer" ? "フリーランサー" : "クライアント"}アカウントを作成する`
-  }
-}
+  };
+};

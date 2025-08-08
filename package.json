@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix --dir src",
     "format": "prettier --write .",
     "generate-api": "orval --config orval.config.ts",
     "prepare": "husky install"
@@ -71,6 +72,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.4",
     "orval": "^7.10.0",
+    "prettier": "3.6.2",
     "react-dropzone": "^14.3.8",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",

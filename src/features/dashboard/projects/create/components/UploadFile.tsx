@@ -8,7 +8,7 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
-import { UseFormReturn } from "react-hook-form";
+import { FieldErrors, GlobalError, UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 import { DynamicFormData } from "../validate";
 import { uploadFileToS3, deleteFileFromS3 } from "@/lib/upload";
@@ -37,7 +37,10 @@ const UploadFile = ({
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      if (selectedFiles && selectedFiles.length + acceptedFiles.length > maxFiles) {
+      if (
+        selectedFiles &&
+        selectedFiles.length + acceptedFiles.length > maxFiles
+      ) {
         toast.error("一度にアップロードできるファイルは5つまでです。");
         return;
       }
@@ -58,15 +61,22 @@ const UploadFile = ({
     [selectedFiles, maxFiles, form, name]
   );
 
-  const onDropRejected = useCallback((rejectedFiles: FileRejection[]) => {
-    if (rejectedFiles && rejectedFiles.length > 0) {
-      if (rejectedFiles.length + (selectedFiles?.length || 0) > maxFiles) {
-        toast.error(`一度にアップロードできるファイルは${maxFiles}つまでです。`);
-      } else {
-        toast.error("許可されていないファイル形式、またはファイルサイズが大きすぎます。");
+  const onDropRejected = useCallback(
+    (rejectedFiles: FileRejection[]) => {
+      if (rejectedFiles && rejectedFiles.length > 0) {
+        if (rejectedFiles.length + (selectedFiles?.length || 0) > maxFiles) {
+          toast.error(
+            `一度にアップロードできるファイルは${maxFiles}つまでです。`
+          );
+        } else {
+          toast.error(
+            "許可されていないファイル形式、またはファイルサイズが大きすぎます。"
+          );
+        }
       }
-    }
-  }, [maxFiles, selectedFiles]);
+    },
+    [maxFiles, selectedFiles]
+  );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -74,7 +84,7 @@ const UploadFile = ({
     multiple,
     accept: acceptedFileTypes,
     maxFiles,
-    disabled: (!!selectedFiles && selectedFiles.length >= maxFiles)
+    disabled: !!selectedFiles && selectedFiles.length >= maxFiles
   });
 
   const removeFile = async (index: number) => {
@@ -129,8 +139,9 @@ const UploadFile = ({
           className={cn(
             "border border-stroke border-dashed rounded-6 py-4 px-3 cursor-pointer",
             {
-              "cursor-default": selectedFiles && selectedFiles.length >= maxFiles,
-              "border-red": (form.formState.errors as Record<string, any>)[name]
+              "cursor-default":
+                selectedFiles && selectedFiles.length >= maxFiles,
+              "border-red": (form.formState.errors as FieldErrors)[name]
             }
           )}
         >
@@ -156,12 +167,16 @@ const UploadFile = ({
                   onClick={e => e.stopPropagation()}
                 >
                   <div className="flex flex-col">
-                    <span className="body-text-bold">
-                      {file.name}
+                    <span className="body-text-bold">{file.name}</span>
+                    <span className="small-text text-gray">
+                      {formatSize(file.size)}
                     </span>
-                    <span className="small-text text-gray">{formatSize(file.size)}</span>
                   </div>
-                  <button type="button" className="text-red" onClick={() => removeFile(index)}>
+                  <button
+                    type="button"
+                    className="text-red"
+                    onClick={() => removeFile(index)}
+                  >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -170,9 +185,12 @@ const UploadFile = ({
           )}
         </div>
       </div>
-      {(form.formState.errors as Record<string, any>)[name] && (
+      {(form.formState.errors as FieldErrors)[name] && (
         <p className="body-text text-red">
-          {(form.formState.errors as Record<string, any>)[name]?.message}
+          {
+            (form.formState.errors as Record<string, GlobalError>)[name]
+              ?.message
+          }
         </p>
       )}
     </div>
