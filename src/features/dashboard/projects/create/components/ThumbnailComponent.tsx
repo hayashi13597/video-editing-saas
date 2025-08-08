@@ -3,20 +3,42 @@
 import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "../validate";
 import FormFieldCustom from "@/components/form/FormFieldCustom";
-import { DESIGN_TONES_OPTIONS, IMAGE_SIZES_OPTIONS, PLATFORM_OPTIONS } from "@/constants/selectOptions";
+import {
+  DESIGN_TONES_OPTIONS,
+  IMAGE_SIZES_OPTIONS,
+  PLATFORM_OPTIONS
+} from "@/constants/selectOptions";
 import { useMemo } from "react";
 import UploadFile from "./UploadFile";
 
-const ThumbnailComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['platforms', "imageSizes", "designTones", "referenceThumbnailsMethod"]);
+const ThumbnailComponent = ({
+  form
+}: {
+  form: UseFormReturn<DynamicFormData>;
+}) => {
+  const watchedValues = form.watch([
+    "platforms",
+    "imageSizes",
+    "designTones",
+    "referenceThumbnailsMethod"
+  ]);
 
-  const { customPlatform, customSize, customDesignTone, referenceThumbnailsUpload, referenceThumbnailsUrls } = useMemo(() => ({
-    customPlatform: watchedValues[0]?.includes('その他'),
-    customSize: watchedValues[1]?.includes('指定サイズ'),
-    customDesignTone: watchedValues[2]?.includes('その他'),
-    referenceThumbnailsUpload: watchedValues[3] === 'ファイルアップロード',
-    referenceThumbnailsUrls: watchedValues[3] === 'URL'
-  }), [watchedValues])
+  const {
+    customPlatform,
+    customSize,
+    customDesignTone,
+    referenceThumbnailsUpload,
+    referenceThumbnailsUrls
+  } = useMemo(
+    () => ({
+      customPlatform: watchedValues[0]?.includes("その他"),
+      customSize: watchedValues[1]?.includes("指定サイズ"),
+      customDesignTone: watchedValues[2]?.includes("その他"),
+      referenceThumbnailsUpload: watchedValues[3] === "ファイルアップロード",
+      referenceThumbnailsUrls: watchedValues[3] === "URL"
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -114,35 +136,31 @@ const ThumbnailComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) 
           control={form.control}
           name="referenceThumbnailsMethod"
           label="参考バナー（他社含む）があればURLや添付で共有ください or ギガファイル便などのURL）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'URL', label: 'URL' },
-            { value: 'ファイルアップロード', label: 'ファイルアップロード' }
+            { value: "URL", label: "URL" },
+            { value: "ファイルアップロード", label: "ファイルアップロード" }
           ]}
           requiredBadge={false}
         />
-        {
-          referenceThumbnailsUrls && (
-            <FormFieldCustom
-              control={form.control}
-              name="referenceThumbnailsUrls"
-              type="text"
-              placeholder='(例) ギガファイル便のURL／Googleドライブ'
-            />
-          )
-        }
-        {
-          referenceThumbnailsUpload && (
-            <UploadFile
-              label="動画ファイルをアップロード"
-              multiple={false}
-              maxFiles={1}
-              acceptedFileTypes={{ "video/*": [] }}
-              name="referenceThumbnailsUpload"
-              form={form}
-            />
-          )
-        }
+        {referenceThumbnailsUrls && (
+          <FormFieldCustom
+            control={form.control}
+            name="referenceThumbnailsUrls"
+            type="text"
+            placeholder="(例) ギガファイル便のURL／Googleドライブ"
+          />
+        )}
+        {referenceThumbnailsUpload && (
+          <UploadFile
+            label="動画ファイルをアップロード"
+            multiple={false}
+            maxFiles={1}
+            acceptedFileTypes={{ "video/*": [] }}
+            name="referenceThumbnailsUpload"
+            form={form}
+          />
+        )}
       </div>
 
       <div className="space-y-3">
@@ -175,10 +193,8 @@ const ThumbnailComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) 
           type="checkbox-group"
           checkboxGroupOptions={[
             {
-              value:
-                "修正は原則2回まで無料（以降は追加料金発生の場合あり）",
-              label:
-                "修正は原則2回まで無料（以降は追加料金発生の場合あり）"
+              value: "修正は原則2回まで無料（以降は追加料金発生の場合あり）",
+              label: "修正は原則2回まで無料（以降は追加料金発生の場合あり）"
             },
             {
               value:
@@ -203,7 +219,7 @@ const ThumbnailComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) 
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ThumbnailComponent
+export default ThumbnailComponent;

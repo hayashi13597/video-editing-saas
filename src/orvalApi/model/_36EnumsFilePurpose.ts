@@ -8,7 +8,6 @@
 export type _36EnumsFilePurpose =
   (typeof _36EnumsFilePurpose)[keyof typeof _36EnumsFilePurpose];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsFilePurpose = {
   OTHER: "OTHER",
   VIDEO_RAW: "VIDEO_RAW",

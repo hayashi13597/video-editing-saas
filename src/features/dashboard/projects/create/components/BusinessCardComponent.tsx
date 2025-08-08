@@ -1,18 +1,25 @@
 "use client";
 
-import { UseFormReturn } from "react-hook-form"
-import { DynamicFormData } from "../validate"
-import FormFieldCustom from "@/components/form/FormFieldCustom"
-import { DESIGN_STYLE_OPTIONS } from "@/constants/selectOptions"
-import { useMemo } from "react"
+import { UseFormReturn } from "react-hook-form";
+import { DynamicFormData } from "../validate";
+import FormFieldCustom from "@/components/form/FormFieldCustom";
+import { DESIGN_STYLE_OPTIONS } from "@/constants/selectOptions";
+import { useMemo } from "react";
 import UploadFile from "./UploadFile";
 
-const BusinessCardComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['designStyle'])
+const BusinessCardComponent = ({
+  form
+}: {
+  form: UseFormReturn<DynamicFormData>;
+}) => {
+  const watchedValues = form.watch(["designStyle"]);
 
-  const { customDesignStyle } = useMemo(() => ({
-    customDesignStyle: watchedValues[0]?.includes('その他')
-  }), [watchedValues])
+  const { customDesignStyle } = useMemo(
+    () => ({
+      customDesignStyle: watchedValues[0]?.includes("その他")
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -31,7 +38,7 @@ const BusinessCardComponent = ({ form }: { form: UseFormReturn<DynamicFormData> 
           control={form.control}
           name="printOption"
           label="印刷の有無"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
             {
               value: "デザインのみ希望",
@@ -50,7 +57,7 @@ const BusinessCardComponent = ({ form }: { form: UseFormReturn<DynamicFormData> 
           control={form.control}
           name="sides"
           label="両面デザインの希望"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
             {
               value: "片面",
@@ -231,17 +238,15 @@ const BusinessCardComponent = ({ form }: { form: UseFormReturn<DynamicFormData> 
                 "ご提供素材（ロゴ・画像）の解像度やサイズにより、仕上がりに影響が出る可能性があります"
             },
             {
-              value:
-                "印刷費・送料は別途お見積りとなります（ご希望時のみ）",
-              label:
-                "印刷費・送料は別途お見積りとなります（ご希望時のみ）"
+              value: "印刷費・送料は別途お見積りとなります（ご希望時のみ）",
+              label: "印刷費・送料は別途お見積りとなります（ご希望時のみ）"
             }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default BusinessCardComponent
+export default BusinessCardComponent;

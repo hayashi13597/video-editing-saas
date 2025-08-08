@@ -8,7 +8,6 @@
 export type _36EnumsPriority =
   (typeof _36EnumsPriority)[keyof typeof _36EnumsPriority];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsPriority = {
   LOW: "LOW",
   MEDIUM: "MEDIUM",

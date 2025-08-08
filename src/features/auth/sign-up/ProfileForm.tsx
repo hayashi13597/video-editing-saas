@@ -17,10 +17,10 @@ import PortfolioLinksField from "./PortfolioLinksField";
 interface ProfileFormProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   form: ReturnType<typeof useForm<profileSchemaType>>;
-  // eslint-disable-next-line
+
   onSubmit: (data: profileSchemaType) => void;
   kind: KindType;
-  // eslint-disable-next-line
+
   handleFileSelect: (file: File | null) => void;
 }
 

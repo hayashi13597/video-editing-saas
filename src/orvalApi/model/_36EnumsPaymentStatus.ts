@@ -8,7 +8,6 @@
 export type _36EnumsPaymentStatus =
   (typeof _36EnumsPaymentStatus)[keyof typeof _36EnumsPaymentStatus];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsPaymentStatus = {
   COMPLETED: "COMPLETED",
   PENDING: "PENDING",

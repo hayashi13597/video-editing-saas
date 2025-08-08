@@ -8,7 +8,6 @@
 export type SendMessageRequestType =
   (typeof SendMessageRequestType)[keyof typeof SendMessageRequestType];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SendMessageRequestType = {
   TEXT: "TEXT",
   IMAGE: "IMAGE",

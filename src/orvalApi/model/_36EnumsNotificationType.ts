@@ -8,7 +8,6 @@
 export type _36EnumsNotificationType =
   (typeof _36EnumsNotificationType)[keyof typeof _36EnumsNotificationType];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsNotificationType = {
   PROJECT_CREATED: "PROJECT_CREATED",
   PROJECT_ASSIGNED: "PROJECT_ASSIGNED",

@@ -3,19 +3,40 @@
 import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "../validate";
 import FormFieldCustom from "@/components/form/FormFieldCustom";
-import { DELIVERY_FORMAT_OPTIONS, SEARCH_INTENT_OPTIONS, SENTENCE_STYLE_OPTIONS, TONES_OPTIONS } from "@/constants/selectOptions";
+import {
+  DELIVERY_FORMAT_OPTIONS,
+  SEARCH_INTENT_OPTIONS,
+  SENTENCE_STYLE_OPTIONS,
+  TONES_OPTIONS
+} from "@/constants/selectOptions";
 import { useMemo } from "react";
 import UploadFile from "./UploadFile";
 
-const SEOArticleComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['searchIntents', 'referenceArticlesMethod', 'tones']);
+const SEOArticleComponent = ({
+  form
+}: {
+  form: UseFormReturn<DynamicFormData>;
+}) => {
+  const watchedValues = form.watch([
+    "searchIntents",
+    "referenceArticlesMethod",
+    "tones"
+  ]);
 
-  const { customSearchIntent, referenceArticlesUrls, referenceArticlesUpload, customTone } = useMemo(() => ({
-    customSearchIntent: watchedValues[0]?.includes('その他'),
-    referenceArticlesUrls: watchedValues[1] === 'URL',
-    referenceArticlesUpload: watchedValues[1] === 'ファイルアップロード',
-    customTone: watchedValues[2]?.includes('その他'),
-  }), [watchedValues])
+  const {
+    customSearchIntent,
+    referenceArticlesUrls,
+    referenceArticlesUpload,
+    customTone
+  } = useMemo(
+    () => ({
+      customSearchIntent: watchedValues[0]?.includes("その他"),
+      referenceArticlesUrls: watchedValues[1] === "URL",
+      referenceArticlesUpload: watchedValues[1] === "ファイルアップロード",
+      customTone: watchedValues[2]?.includes("その他")
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -111,34 +132,30 @@ const SEOArticleComponent = ({ form }: { form: UseFormReturn<DynamicFormData> })
           control={form.control}
           name="referenceArticlesMethod"
           label="参考にしたい記事や競合サイト（URLや名前）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'URL', label: 'URL' },
-            { value: 'ファイルアップロード', label: 'ファイルアップロード' }
+            { value: "URL", label: "URL" },
+            { value: "ファイルアップロード", label: "ファイルアップロード" }
           ]}
           requiredBadge={false}
         />
-        {
-          referenceArticlesUrls && (
-            <FormFieldCustom
-              control={form.control}
-              name="referenceArticlesUrls"
-              type="text"
-            />
-          )
-        }
-        {
-          referenceArticlesUpload && (
-            <UploadFile
-              label="動画ファイルをアップロード"
-              multiple={false}
-              maxFiles={1}
-              acceptedFileTypes={{ "image/*": [] }}
-              name="referenceArticlesUpload"
-              form={form}
-            />
-          )
-        }
+        {referenceArticlesUrls && (
+          <FormFieldCustom
+            control={form.control}
+            name="referenceArticlesUrls"
+            type="text"
+          />
+        )}
+        {referenceArticlesUpload && (
+          <UploadFile
+            label="動画ファイルをアップロード"
+            multiple={false}
+            maxFiles={1}
+            acceptedFileTypes={{ "image/*": [] }}
+            name="referenceArticlesUpload"
+            form={form}
+          />
+        )}
       </div>
 
       <div className="space-y-3">
@@ -227,17 +244,15 @@ const SEOArticleComponent = ({ form }: { form: UseFormReturn<DynamicFormData> })
                 "検索意図が不明確な場合、意図とずれる可能性があるため記載をお願いします"
             },
             {
-              value:
-                "誤字脱字・事実確認は初稿時にご確認いただく形となります",
-              label:
-                "誤字脱字・事実確認は初稿時にご確認いただく形となります"
+              value: "誤字脱字・事実確認は初稿時にご確認いただく形となります",
+              label: "誤字脱字・事実確認は初稿時にご確認いただく形となります"
             }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default SEOArticleComponent
+export default SEOArticleComponent;

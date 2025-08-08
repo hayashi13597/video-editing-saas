@@ -3,20 +3,42 @@
 import FormFieldCustom from "@/components/form/FormFieldCustom";
 import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "../validate";
-import { BANNER_TYPE_OPTIONS, DESIGN_ATMOSPHERE_OPTIONS, DESIRE_EFFECT_OPTIONS } from "@/constants/selectOptions";
+import {
+  BANNER_TYPE_OPTIONS,
+  DESIGN_ATMOSPHERE_OPTIONS,
+  DESIRE_EFFECT_OPTIONS
+} from "@/constants/selectOptions";
 import { useMemo } from "react";
 import UploadFile from "./UploadFile";
 
-const BannerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['bannerTypes', 'desiredEffect', 'designAtmosphere', 'referenceBannersMethod']);
+const BannerComponent = ({
+  form
+}: {
+  form: UseFormReturn<DynamicFormData>;
+}) => {
+  const watchedValues = form.watch([
+    "bannerTypes",
+    "desiredEffect",
+    "designAtmosphere",
+    "referenceBannersMethod"
+  ]);
 
-  const { customBannerType, customDesiredEffect, customDesignAtmosphere, referenceBannersUpload, referenceBannerUrls } = useMemo(() => ({
-    customBannerType: watchedValues[0]?.includes('その他'),
-    customDesiredEffect: watchedValues[1]?.includes('その他'),
-    customDesignAtmosphere: watchedValues[2]?.includes('その他'),
-    referenceBannerUrls: watchedValues[3] === 'URL',
-    referenceBannersUpload: watchedValues[3] === 'ファイルアップロード'
-  }), [watchedValues])
+  const {
+    customBannerType,
+    customDesiredEffect,
+    customDesignAtmosphere,
+    referenceBannersUpload,
+    referenceBannerUrls
+  } = useMemo(
+    () => ({
+      customBannerType: watchedValues[0]?.includes("その他"),
+      customDesiredEffect: watchedValues[1]?.includes("その他"),
+      customDesignAtmosphere: watchedValues[2]?.includes("その他"),
+      referenceBannerUrls: watchedValues[3] === "URL",
+      referenceBannersUpload: watchedValues[3] === "ファイルアップロード"
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -156,35 +178,31 @@ const BannerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => 
           control={form.control}
           name="referenceBannersMethod"
           label="参考バナー（他社含む）があればURLや添付で共有ください or ギガファイル便などのURL）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'URL', label: 'URL' },
-            { value: 'ファイルアップロード', label: 'ファイルアップロード' }
+            { value: "URL", label: "URL" },
+            { value: "ファイルアップロード", label: "ファイルアップロード" }
           ]}
           requiredBadge={true}
         />
-        {
-          referenceBannerUrls && (
-            <FormFieldCustom
-              control={form.control}
-              name="referenceBannerUrls"
-              type="text"
-              placeholder='(例) ギガファイル便のURL／Googleドライブ'
-            />
-          )
-        }
-        {
-          referenceBannersUpload && (
-            <UploadFile
-              label="動画ファイルをアップロード"
-              multiple={false}
-              maxFiles={1}
-              acceptedFileTypes={{ "video/*": [] }}
-              name="referenceBannersUpload"
-              form={form}
-            />
-          )
-        }
+        {referenceBannerUrls && (
+          <FormFieldCustom
+            control={form.control}
+            name="referenceBannerUrls"
+            type="text"
+            placeholder="(例) ギガファイル便のURL／Googleドライブ"
+          />
+        )}
+        {referenceBannersUpload && (
+          <UploadFile
+            label="動画ファイルをアップロード"
+            multiple={false}
+            maxFiles={1}
+            acceptedFileTypes={{ "video/*": [] }}
+            name="referenceBannersUpload"
+            form={form}
+          />
+        )}
       </div>
 
       <div className="space-y-3">
@@ -217,10 +235,8 @@ const BannerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => 
           type="checkbox-group"
           checkboxGroupOptions={[
             {
-              value:
-                "修正は原則2回まで無料です（以降は有料となります）",
-              label:
-                "修正は原則2回まで無料です（以降は有料となります）"
+              value: "修正は原則2回まで無料です（以降は有料となります）",
+              label: "修正は原則2回まで無料です（以降は有料となります）"
             },
             {
               value:
@@ -235,17 +251,15 @@ const BannerComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => 
                 "ご提供素材（画像・ロゴ等）の画質により仕上がり品質に影響が出る可能性があります"
             },
             {
-              value:
-                "広告効果の保証は含まれておりません（効果測定は別途相談）",
-              label:
-                "広告効果の保証は含まれておりません（効果測定は別途相談）"
+              value: "広告効果の保証は含まれておりません（効果測定は別途相談）",
+              label: "広告効果の保証は含まれておりません（効果測定は別途相談）"
             }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default BannerComponent
+export default BannerComponent;

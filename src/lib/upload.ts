@@ -23,7 +23,6 @@ async function getPresignedUploadUrl({
     });
     return res;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Error getting pre-signed URL:", error);
     throw new Error("Failed to get pre-signed URL");
   }
@@ -46,7 +45,6 @@ async function uploadFileWithPresignedUrl({
       }
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Error uploading file to S3:", error);
     throw new Error("Failed to upload file to S3");
   }
@@ -86,7 +84,6 @@ export async function deleteFileFromS3(key: string) {
   try {
     await getS3FileUpload()._delete({ key });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Error deleting file from S3:", error);
     throw new Error("Failed to delete file from S3");
   }

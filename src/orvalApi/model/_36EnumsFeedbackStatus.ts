@@ -8,7 +8,6 @@
 export type _36EnumsFeedbackStatus =
   (typeof _36EnumsFeedbackStatus)[keyof typeof _36EnumsFeedbackStatus];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsFeedbackStatus = {
   OPEN: "OPEN",
   ACKNOWLEDGED: "ACKNOWLEDGED",

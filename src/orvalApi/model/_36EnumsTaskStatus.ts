@@ -8,7 +8,6 @@
 export type _36EnumsTaskStatus =
   (typeof _36EnumsTaskStatus)[keyof typeof _36EnumsTaskStatus];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsTaskStatus = {
   REVIEW: "REVIEW",
   TODO: "TODO",

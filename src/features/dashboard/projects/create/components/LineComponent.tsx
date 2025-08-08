@@ -3,18 +3,29 @@
 import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "../validate";
 import FormFieldCustom from "@/components/form/FormFieldCustom";
-import { DESIGN_PREFERENCE_OPTIONS, LINE_TYPE_OPTIONS, OBJECTIVES_OPTIONS } from "@/constants/selectOptions";
+import {
+  DESIGN_PREFERENCE_OPTIONS,
+  LINE_TYPE_OPTIONS,
+  OBJECTIVES_OPTIONS
+} from "@/constants/selectOptions";
 import { useMemo } from "react";
 import UploadFile from "./UploadFile";
 
 const LineComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['lineType', "objectives", "designPreference"]);
+  const watchedValues = form.watch([
+    "lineType",
+    "objectives",
+    "designPreference"
+  ]);
 
-  const { customLineType, customObjective, designDetails } = useMemo(() => ({
-    customLineType: watchedValues[0]?.includes('その他'),
-    customObjective: watchedValues[1]?.includes('その他'),
-    designDetails: watchedValues[2]?.includes('カラー／雰囲気指定あり')
-  }), [watchedValues])
+  const { customLineType, customObjective, designDetails } = useMemo(
+    () => ({
+      customLineType: watchedValues[0]?.includes("その他"),
+      customObjective: watchedValues[1]?.includes("その他"),
+      designDetails: watchedValues[2]?.includes("カラー／雰囲気指定あり")
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -190,10 +201,8 @@ const LineComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
                 "構築後の変更・修正は原則2回まで無料です（以降は都度お見積り）"
             },
             {
-              value:
-                "未提出の素材がある場合、納期に影響が出る可能性があります",
-              label:
-                "未提出の素材がある場合、納期に影響が出る可能性があります"
+              value: "未提出の素材がある場合、納期に影響が出る可能性があります",
+              label: "未提出の素材がある場合、納期に影響が出る可能性があります"
             },
             {
               value:
@@ -202,17 +211,15 @@ const LineComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
                 "LINEの仕様変更によって挙動が変わる可能性があります（LINE側要因）"
             },
             {
-              value:
-                "LINE構築による成果（登録数／売上）の保証はいたしかねます",
-              label:
-                "LINE構築による成果（登録数／売上）の保証はいたしかねます"
+              value: "LINE構築による成果（登録数／売上）の保証はいたしかねます",
+              label: "LINE構築による成果（登録数／売上）の保証はいたしかねます"
             }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default LineComponent
+export default LineComponent;

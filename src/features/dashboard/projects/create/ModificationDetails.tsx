@@ -11,7 +11,12 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -61,25 +66,41 @@ const ModificationDetails = ({
               defaultValue={`modificationDetails.${index}.modificationLocation`}
               key={field.id}
             >
-              <AccordionItem value={`modificationDetails.${index}.modificationLocation`} className="border-none">
-                <AccordionTrigger className={cn("body-text-bold bg-light-gray hover:no-underline px-2.5 py-1.5 [&_svg]:text-text items-center gap-3", {
-                  "[&_svg]:order-2 justify-start grid grid-cols-[auto_auto_1fr]": fields.length > 1,
-                  "border border-red rounded-6 bg-red text-white [&_svg]:text-white": Array.isArray(errors.modificationDetails) && !!errors.modificationDetails[index]
-                })}>
+              <AccordionItem
+                value={`modificationDetails.${index}.modificationLocation`}
+                className="border-none"
+              >
+                <AccordionTrigger
+                  className={cn(
+                    "body-text-bold bg-light-gray hover:no-underline px-2.5 py-1.5 [&_svg]:text-text items-center gap-3",
+                    {
+                      "[&_svg]:order-2 justify-start grid grid-cols-[auto_auto_1fr]":
+                        fields.length > 1,
+                      "border border-red rounded-6 bg-red text-white [&_svg]:text-white":
+                        Array.isArray(errors.modificationDetails) &&
+                        !!errors.modificationDetails[index]
+                    }
+                  )}
+                >
                   <span>{index + 1}．修正内容</span>
                   {fields.length > 1 && (
                     <div className="w-full flex order-3 justify-end">
-                      <Badge className="px-1.5 flex-center" variant="destructive" onClick={() => handleRemove(index)}>
-                        <Trash2 size={16} className="w-4 h-4 stroke-white order-1" />
+                      <Badge
+                        className="px-1.5 flex-center"
+                        variant="destructive"
+                        onClick={() => handleRemove(index)}
+                      >
+                        <Trash2
+                          size={16}
+                          className="w-4 h-4 stroke-white order-1"
+                        />
                         <span className="order-2">削除</span>
                       </Badge>
                     </div>
                   )}
                 </AccordionTrigger>
                 <AccordionContent className="p-0 mt-1">
-                  <div
-                    className="grid grid-cols-1 gap-3"
-                  >
+                  <div className="grid grid-cols-1 gap-3">
                     <div className="p-3 border border-stroke rounded-6 grid grid-cols-1 gap-3">
                       <FormField
                         control={form.control}

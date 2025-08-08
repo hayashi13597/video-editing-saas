@@ -8,7 +8,6 @@
 export type _36EnumsProjectStatus =
   (typeof _36EnumsProjectStatus)[keyof typeof _36EnumsProjectStatus];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsProjectStatus = {
   OPEN: "OPEN",
   ASSIGNED: "ASSIGNED",

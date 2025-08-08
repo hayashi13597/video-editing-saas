@@ -7,7 +7,6 @@
 
 export type _36EnumsRole = (typeof _36EnumsRole)[keyof typeof _36EnumsRole];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsRole = {
   CLIENT: "CLIENT",
   FREELANCER: "FREELANCER",

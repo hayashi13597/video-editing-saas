@@ -8,7 +8,6 @@
 export type _36EnumsUserAvalabilityStatus =
   (typeof _36EnumsUserAvalabilityStatus)[keyof typeof _36EnumsUserAvalabilityStatus];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsUserAvalabilityStatus = {
   AVAILABLE: "AVAILABLE",
   BUSY: "BUSY",

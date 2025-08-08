@@ -8,7 +8,6 @@
 export type SignUpDtoClassification =
   (typeof SignUpDtoClassification)[keyof typeof SignUpDtoClassification];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SignUpDtoClassification = {
   client: "client",
   freelance: "freelance"

@@ -124,12 +124,12 @@
 }
 
 @utility green-gradient {
-  background: linear-gradient(270deg, #76D996 0%, #4CAF98 100%);
-  box-shadow: 0px 3px 12px 0px #60C3974D;
+  background: linear-gradient(270deg, #76d996 0%, #4caf98 100%);
+  box-shadow: 0px 3px 12px 0px #60c3974d;
 }
 
 @utility shadow-custom {
-  box-shadow: 0px 3px 12px 0px #2F2B3D24;
+  box-shadow: 0px 3px 12px 0px #2f2b3d24;
 }
 
 @utility h3-title {

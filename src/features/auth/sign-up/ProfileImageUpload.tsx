@@ -9,7 +9,6 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 interface ProfileImageUploadProps {
-  // eslint-disable-next-line
   onFileSelect?: (file: File | null) => void;
   label?: string;
 }
@@ -54,7 +53,7 @@ const ProfileImageUpload = ({
           className={cn(
             "border border-stroke border-dashed rounded-6 py-4 px-3 cursor-pointer",
             {
-              "cursor-default": selectedFile !== null,
+              "cursor-default": selectedFile !== null
             }
           )}
         >
@@ -75,9 +74,7 @@ const ProfileImageUpload = ({
             <div className="flex-between bg-light-gray rounded-6 px-3 py-1.5 mt-2.5">
               <div>
                 <p className="body-text-bold">{file.name}</p>
-                <p className="small-text text-gray">
-                  {formatSize(file.size)}
-                </p>
+                <p className="small-text text-gray">{formatSize(file.size)}</p>
               </div>
               <button
                 type="button"

@@ -28,12 +28,12 @@ export type Option = {
 interface MultiSelectProps {
   options: Option[];
   selected: string[];
-  // eslint-disable-next-line
+
   onChange: (selected: string[]) => void;
   placeholder?: string;
   className?: string;
   allowAddNew?: boolean;
-  // eslint-disable-next-line
+
   onAddNew?: (newOption: Option) => void;
 }
 

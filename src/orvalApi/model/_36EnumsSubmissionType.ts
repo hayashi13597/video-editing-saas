@@ -8,7 +8,6 @@
 export type _36EnumsSubmissionType =
   (typeof _36EnumsSubmissionType)[keyof typeof _36EnumsSubmissionType];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsSubmissionType = {
   FILE_UPLOAD: "FILE_UPLOAD",
   URL_LINK: "URL_LINK",

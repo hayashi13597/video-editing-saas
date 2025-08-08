@@ -8,7 +8,6 @@
 export type _36EnumsProjectType =
   (typeof _36EnumsProjectType)[keyof typeof _36EnumsProjectType];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsProjectType = {
   LP_EDIT: "LP_EDIT",
   SEO_ARTICLE: "SEO_ARTICLE",

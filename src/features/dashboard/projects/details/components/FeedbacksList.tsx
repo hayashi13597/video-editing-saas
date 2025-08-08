@@ -28,35 +28,50 @@ const FeedbacksList = () => {
             <div className="space-y-2.5">
               <div className="flex items-center gap-6 text-balance px-2.5">
                 <Checkbox id="content-1" />
-                <Label htmlFor="content-1" className="flex flex-col items-start">
+                <Label
+                  htmlFor="content-1"
+                  className="flex flex-col items-start"
+                >
                   <span>1. 商品紹介ページのテロップのズレ</span>
                   <span className="small-text text-gray">1:33</span>
                 </Label>
               </div>
               <div className="flex items-center gap-6 text-balance px-2.5">
                 <Checkbox id="content-2" />
-                <Label htmlFor="content-2" className="flex flex-col items-start">
+                <Label
+                  htmlFor="content-2"
+                  className="flex flex-col items-start"
+                >
                   <span>2. 背景に会社のロゴを載せる</span>
                   <span className="small-text text-gray">2:30</span>
                 </Label>
               </div>
               <div className="flex items-center gap-6 text-balance px-2.5">
                 <Checkbox id="content-3" />
-                <Label htmlFor="content-3" className="flex flex-col items-start">
+                <Label
+                  htmlFor="content-3"
+                  className="flex flex-col items-start"
+                >
                   <span>3. テロップとBGM 修正のお願い</span>
                   <span className="small-text text-gray">2:59</span>
                 </Label>
               </div>
               <div className="flex items-center gap-6 text-balance px-2.5">
                 <Checkbox id="content-4" />
-                <Label htmlFor="content-4" className="flex flex-col items-start">
+                <Label
+                  htmlFor="content-4"
+                  className="flex flex-col items-start"
+                >
                   <span>4. 全体的な色を薄い青色にしたい</span>
                   <span className="small-text text-gray">3:10</span>
                 </Label>
               </div>
               <div className="flex items-center gap-6 text-balance px-2.5">
                 <Checkbox id="content-5" />
-                <Label htmlFor="content-5" className="flex flex-col items-start">
+                <Label
+                  htmlFor="content-5"
+                  className="flex flex-col items-start"
+                >
                   <span>5. ui/uxをUI/UXに変更</span>
                   <span className="small-text text-gray">3:40</span>
                 </Label>

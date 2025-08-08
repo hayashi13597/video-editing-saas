@@ -1,21 +1,39 @@
 "use client";
 
-import React, { useMemo } from 'react'
-import { UseFormReturn } from 'react-hook-form'
-import { DynamicFormData } from '../validate'
-import FormFieldCustom from '@/components/form/FormFieldCustom'
-import { EDITING_STYLE_OPTIONS, SUBTITLE_STYLE_OPTIONS, VIDEO_ASPECT_RATIO_OPTIONS, VIDEO_DURATION_OPTIONS, VIDEO_USAGE_OPTIONS } from '@/constants/selectOptions'
-import UploadFile from './UploadFile'
+import React, { useMemo } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { DynamicFormData } from "../validate";
+import FormFieldCustom from "@/components/form/FormFieldCustom";
+import {
+  EDITING_STYLE_OPTIONS,
+  SUBTITLE_STYLE_OPTIONS,
+  VIDEO_ASPECT_RATIO_OPTIONS,
+  VIDEO_DURATION_OPTIONS,
+  VIDEO_USAGE_OPTIONS
+} from "@/constants/selectOptions";
+import UploadFile from "./UploadFile";
 
 const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['videoUsage', 'sourceVideoUploadMethod', 'editingStyle'])
+  const watchedValues = form.watch([
+    "videoUsage",
+    "sourceVideoUploadMethod",
+    "editingStyle"
+  ]);
 
-  const { customVideoUsage, sourceVideoUrl, sourceVideoUploadUrl, editingStyle } = useMemo(() => ({
-    customVideoUsage: watchedValues[0]?.includes('その他'),
-    sourceVideoUrl: watchedValues[1] === "URL",
-    sourceVideoUploadUrl: watchedValues[1] === "ファイルアップロード",
-    editingStyle: watchedValues[2]?.includes('その他')
-  }), [watchedValues])
+  const {
+    customVideoUsage,
+    sourceVideoUrl,
+    sourceVideoUploadUrl,
+    editingStyle
+  } = useMemo(
+    () => ({
+      customVideoUsage: watchedValues[0]?.includes("その他"),
+      sourceVideoUrl: watchedValues[1] === "URL",
+      sourceVideoUploadUrl: watchedValues[1] === "ファイルアップロード",
+      editingStyle: watchedValues[2]?.includes("その他")
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -65,35 +83,31 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           control={form.control}
           name="sourceVideoUploadMethod"
           label="素材動画（アップロード or ギガファイル便などのURL）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'URL', label: 'URL' },
-            { value: 'ファイルアップロード', label: 'ファイルアップロード' }
+            { value: "URL", label: "URL" },
+            { value: "ファイルアップロード", label: "ファイルアップロード" }
           ]}
           requiredBadge={true}
         />
-        {
-          sourceVideoUrl && (
-            <FormFieldCustom
-              control={form.control}
-              name="sourceVideoUrl"
-              type="text"
-              placeholder='(例) ギガファイル便のURL／Googleドライブ'
-            />
-          )
-        }
-        {
-          sourceVideoUploadUrl && (
-            <UploadFile
-              label="動画ファイルをアップロード"
-              multiple={false}
-              maxFiles={1}
-              acceptedFileTypes={{ "video/*": [] }}
-              name="sourceVideoUploadUrl"
-              form={form}
-            />
-          )
-        }
+        {sourceVideoUrl && (
+          <FormFieldCustom
+            control={form.control}
+            name="sourceVideoUrl"
+            type="text"
+            placeholder="(例) ギガファイル便のURL／Googleドライブ"
+          />
+        )}
+        {sourceVideoUploadUrl && (
+          <UploadFile
+            label="動画ファイルをアップロード"
+            multiple={false}
+            maxFiles={1}
+            acceptedFileTypes={{ "video/*": [] }}
+            name="sourceVideoUploadUrl"
+            form={form}
+          />
+        )}
 
         <UploadFile
           label="使用したい画像／ロゴなど"
@@ -110,7 +124,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           name="bgmRequirements"
           label="使用したいBGM・SE（希望の曲やイメージ）"
           type="textarea"
-          placeholder='(例) 明るめ／落ち着いた／盛り上がる感じ／具体的な曲名 など'
+          placeholder="(例) 明るめ／落ち着いた／盛り上がる感じ／具体的な曲名 など"
           requiredBadge={false}
         />
       </div>
@@ -130,7 +144,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
             control={form.control}
             name="customEditingStyle"
             type="text"
-            placeholder='(例) カジュアルな感じ／ビジネス向けの落ち着いた雰囲気 など'
+            placeholder="(例) カジュアルな感じ／ビジネス向けの落ち着いた雰囲気 など"
           />
         )}
 
@@ -149,7 +163,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           name="cuttingInstructions"
           label="カットの指示（間引き・不要部分カット等）"
           type="textarea"
-          placeholder='(例) 間の空白をカット／言い間違い部分を削除 など'
+          placeholder="(例) 間の空白をカット／言い間違い部分を削除 など"
           requiredBadge={false}
         />
 
@@ -158,7 +172,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           name="graphicsRequirements"
           label="図解／イラスト／アニメーションの挿入希望（あれば）"
           type="textarea"
-          placeholder='(例) 図解・イラスト・アニメーションなど'
+          placeholder="(例) 図解・イラスト・アニメーションなど"
           requiredBadge={false}
         />
 
@@ -167,7 +181,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           name="ngItems"
           label="NG事項・避けてほしい表現（言葉、効果など）"
           type="textarea"
-          placeholder='(例) 特定の言葉／色／効果音／フォントの指定 など'
+          placeholder="(例) 特定の言葉／色／効果音／フォントの指定 など"
           requiredBadge={false}
         />
       </div>
@@ -179,7 +193,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           name="referenceVideos"
           label="参考動画（SNSリンクやURL、YouTube等）"
           type="text"
-          placeholder='(例) Instagram・TikTok・YouTubeなどのリンク'
+          placeholder="(例) Instagram・TikTok・YouTubeなどのリンク"
           requiredBadge={false}
         />
 
@@ -188,7 +202,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           name="additionalInstructions"
           label="その他指示"
           type="text"
-          placeholder='(例)「この感じに仕上げたい」「この雰囲気はNG」など'
+          placeholder="(例)「この感じに仕上げたい」「この雰囲気はNG」など"
           requiredBadge={false}
         />
       </div>
@@ -201,7 +215,7 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           name="desiredDeadline"
           label="希望納期（◯月◯日まで）"
           type="text"
-          placeholder='(例) ○月○日までに初稿／○月○日までに完成など'
+          placeholder="(例) ○月○日までに初稿／○月○日までに完成など"
           requiredBadge={false}
         />
 
@@ -211,8 +225,8 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
           label="中間チェックの希望"
           type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'あり', label: 'あり' },
-            { value: 'なし', label: 'なし' }
+            { value: "あり", label: "あり" },
+            { value: "なし", label: "なし" }
           ]}
           requiredBadge={false}
         />
@@ -231,8 +245,10 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
               label: "修正は原則2回まで無料、以降は別途お見積りになります"
             },
             {
-              value: "いただいた素材の状態（画質・音声）によっては仕上がりに影響が出る場合があります",
-              label: "いただいた素材の状態（画質・音声）によっては仕上がりに影響が出る場合があります"
+              value:
+                "いただいた素材の状態（画質・音声）によっては仕上がりに影響が出る場合があります",
+              label:
+                "いただいた素材の状態（画質・音声）によっては仕上がりに影響が出る場合があります"
             },
             {
               value:
@@ -241,15 +257,17 @@ const VideoComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
                 "「おまかせ」部分の表現については一任されることを了承しています"
             },
             {
-              value: "BGM・音源の著作権には十分ご注意ください（商用利用OKの素材をご提供ください）",
-              label: "BGM・音源の著作権には十分ご注意ください（商用利用OKの素材をご提供ください）"
+              value:
+                "BGM・音源の著作権には十分ご注意ください（商用利用OKの素材をご提供ください）",
+              label:
+                "BGM・音源の著作権には十分ご注意ください（商用利用OKの素材をご提供ください）"
             }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default VideoComponent
+export default VideoComponent;

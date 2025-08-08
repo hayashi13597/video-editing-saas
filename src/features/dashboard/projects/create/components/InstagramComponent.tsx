@@ -1,22 +1,46 @@
 "use client";
 
-import { UseFormReturn } from 'react-hook-form'
-import { DynamicFormData } from '../validate'
-import FormFieldCustom from '@/components/form/FormFieldCustom';
-import { DESIGN_STYLE_OPTIONS, POST_FORMATS_OPTIONS, POST_PURPOSES_OPTIONS, REEL_DURATION_OPTIONS, SUBTITLES_OPTIONS } from '@/constants/selectOptions';
-import { useMemo } from 'react';
-import UploadFile from './UploadFile';
+import { UseFormReturn } from "react-hook-form";
+import { DynamicFormData } from "../validate";
+import FormFieldCustom from "@/components/form/FormFieldCustom";
+import {
+  DESIGN_STYLE_OPTIONS,
+  POST_FORMATS_OPTIONS,
+  POST_PURPOSES_OPTIONS,
+  REEL_DURATION_OPTIONS,
+  SUBTITLES_OPTIONS
+} from "@/constants/selectOptions";
+import { useMemo } from "react";
+import UploadFile from "./UploadFile";
 
-export const InstagramComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['postFormats', 'postPurposes', "designStyles", "assetsMethod"]);
+export const InstagramComponent = ({
+  form
+}: {
+  form: UseFormReturn<DynamicFormData>;
+}) => {
+  const watchedValues = form.watch([
+    "postFormats",
+    "postPurposes",
+    "designStyles",
+    "assetsMethod"
+  ]);
 
-  const { customPostFormat, customPostPurpose, customDesignStyle, assetsUrls, assetsUpload } = useMemo(() => ({
-    customPostFormat: watchedValues[0]?.includes('その他'),
-    customPostPurpose: watchedValues[1]?.includes('その他'),
-    customDesignStyle: watchedValues[2]?.includes('その他'),
-    assetsUrls: watchedValues[3] === 'URL',
-    assetsUpload: watchedValues[3] === 'ファイルアップロード'
-  }), [watchedValues])
+  const {
+    customPostFormat,
+    customPostPurpose,
+    customDesignStyle,
+    assetsUrls,
+    assetsUpload
+  } = useMemo(
+    () => ({
+      customPostFormat: watchedValues[0]?.includes("その他"),
+      customPostPurpose: watchedValues[1]?.includes("その他"),
+      customDesignStyle: watchedValues[2]?.includes("その他"),
+      assetsUrls: watchedValues[3] === "URL",
+      assetsUpload: watchedValues[3] === "ファイルアップロード"
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -135,35 +159,31 @@ export const InstagramComponent = ({ form }: { form: UseFormReturn<DynamicFormDa
           control={form.control}
           name="assetsMethod"
           label="参考バナー（他社含む）があればURLや添付で共有ください or ギガファイル便などのURL）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'URL', label: 'URL' },
-            { value: 'ファイルアップロード', label: 'ファイルアップロード' }
+            { value: "URL", label: "URL" },
+            { value: "ファイルアップロード", label: "ファイルアップロード" }
           ]}
           requiredBadge={false}
         />
-        {
-          assetsUrls && (
-            <FormFieldCustom
-              control={form.control}
-              name="assetsUrls"
-              type="text"
-              placeholder='(例) ギガファイル便のURL／Googleドライブ'
-            />
-          )
-        }
-        {
-          assetsUpload && (
-            <UploadFile
-              label="動画ファイルをアップロード"
-              multiple={false}
-              maxFiles={1}
-              acceptedFileTypes={{ "video/*": [] }}
-              name="assetsUpload"
-              form={form}
-            />
-          )
-        }
+        {assetsUrls && (
+          <FormFieldCustom
+            control={form.control}
+            name="assetsUrls"
+            type="text"
+            placeholder="(例) ギガファイル便のURL／Googleドライブ"
+          />
+        )}
+        {assetsUpload && (
+          <UploadFile
+            label="動画ファイルをアップロード"
+            multiple={false}
+            maxFiles={1}
+            acceptedFileTypes={{ "video/*": [] }}
+            name="assetsUpload"
+            form={form}
+          />
+        )}
       </div>
 
       <div className="space-y-3">
@@ -172,20 +192,20 @@ export const InstagramComponent = ({ form }: { form: UseFormReturn<DynamicFormDa
           control={form.control}
           name="reelDuration"
           label="動画時間の希望 or ギガファイル便などのURL）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={REEL_DURATION_OPTIONS}
           requiredBadge={false}
-          checkboxGroupClassName='flex flex-col items-start'
+          checkboxGroupClassName="flex flex-col items-start"
         />
 
         <FormFieldCustom
           control={form.control}
           name="subtitles"
           label="テロップやナレーションの有無"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={SUBTITLES_OPTIONS}
           requiredBadge={false}
-          checkboxGroupClassName='flex flex-col items-start'
+          checkboxGroupClassName="flex flex-col items-start"
         />
 
         <FormFieldCustom
@@ -228,10 +248,8 @@ export const InstagramComponent = ({ form }: { form: UseFormReturn<DynamicFormDa
           type="checkbox-group"
           checkboxGroupOptions={[
             {
-              value:
-                "修正は原則2回まで無料です（3回目以降は有料）",
-              label:
-                "修正は原則2回まで無料です（3回目以降は有料）"
+              value: "修正は原則2回まで無料です（3回目以降は有料）",
+              label: "修正は原則2回まで無料です（3回目以降は有料）"
             },
             {
               value:
@@ -246,15 +264,13 @@ export const InstagramComponent = ({ form }: { form: UseFormReturn<DynamicFormDa
                 "投稿内容（表現・情報）の事前チェック・承認後の修正には対応できない場合があります"
             },
             {
-              value:
-                "効果（再生数・フォロワー数）の保証はいたしかねます",
-              label:
-                "効果（再生数・フォロワー数）の保証はいたしかねます"
+              value: "効果（再生数・フォロワー数）の保証はいたしかねます",
+              label: "効果（再生数・フォロワー数）の保証はいたしかねます"
             }
           ]}
           requiredBadge={true}
         />
       </div>
     </>
-  )
-}
+  );
+};

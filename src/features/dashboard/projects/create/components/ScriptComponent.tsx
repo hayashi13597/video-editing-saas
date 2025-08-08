@@ -4,22 +4,52 @@ import { UseFormReturn } from "react-hook-form";
 import { DynamicFormData } from "../validate";
 import { useMemo } from "react";
 import FormFieldCustom from "@/components/form/FormFieldCustom";
-import { KEY_ELEMENTS_OPTIONS, SCRIPT_PLATFORM_OPTIONS, SCRIPT_STYLE_OPTIONS, TONE_PREFERENCE_OPTIONS, VIDEO_DURATION, VIDEO_DURATION_OPTIONS, VIDEO_GLOBAL_OPTIONS } from "@/constants/selectOptions";
+import {
+  KEY_ELEMENTS_OPTIONS,
+  SCRIPT_PLATFORM_OPTIONS,
+  SCRIPT_STYLE_OPTIONS,
+  TONE_PREFERENCE_OPTIONS,
+  VIDEO_DURATION_OPTIONS,
+  VIDEO_GLOBAL_OPTIONS
+} from "@/constants/selectOptions";
 import UploadFile from "./UploadFile";
 
-const ScriptComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => {
-  const watchedValues = form.watch(['platforms', "videoGoals", "scriptStyles", "tonePreferences", "referencePostsMethod", "pastExamplesMethod"]);
+const ScriptComponent = ({
+  form
+}: {
+  form: UseFormReturn<DynamicFormData>;
+}) => {
+  const watchedValues = form.watch([
+    "platforms",
+    "videoGoals",
+    "scriptStyles",
+    "tonePreferences",
+    "referencePostsMethod",
+    "pastExamplesMethod"
+  ]);
 
-  const { customPlatform, customVideoGoal, customScriptStyle, customTonePreference, referencePostsUpload, referencePostsUrls, pastExamplesUpload, pastExamplesUrls } = useMemo(() => ({
-    customPlatform: watchedValues[0]?.includes('その他'),
-    customVideoGoal: watchedValues[1]?.includes('その他'),
-    customScriptStyle: watchedValues[2]?.includes('その他　'),
-    customTonePreference: watchedValues[3]?.includes('その他'),
-    referencePostsUpload: watchedValues[4] === 'ファイルアップロード',
-    referencePostsUrls: watchedValues[4] === 'URL',
-    pastExamplesUpload: watchedValues[5] === 'ファイルアップロード_Example',
-    pastExamplesUrls: watchedValues[5] === 'URL_Example'
-  }), [watchedValues])
+  const {
+    customPlatform,
+    customVideoGoal,
+    customScriptStyle,
+    customTonePreference,
+    referencePostsUpload,
+    referencePostsUrls,
+    pastExamplesUpload,
+    pastExamplesUrls
+  } = useMemo(
+    () => ({
+      customPlatform: watchedValues[0]?.includes("その他"),
+      customVideoGoal: watchedValues[1]?.includes("その他"),
+      customScriptStyle: watchedValues[2]?.includes("その他　"),
+      customTonePreference: watchedValues[3]?.includes("その他"),
+      referencePostsUpload: watchedValues[4] === "ファイルアップロード",
+      referencePostsUrls: watchedValues[4] === "URL",
+      pastExamplesUpload: watchedValues[5] === "ファイルアップロード_Example",
+      pastExamplesUrls: watchedValues[5] === "URL_Example"
+    }),
+    [watchedValues]
+  );
 
   return (
     <>
@@ -160,69 +190,74 @@ const ScriptComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => 
           control={form.control}
           name="referencePostsMethod"
           label="参考バナー（他社含む）があればURLや添付で共有ください or ギガファイル便などのURL）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'URL', label: 'URL' },
-            { value: 'ファイルアップロード', label: 'ファイルアップロード' }
+            { value: "URL", label: "URL" },
+            { value: "ファイルアップロード", label: "ファイルアップロード" }
           ]}
           requiredBadge={true}
         />
-        {
-          referencePostsUrls && (
-            <FormFieldCustom
-              control={form.control}
-              name="referencePostsUrls"
-              type="text"
-              placeholder='(例) ギガファイル便のURL／Googleドライブ'
-            />
-          )
-        }
-        {
-          referencePostsUpload && (
-            <UploadFile
-              label="参考になる投稿（URLまたは添付）"
-              multiple={false}
-              maxFiles={1}
-              acceptedFileTypes={{ "video/*": [], "image/*": [], "text/*": [], "application/pdf": [] }}
-              name="referencePostsUpload"
-              form={form}
-            />
-          )
-        }
+        {referencePostsUrls && (
+          <FormFieldCustom
+            control={form.control}
+            name="referencePostsUrls"
+            type="text"
+            placeholder="(例) ギガファイル便のURL／Googleドライブ"
+          />
+        )}
+        {referencePostsUpload && (
+          <UploadFile
+            label="参考になる投稿（URLまたは添付）"
+            multiple={false}
+            maxFiles={1}
+            acceptedFileTypes={{
+              "video/*": [],
+              "image/*": [],
+              "text/*": [],
+              "application/pdf": []
+            }}
+            name="referencePostsUpload"
+            form={form}
+          />
+        )}
 
         <FormFieldCustom
           control={form.control}
           name="pastExamplesMethod"
           label="自社やご自身の過去の投稿で「このテイストが良かった」ものがあれば教えてください or ギガファイル便などのURL）"
-          type='single-checkbox-group'
+          type="single-checkbox-group"
           checkboxGroupOptions={[
-            { value: 'URL_Example', label: 'URL' },
-            { value: 'ファイルアップロード_Example', label: 'ファイルアップロード' }
+            { value: "URL_Example", label: "URL" },
+            {
+              value: "ファイルアップロード_Example",
+              label: "ファイルアップロード"
+            }
           ]}
           requiredBadge={true}
         />
-        {
-          pastExamplesUrls && (
-            <FormFieldCustom
-              control={form.control}
-              name="pastExamplesUrls"
-              type="text"
-              placeholder='(例) ギガファイル便のURL／Googleドライブ'
-            />
-          )
-        }
-        {
-          pastExamplesUpload && (
-            <UploadFile
-              label="動画ファイルをアップロード"
-              multiple={false}
-              maxFiles={1}
-              acceptedFileTypes={{ "video/*": [], "image/*": [], "text/*": [], "application/pdf": [] }}
-              name="pastExamplesUpload"
-              form={form}
-            />
-          )
-        }
+        {pastExamplesUrls && (
+          <FormFieldCustom
+            control={form.control}
+            name="pastExamplesUrls"
+            type="text"
+            placeholder="(例) ギガファイル便のURL／Googleドライブ"
+          />
+        )}
+        {pastExamplesUpload && (
+          <UploadFile
+            label="動画ファイルをアップロード"
+            multiple={false}
+            maxFiles={1}
+            acceptedFileTypes={{
+              "video/*": [],
+              "image/*": [],
+              "text/*": [],
+              "application/pdf": []
+            }}
+            name="pastExamplesUpload"
+            form={form}
+          />
+        )}
       </div>
 
       <div className="space-y-3">
@@ -261,10 +296,8 @@ const ScriptComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => 
                 "構成・表現の方向性が大きく変わる場合、再作成扱いとなる可能性があります"
             },
             {
-              value:
-                "修正は原則1回まで無料、それ以降は別途見積もりとなります",
-              label:
-                "修正は原則1回まで無料、それ以降は別途見積もりとなります"
+              value: "修正は原則1回まで無料、それ以降は別途見積もりとなります",
+              label: "修正は原則1回まで無料、それ以降は別途見積もりとなります"
             },
             {
               value:
@@ -283,7 +316,7 @@ const ScriptComponent = ({ form }: { form: UseFormReturn<DynamicFormData> }) => 
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ScriptComponent
+export default ScriptComponent;

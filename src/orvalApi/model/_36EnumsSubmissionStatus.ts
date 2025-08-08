@@ -8,7 +8,6 @@
 export type _36EnumsSubmissionStatus =
   (typeof _36EnumsSubmissionStatus)[keyof typeof _36EnumsSubmissionStatus];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsSubmissionStatus = {
   DRAFT: "DRAFT",
   SUBMITTED: "SUBMITTED",

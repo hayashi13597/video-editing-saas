@@ -8,7 +8,6 @@
 export type _36EnumsFeedbackType =
   (typeof _36EnumsFeedbackType)[keyof typeof _36EnumsFeedbackType];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const _36EnumsFeedbackType = {
   GENERAL: "GENERAL",
   SPECIFIC: "SPECIFIC",

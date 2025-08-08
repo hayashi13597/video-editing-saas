@@ -28,10 +28,8 @@ AXIOS_INSTANCE.interceptors.response.use(
   },
   error => {
     if (Axios.isCancel(error)) {
-      // eslint-disable-next-line no-console
       console.warn("Request cancelled:", error.message);
     } else {
-      // eslint-disable-next-line no-console
       console.error("Request failed:", error);
     }
     return Promise.reject(error);
