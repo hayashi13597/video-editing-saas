@@ -18,7 +18,7 @@ import {
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import ChatIcon from "../../../public/icons/chat.svg";
 import SmartHomeIcon from "../../../public/icons/smart-home.svg";
 import PaperIcon from "../../../public/icons/paper.svg";
@@ -29,8 +29,14 @@ import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { UserRole } from "@/types/form";
 import SidebarSkeleton from "@/components/common/SidebarSkeleton";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "@/components/ui/popover";
 
 const SidebarComponent = () => {
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
@@ -112,63 +118,112 @@ const SidebarComponent = () => {
           </div>
         )}
 
-        <Collapsible defaultOpen={!isCollapsed} className="group/collapsible">
-          <SidebarGroup className="p-0">
-            <SidebarGroupLabel asChild>
-              <TooltipCustom content="案件官理" isCollapsed={isCollapsed}>
-                <CollapsibleTrigger asChild={isCollapsed ? false : true}>
+        {!isCollapsed && (
+          <Collapsible defaultOpen={!isCollapsed} className="group/collapsible">
+            <SidebarGroup className="p-0">
+              <SidebarGroupLabel asChild>
+                <TooltipCustom content="案件官理" isCollapsed={isCollapsed}>
+                  <CollapsibleTrigger asChild={isCollapsed ? false : true}>
+                    <Link
+                      href="#"
+                      className={cn(
+                        "body-text text-text bg-action-selected py-2 px-3 h-fit mb-1.5 cursor-pointer rounded-6 flex items-center gap-2",
+                        isCollapsed &&
+                          "flex-center bg-white mb-0 hover:bg-green-main hover:text-white",
+                        isCollapsed &&
+                          pathname === routesApp.projects &&
+                          "bg-green-main text-white"
+                      )}
+                    >
+                      <PaperIcon width={20} height={20} />
+                      {!isCollapsed && (
+                        <span className="line-clamp-1">案件官理</span>
+                      )}
+                      {!isCollapsed && (
+                        <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                      )}
+                    </Link>
+                  </CollapsibleTrigger>
+                </TooltipCustom>
+              </SidebarGroupLabel>
+              {!isCollapsed && (
+                <CollapsibleContent>
                   <Link
-                    href={isCollapsed ? routesApp.projects : "#"}
+                    href={
+                      userRole === "CLIENT" ? routesApp.create : routesApp.list
+                    }
                     className={cn(
-                      "body-text text-text bg-action-selected py-2 px-3 h-fit mb-1.5 cursor-pointer rounded-6 flex items-center gap-2",
-                      isCollapsed &&
-                        "flex-center bg-white mb-0 hover:bg-green-main hover:text-white",
-                      isCollapsed &&
-                        pathname === routesApp.projects &&
+                      "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
+                      pathname === routesApp.create &&
+                        "bg-green-main text-white",
+                      pathname === routesApp.list && "bg-green-main text-white"
+                    )}
+                  >
+                    <span className="block w-2.5 h-2.5 border-2 rounded-full" />
+                    {userRole === "CLIENT" ? "案件登録" : "応募可能な案件"}
+                  </Link>
+                  <Link
+                    href={routesApp.projects}
+                    className={cn(
+                      "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
+                      pathname === routesApp.projects &&
                         "bg-green-main text-white"
                     )}
                   >
-                    <PaperIcon width={20} height={20} />
-                    {!isCollapsed && (
-                      <span className="line-clamp-1">案件官理</span>
-                    )}
-                    {!isCollapsed && (
-                      <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                    )}
+                    <span className="block w-2.5 h-2.5 border-2 rounded-full" />
+                    {userRole === "CLIENT" ? "案件一覧" : "応募済みの案件"}
                   </Link>
-                </CollapsibleTrigger>
-              </TooltipCustom>
-            </SidebarGroupLabel>
-            {!isCollapsed && (
-              <CollapsibleContent>
+                </CollapsibleContent>
+              )}
+            </SidebarGroup>
+          </Collapsible>
+        )}
+
+        {isCollapsed && (
+          <div
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
                 <Link
-                  href={
-                    userRole === "CLIENT" ? routesApp.create : routesApp.list
-                  }
+                  href="#"
                   className={cn(
-                    "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
-                    pathname === routesApp.create && "bg-green-main text-white",
-                    pathname === routesApp.list && "bg-green-main text-white"
-                  )}
-                >
-                  <span className="block w-2.5 h-2.5 border-2 rounded-full" />
-                  {userRole === "CLIENT" ? "案件登録" : "応募可能な案件"}
-                </Link>
-                <Link
-                  href={routesApp.projects}
-                  className={cn(
-                    "body-text text-text flex items-center gap-2 py-2 pl-7 mb-1.5 rounded-6 hover:bg-green-main hover:text-white",
-                    pathname === routesApp.projects &&
+                    "body-text text-text flex items-center gap-2 py-2 px-3 rounded-6 hover:bg-green-main hover:text-white",
+                    isCollapsed && "justify-center",
+                    (pathname === routesApp.create ||
+                      pathname === routesApp.list ||
+                      pathname === routesApp.projects) &&
                       "bg-green-main text-white"
                   )}
                 >
-                  <span className="block w-2.5 h-2.5 border-2 rounded-full" />
-                  {userRole === "CLIENT" ? "案件一覧" : "応募済みの案件"}
+                  <PaperIcon width={20} height={20} />
                 </Link>
-              </CollapsibleContent>
-            )}
-          </SidebarGroup>
-        </Collapsible>
+              </PopoverTrigger>
+              <PopoverContent
+                side="right"
+                align="start"
+                sideOffset={0}
+                className="border-none shadow-md p-0 max-w-[6vw] rounded-none"
+              >
+                <div className="flex flex-col">
+                  <Link
+                    href={routesApp.create}
+                    className="body-text text-text hover:bg-green-main hover:text-white py-2 px-3"
+                  >
+                    {userRole === "CLIENT" ? "案件登録" : "応募可能な案件"}
+                  </Link>
+                  <Link
+                    href={routesApp.list}
+                    className="body-text text-text hover:bg-green-main hover:text-white py-2 px-3"
+                  >
+                    {userRole === "CLIENT" ? "案件一覧" : "応募済みの案件"}
+                  </Link>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+        )}
 
         <SidebarGroup className="p-0">
           <TooltipCustom content="チャット" isCollapsed={isCollapsed}>

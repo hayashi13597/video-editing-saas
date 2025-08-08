@@ -67,6 +67,7 @@ const SEOArticleComponent = ({
           type="single-checkbox-group"
           checkboxGroupOptions={DELIVERY_FORMAT_OPTIONS}
           requiredBadge={true}
+          checkboxGroupClassName="flex flex-col items-start"
         />
       </div>
 
