@@ -1,6 +1,9 @@
 import AuthLayout from "@/components/auth/AuthLayout";
+import { routesApp } from "@/constants/routesApp";
 import FormVerifyEmail from "@/features/auth/verify";
+import { ChevronLeft } from "lucide-react";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "2段階認証",
@@ -21,8 +24,19 @@ export default async function Verify({
   return (
     <AuthLayout
       title="2段階認証"
-      description={`あなたの携帯電話に認証コードを送信しました。下の欄に携帯電話からコードを入力してください。\n${email ? email : ""}`}
+      description={`${email ? email : ""}に認証コードを送信しました。\n6桁の認証コードを入力してください。`}
       descriptionClassName="text-center"
+      footer={
+        <div className="w-full justify-center">
+          <Link
+            href={routesApp.signIn}
+            className="flex-center gap-2 text-green-main"
+          >
+            <ChevronLeft className="text-accent" />
+            ログイン画面
+          </Link>
+        </div>
+      }
     >
       <FormVerifyEmail email={email} resetPassword={resetPassword} />
     </AuthLayout>

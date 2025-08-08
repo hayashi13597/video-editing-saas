@@ -19,12 +19,7 @@ const baseSignUpSchema = z.object({
       passwordRegex,
       "パスワードは8文字以上で、大文字・小文字・数字・特殊文字を含む必要があります"
     ),
-  confirmPassword: z
-    .string()
-    .regex(
-      passwordRegex,
-      "確認用パスワードは8文字以上で、大文字・小文字・数字・特殊文字を含む必要があります"
-    )
+  confirmPassword: z.string()
 });
 
 // Client schema with specific validations

@@ -3,12 +3,10 @@ import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import Link from "next/link";
-import { routesApp } from "@/constants/routesApp";
-import { cn } from "@/lib/utils";
 import { signUpSchemaType } from "./validate";
 import { KindType } from "@/types/form";
 import FormFieldCustom from "@/components/form/FormFieldCustom";
+import PasswordAlert from "../PasswordAlert";
 
 interface AccountFormProps {
   form: ReturnType<typeof useForm<signUpSchemaType>>;
@@ -20,12 +18,13 @@ interface AccountFormProps {
 const AccountForm = ({
   form,
   onSubmit,
-  kind = "freelancer",
-  isProfileUpdate = false
+  kind = "freelancer"
 }: AccountFormProps) => {
   useEffect(() => {
     form.setValue("role", kind);
   }, [kind, form]);
+
+  const watchedPassword = form.watch("password");
 
   return (
     <Form {...form}>
@@ -92,6 +91,7 @@ const AccountForm = ({
               type="password"
               autoComplete="new-password"
               requiredBadge={true}
+              isShowMessageError={false}
             />
 
             {/* Confirm Password */}
@@ -104,32 +104,11 @@ const AccountForm = ({
               requiredBadge={true}
             />
           </div>
+
+          <PasswordAlert watchedPassword={watchedPassword} />
         </div>
 
-        <div
-          className={cn("flex-between", isProfileUpdate ? "justify-end" : "")}
-        >
-          {kind === "client" ? (
-            <Link
-              href={routesApp.signUpFreelancer}
-              className={cn(
-                "text-size-primary text-accent hover:underline",
-                isProfileUpdate ? "cursor-not-allowed hidden" : ""
-              )}
-            >
-              フリーランスの登録はこちら
-            </Link>
-          ) : (
-            <Link
-              href={routesApp.signUpClient}
-              className={cn(
-                "body-text text-accent hover:underline",
-                isProfileUpdate ? "cursor-not-allowed hidden" : ""
-              )}
-            >
-              企業様の登録はこちら
-            </Link>
-          )}
+        <div className="flex flex-end">
           <Button className="button-submit w-fit">
             <span>Next</span>
             <ArrowRightIcon className="w-4 h-4 ml-2" />

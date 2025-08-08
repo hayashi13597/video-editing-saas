@@ -13,6 +13,7 @@ import { getAuthentication } from "@/orvalApi/endpoints/authentication/authentic
 import { getErrorMessage } from "@/lib/utils";
 import Link from "next/link";
 import { useState } from "react";
+import PasswordAlert from "../PasswordAlert";
 
 interface ResetPasswordFormProps {
   email: string;
@@ -32,6 +33,8 @@ const ResetPasswordForm = ({
       confirmPassword: ""
     }
   });
+
+  const watchedPassword = form.watch("password");
 
   const onSubmit = async (data: resetPasswordType) => {
     const { password } = data;
@@ -68,6 +71,7 @@ const ResetPasswordForm = ({
               label="新規パスワード"
               placeholder="············"
             />
+            <PasswordAlert watchedPassword={watchedPassword} />
             <FormFieldCustom
               control={form.control}
               name="confirmPassword"

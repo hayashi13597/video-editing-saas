@@ -23,6 +23,7 @@ interface FormPasswordProps<T extends FormType> {
   requiredBadge?: boolean;
   badgeText?: string;
   disabled?: boolean;
+  isShowMessageError?: boolean;
 }
 
 const FormPassword = <T extends FormType>({
@@ -32,7 +33,8 @@ const FormPassword = <T extends FormType>({
   label = "パスワード",
   requiredBadge,
   badgeText,
-  disabled
+  disabled,
+  isShowMessageError = true
 }: FormPasswordProps<T>) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -46,7 +48,7 @@ const FormPassword = <T extends FormType>({
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1">
-          <FormLabel className="body-text">
+          <FormLabel className="leading-[1.75]">
             {label}
             {requiredBadge ? (
               <RequiredBadge required={true} text={badgeText} />
@@ -78,7 +80,7 @@ const FormPassword = <T extends FormType>({
               />
             )}
           </div>
-          <FormMessage />
+          {isShowMessageError && <FormMessage />}
         </FormItem>
       )}
     />

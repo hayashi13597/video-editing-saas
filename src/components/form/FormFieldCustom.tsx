@@ -60,6 +60,7 @@ interface FormFieldCustomProps<T extends FormType> {
   checkboxGroupOptions?: SelectOption[];
   checkboxGroupClassName?: string;
   defaultValueSingleCheckBox?: string | boolean;
+  isShowMessageError?: boolean;
 }
 
 const FormFieldCustom = <T extends FormType>({
@@ -79,7 +80,8 @@ const FormFieldCustom = <T extends FormType>({
   note,
   radioPlan = true,
   checkboxGroupOptions,
-  checkboxGroupClassName
+  checkboxGroupClassName,
+  isShowMessageError
 }: FormFieldCustomProps<T>) => {
   const [selectedPlan, setSelectedPlan] = useState<string | undefined>(
     undefined
@@ -113,7 +115,7 @@ const FormFieldCustom = <T extends FormType>({
           case "email":
             return (
               <FormItem className="flex flex-col gap-1">
-                <FormLabel className="body-text">
+                <FormLabel className="leading-[1.75]">
                   {label}
                   {requiredBadge ? (
                     <RequiredBadge required={true} text={badgeText} />
@@ -146,6 +148,9 @@ const FormFieldCustom = <T extends FormType>({
                 requiredBadge={requiredBadge}
                 badgeText={badgeText}
                 disabled={disabled}
+                label={label}
+                placeholder={placeholder}
+                isShowMessageError={isShowMessageError}
               />
             );
           case "checkbox":
